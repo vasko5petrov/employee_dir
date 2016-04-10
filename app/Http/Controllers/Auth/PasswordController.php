@@ -29,4 +29,23 @@ class PasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    /**
+     * Override showResetForm(), reset(), sendResetLinkEmail() to disable password reset functionality
+     *
+     */
+    public function reset()
+    {
+        return redirect('/');
+    }
+
+    public function showResetForm()
+    {
+        return redirect('/');
+    }
+
+    public function sendResetLinkEmail()
+    {
+        return redirect('/');
+    }
 }
