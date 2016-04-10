@@ -13,11 +13,11 @@ class CreateDepartmentsTable extends Migration
     public function up()
     {
         // create departments tables
+        Schema::dropIfExists('departments');
         Schema::create('departments', function(Blueprint $tables) {
             $tables->increments('id');
             $tables->string('name');
             $tables->string('office_number');
-            $tables->integer('manager_id');
             $tables->timestamps();
         });
     }
