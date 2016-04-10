@@ -69,4 +69,12 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    /**
+     * Override showRegistrationForm() method to disable Register route.
+     */
+    public function showRegistrationForm()
+    {
+        return redirect('/');
+    }
 }
