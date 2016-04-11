@@ -28,11 +28,14 @@ class DatabaseSeeder extends Seeder
         $employee->name = 'Adam';
         $employee->job_title = 'Developer';
         $employee->department_id = '1';
+        $employee->email = 'adam@gmail.com';
         $employee->save();
 
         $employee = new App\Employee();
         $employee->name = 'Adam M';
         $employee->job_title = 'Manager';
+        $employee->email = 'adam_M@gmail.com';
+        $employee->phone_number = '0166443325';
         $employee->department_id = '2';
         $employee->is_manager = true;
         $employee->save();
@@ -41,6 +44,8 @@ class DatabaseSeeder extends Seeder
         $employee->name = 'Hieu-PX';
         $employee->job_title = 'Manager';
         $employee->department_id = '1';
+        $employee->email = 'pxhieu@gmail.com';
+        $employee->phone_number = '09671625378';
         $employee->is_manager = true;
         $employee->save();
 
