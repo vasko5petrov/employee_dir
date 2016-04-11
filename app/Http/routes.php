@@ -20,3 +20,5 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/department', 'DepartmentController@index');
 Route::get('/employee', 'EmployeeController@index');
+Route::get('/change-password', 'UserController@changePasswordForm')->middleware('auth');
+Route::post('/change-password', 'UserController@changePassword')->middleware('auth');
