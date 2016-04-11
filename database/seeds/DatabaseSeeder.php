@@ -31,15 +31,32 @@ class DatabaseSeeder extends Seeder
         $employee->save();
 
         $employee = new App\Employee();
-        $employee->name = 'Adam';
+        $employee->name = 'Adam M';
+        $employee->job_title = 'Manager';
+        $employee->department_id = '2';
+        $employee->is_manager = true;
+        $employee->save();
+
+        $employee = new App\Employee();
+        $employee->name = 'Hieu-PX';
         $employee->job_title = 'Manager';
         $employee->department_id = '1';
         $employee->is_manager = true;
         $employee->save();
 
         $deparment = new App\Department();
-        $deparment->name = 'SSC Head Office';
-        $deparment->office_number = '00112992';
+        $deparment->name = 'KTLab, UET-VNU';
+        $deparment->office_number = '0166334225';
+        $deparment->save();
+
+        $deparment = new App\Department();
+        $deparment->name = 'Bla bla bla';
+        $deparment->office_number = '0432254566';
+        $deparment->save();
+
+        $deparment = new App\Department();
+        $deparment->name = 'Example Department';
+        $deparment->office_number = '097856125625';
         $deparment->save();
     }
 }

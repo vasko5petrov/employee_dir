@@ -8,7 +8,32 @@
                     <div class="panel-heading">Departments</div>
 
                     <div class="panel-body">
-                        Department list goes here.
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Office Number</th>
+                                    <th>Manager</th>
+                                </tr>
+                            <tbody>
+                                @foreach($departments as $index=>$dp)
+                                    <tr>
+                                        <td>{{$index+1}}</td>
+                                        <td><a href="{{url('/department').'/'.$dp->id}}">{{$dp->name}}</a></td>
+                                        <td>{{$dp->office_number}}</td>
+                                        <td>
+                                            @if($dp->manager())
+                                                <a href="{{url('/employee').'/'.$dp->manager()->id}}">{{$dp->manager()->name}}</a>
+                                            @else
+                                                No manager
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
