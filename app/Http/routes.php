@@ -18,7 +18,15 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+// Department routes
 Route::get('/department', 'DepartmentController@index');
+Route::get('/department/add', 'DepartmentController@addForm');
+Route::post('department/add', 'DepartmentController@add');
+
+// Employee routes
 Route::get('/employee', 'EmployeeController@index');
+
+// Admin routes
 Route::get('/change-password', 'UserController@changePasswordForm')->middleware('auth');
 Route::post('/change-password', 'UserController@changePassword')->middleware('auth');
