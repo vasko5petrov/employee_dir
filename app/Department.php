@@ -16,10 +16,7 @@ class Department extends Model
     // Find the Manager of the Department
     public function manager()
     {
-        $employees = $this->employees;
-        foreach ($employees as $em) {
-            if ($em->is_manager == 1) return $em;
-        }
-        return false;
+        $manager = Employee::find($this->manager_id);
+        return $manager;
     }
 }

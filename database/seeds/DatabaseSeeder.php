@@ -37,7 +37,6 @@ class DatabaseSeeder extends Seeder
         $employee->email = 'adam_M@gmail.com';
         $employee->phone_number = '0166443325';
         $employee->department_id = '2';
-        $employee->is_manager = true;
         $employee->save();
 
         $employee = new App\Employee();
@@ -46,22 +45,24 @@ class DatabaseSeeder extends Seeder
         $employee->department_id = '1';
         $employee->email = 'pxhieu@gmail.com';
         $employee->phone_number = '09671625378';
-        $employee->is_manager = true;
         $employee->save();
 
         $deparment = new App\Department();
         $deparment->name = 'KTLab, UET-VNU';
         $deparment->office_number = '0166334225';
+        $deparment->manager_id = '3';
         $deparment->save();
 
         $deparment = new App\Department();
         $deparment->name = 'Bla bla bla';
         $deparment->office_number = '0432254566';
+        $deparment->manager_id = '2';
         $deparment->save();
 
         $deparment = new App\Department();
         $deparment->name = 'Example Department';
         $deparment->office_number = '097856125625';
+        $deparment->manager_id = '1';
         $deparment->save();
     }
 }

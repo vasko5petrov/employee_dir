@@ -21,7 +21,6 @@ class CreateEmployeesTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
             $table->string('picture')->nullable();
-            $table->boolean('is_manager');
             $table->integer('department_id');
             $table->timestamps();
         });
