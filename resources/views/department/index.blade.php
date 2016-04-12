@@ -7,11 +7,13 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Departments
-                        <div class="pull-right">
-                            <a href="{{url('/department/add')}}" class="btn btn-primary btn-xs">
-                                <i class="fa fa-btn fa-plus" aria-hidden="true"></i>Add
-                            </a>
-                        </div>
+                        @if(!Auth::guest())
+                            <div class="pull-right">
+                                <a href="{{url('/department/add')}}" class="btn btn-primary btn-xs">
+                                    <i class="fa fa-btn fa-plus" aria-hidden="true"></i>Add
+                                </a>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="panel-body">

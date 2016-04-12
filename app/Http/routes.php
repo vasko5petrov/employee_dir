@@ -21,8 +21,8 @@ Route::get('/home', 'HomeController@index');
 
 // Department routes
 Route::get('/department', 'DepartmentController@index');
-Route::get('/department/add', 'DepartmentController@addForm');
-Route::post('department/add', 'DepartmentController@add');
+Route::get('/department/add', 'DepartmentController@addForm')->middleware('auth');
+Route::post('department/add', 'DepartmentController@add')->middleware('auth');
 
 // Employee routes
 Route::get('/employee', 'EmployeeController@index');
