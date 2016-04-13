@@ -89,4 +89,15 @@ class DepartmentController extends Controller
         }
         return view('department.editDepartmentResult', compact('result', 'alert_type'));
     }
+
+    // Delete a department
+    public function delete(Request $request)
+    {
+        $delete_id = $request->input('dp-id');
+        if (is_numeric($delete_id)) {
+            $dp = Department::find($delete_id);
+            $dp->delete();
+        }
+        return redirect('/department');
+    }
 }
