@@ -24,6 +24,9 @@
                                     <th>Name</th>
                                     <th>Office Number</th>
                                     <th>Manager</th>
+                                    @if(!Auth::guest())
+                                        <th></th>
+                                    @endif
                                 </tr>
                             <tbody>
                                 @foreach($departments as $index=>$dp)
@@ -34,10 +37,18 @@
                                         <td>
                                             @if($dp->manager())
                                                 <a href="{{url('/employee').'/'.$dp->manager()->id}}">{{$dp->manager()->name}}</a>
-                                            @else
-                                                No manager
                                             @endif
                                         </td>
+                                        @if(!Auth::guest())
+                                            <td>
+                                                <a href="{{url('/department').'/edit/'.$dp->id}}" class="btn btn-primary btn-xs">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </a>
+                                                <a href="{{url('/department').'/delete/'.$dp->id}}" class="btn btn-danger btn-xs">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -23,6 +23,8 @@ Route::get('/home', 'HomeController@index');
 Route::get('/department', 'DepartmentController@index');
 Route::get('/department/add', 'DepartmentController@addForm')->middleware('auth');
 Route::post('department/add', 'DepartmentController@add')->middleware('auth');
+Route::get('department/edit/{id}', 'DepartmentController@editForm')->middleware('auth');
+Route::post('department/edit/{id}', 'DepartmentController@edit')->middleware('auth');
 
 // Employee routes
 Route::get('/employee', 'EmployeeController@index');
