@@ -9,7 +9,7 @@
                         Departments
                         @if(!Auth::guest())
                             <div class="pull-right">
-                                <a href="{{url('/department/add')}}" class="btn btn-primary btn-xs">
+                                <a href="{{url('/department/add')}}" class="btn btn-primary btn-xs" title="Add new department">
                                     <i class="fa fa-btn fa-plus" aria-hidden="true"></i>Add
                                 </a>
                             </div>
@@ -24,9 +24,7 @@
                                     <th>Name</th>
                                     <th>Office Number</th>
                                     <th>Manager</th>
-                                    @if(!Auth::guest())
-                                        <th></th>
-                                    @endif
+                                    <th></th>
                                 </tr>
                             <tbody>
                                 @foreach($departments as $index=>$dp)
@@ -39,8 +37,11 @@
                                                 <a href="{{url('/employee').'/'.$dp->manager()->id}}">{{$dp->manager()->name}}</a>
                                             @endif
                                         </td>
-                                        @if(!Auth::guest())
-                                            <td>
+                                        <td>
+                                            <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn btn-default btn-xs" title="Show employees">
+                                                <i class="fa fa-list" aria-hidden="true"></i>
+                                            </a>
+                                            @if(!Auth::guest())
                                                 <a href="{{url('/department').'/edit/'.$dp->id}}" class="btn btn-primary btn-xs" title="Edit department">
                                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </a>
@@ -71,8 +72,8 @@
                                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                                     </button>
                                                 </form>
-                                            </td>
-                                        @endif
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

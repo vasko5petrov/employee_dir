@@ -8,6 +8,7 @@ use App\Employee;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Symfony\Component\Finder\Iterator\DepthRangeFilterIterator;
 
 class DepartmentController extends Controller
 {
@@ -17,6 +18,14 @@ class DepartmentController extends Controller
         $departments = Department::all();
         $departments = $departments->sortBy('name')->values()->all();
         return view('department.index', compact('departments'));
+    }
+
+    // show list of employees in this department
+    public function employeeList($id)
+    {
+        $dp = Department::find($id);
+        $employees = $dp->employees;
+        return view('department.employeeList', compact('dp', 'employees'));
     }
 
     // Return form: Add a new department
