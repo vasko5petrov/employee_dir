@@ -24,9 +24,9 @@ Route::get('/department', 'DepartmentController@index');
 Route::get('/department/{id}/employee', 'DepartmentController@employeeList');
 Route::get('/department/add', 'DepartmentController@addForm')->middleware('auth');
 Route::post('department/add', 'DepartmentController@add')->middleware('auth');
-Route::get('department/edit/{id}', 'DepartmentController@editForm')->middleware('auth');
-Route::post('department/edit/{id}', 'DepartmentController@edit')->middleware('auth');
-Route::delete('department/delete/{id}', 'DepartmentController@delete')->middleware('auth');
+Route::get('department/{id}/edit', 'DepartmentController@editForm')->middleware('auth');
+Route::post('department/{id}/edit', 'DepartmentController@edit')->middleware('auth');
+Route::delete('department/{id}/delete', 'DepartmentController@delete')->middleware('auth');
 
 // Employee routes
 Route::get('/employee', 'EmployeeController@index');

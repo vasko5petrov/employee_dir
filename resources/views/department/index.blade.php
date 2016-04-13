@@ -30,11 +30,11 @@
                                 @foreach($departments as $index=>$dp)
                                     <tr>
                                         <td>{{$index+1}}</td>
-                                        <td><a href="{{url('/department').'/'.$dp->id}}">{{$dp->name}}</a></td>
+                                        <td><a href="{{url('/department').'/'.$dp->id.'/detail'}}">{{$dp->name}}</a></td>
                                         <td>{{$dp->office_number}}</td>
                                         <td>
                                             @if($dp->manager())
-                                                <a href="{{url('/employee').'/'.$dp->manager()->id}}">{{$dp->manager()->name}}</a>
+                                                <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}">{{$dp->manager()->name}}</a>
                                             @endif
                                         </td>
                                         <td>
@@ -42,7 +42,7 @@
                                                 <i class="fa fa-list" aria-hidden="true"></i>
                                             </a>
                                             @if(!Auth::guest())
-                                                <a href="{{url('/department').'/edit/'.$dp->id}}" class="btn btn-primary btn-xs" title="Edit department">
+                                                <a href="{{url('/department').'/'.$dp->id.'/edit'}}" class="btn btn-primary btn-xs" title="Edit department">
                                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </a>
 
@@ -64,7 +64,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <form role="form" method="POST" action="{{url('/department').'/delete/'.$dp->id}}" accept-charset="UTF-8" style="display:inline">
+                                                <form role="form" method="POST" action="{{url('/department').'/'.$dp->id.'/delete'}}" accept-charset="UTF-8" style="display:inline">
                                                     {{csrf_field()}}
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <input type="hidden" class="form-control" name="dp-id" value="{{$dp->id}}">

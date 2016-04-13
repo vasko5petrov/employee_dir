@@ -22,8 +22,8 @@
                             @foreach($employees as $index=>$em)
                                 <tr>
                                     <td>{{$index+1}}</td>
-                                    <td><a href="{{url('/employee').'/'.$em->id}}">{{$em->name}}</a></td>
-                                    <td><a href="{{url('/department').'/'.$em->department->id}}">{{$em->department->name}}</a></td>
+                                    <td><a href="{{url('/employee').'/'.$em->id.'/detail'}}">{{$em->name}}</a></td>
+                                    <td><a href="{{url('/department').'/'.$em->department->id.'/detail'}}">{{$em->department->name}}</a></td>
                                     <td>{{$em->job_title}}</td>
                                     <td>{{$em->email}}</td>
                                     <td>{{$em->phone_number}}</td>
