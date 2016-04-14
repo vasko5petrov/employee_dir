@@ -111,4 +111,11 @@ class DepartmentController extends Controller
         }
         return redirect('/department');
     }
+    
+    //Show a department details
+    public function show($id) 
+    {
+        $dp = Department::find($id);
+        return view('department.showDepartmentDetails', compact('dp'));
+    }
 }
