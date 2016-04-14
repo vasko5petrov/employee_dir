@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Edit department</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/department/edit').'/'.$dp->id }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/department').'/'.$dp->id.'/edit'}}">
                             {!! csrf_field() !!}
 
                             <div class="form-group">
@@ -30,10 +30,14 @@
                                 <label class="col-md-4 control-label">Manager</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" name="dp-manager-id">
-                                        @foreach($employees as $em)
-                                            <option value="{{$em->id}}">{{$em->name}}</option>
-                                        @endforeach
+                                    <select class="form-control" name="dp-manager-id" >
+                                        @if(sizeof($employees))
+                                            @foreach($employees as $em)
+                                                <option value="{{$em->id}}">{{$em->name}}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="{{$dp->manager_id}}">{{$dp->manager_name}}</option>
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -43,6 +47,9 @@
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-btn fa-floppy-o"></i>Save
                                     </button>
+                                    <a type="button" class="btn btn-default" href="{{url('/department')}}">
+                                        Cancel
+                                    </a>
                                 </div>
                             </div>
                         </form>

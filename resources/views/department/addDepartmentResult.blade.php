@@ -10,10 +10,18 @@
                         <div class="alert alert-{{$alert_type}}" role="alert">
                             {{$result}}
                         </div>
-                        <a href="{{url('department/add')}}" class="btn btn-primary" role="button">
-                            <i class="fa fa-btn fa-chevron-left"></i>Back
-                        </a>
-
+                        @if($alert_type == 'success')
+                            <a href="{{url('department')}}" class="btn btn-primary" role="button">
+                                OK
+                            </a>
+                            <a href="{{url('department/add')}}" class="btn btn-default" role="button">
+                                Add one more
+                            </a>
+                        @else
+                            <a href="{{url('department/add')}}" class="btn btn-primary" role="button">
+                                <i class="fa fa-btn fa-chevron-left"></i>Back
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>

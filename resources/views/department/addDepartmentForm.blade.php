@@ -42,6 +42,9 @@
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-btn fa-floppy-o"></i>Save
                                     </button>
+                                    <a type="button" class="btn btn-default" href="{{url('/department')}}">
+                                        Cancel
+                                    </a>
                                 </div>
                             </div>
                         </form>

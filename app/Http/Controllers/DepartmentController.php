@@ -65,6 +65,7 @@ class DepartmentController extends Controller
     public function editForm($id)
     {
         $dp = Department::find($id);
+        $dp->manager_name = Employee::find($dp->manager_id)->name;
         $employees = $dp->employees;
         return view('department.editDepartmentForm', compact('dp', 'employees'));
     }
@@ -73,14 +74,15 @@ class DepartmentController extends Controller
     // Need to be enhanced with validation
     public function edit(Request $request)
     {
+        $dp_id = $request->input('dp-id');
         $new_dp_name = $request->input('dp-name');
         $new_dp_office_number = $request->input('dp-office-number');
         $new_dp_manager_id = $request->input('dp-manager-id');
-        if ($request->input('dp-id') && is_numeric($request->input('dp-id'))) {
+        if ($dp_id && is_numeric($dp_id)) {
             $dp = Department::find($request->input('dp-id'));
 
             if ($dp->name === $new_dp_name && $dp->office_number === $new_dp_office_number && $dp->manager_id === $new_dp_manager_id) {
-                $result = 'Department information unchanged!';
+                $result = 'Department information remains unchanged!';
                 $alert_type = 'warning';
             }
             elseif ($new_dp_name != '' && $new_dp_office_number != '' && is_numeric($new_dp_manager_id)) {
@@ -96,7 +98,7 @@ class DepartmentController extends Controller
             $result = "Something's wrong. Check your input!";
             $alert_type = 'warning';
         }
-        return view('department.editDepartmentResult', compact('result', 'alert_type'));
+        return view('department.editDepartmentResult', compact('result', 'alert_type', 'dp_id'));
     }
 
     // Delete a department
