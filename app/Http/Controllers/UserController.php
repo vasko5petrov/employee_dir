@@ -8,47 +8,42 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Validator;
+use Symfony\Component\Console\Input\Input;
 
 class UserController extends Controller
 {
-    //
-    public function changePasswordForm()
+    // Return form: Update password
+    public function updatePasswordForm()
     {
         return view('admin.changePasswordForm');
     }
 
-    public function changePassword(Request $request)
+    public function updatePassword(Request $request)
     {
-        $old_pw = $request->input('old-password');
-        $new_pw = $request->input('new-password');
-        $retype_new_pw = $request->input('retype-new-password');
-
-        if ($old_pw == '' || $new_pw == ''|| $retype_new_pw == ''){
-            $result = 'You must fill in all fields first!';
-            $alert_type = 'warning';
-        }
-        else if ($new_pw != $retype_new_pw) {
-            $result = 'Your password retype does not match!';
-            $alert_type = 'warning';
-        }
-        else if ($old_pw === $new_pw) {
-            $result = 'New password is the same as old password!';
+        $this->validate($request, [
+            'current_password' => 'bail|required|string|min:6',
+            'new_password' => 'required|string|min:6',
+            'password_confirm' => 'required|string|min:6|same:new_password'
+        ]);
+        if ($request->input('current_password') === $request->input('new_password')) {
+            $result = 'The current password and new password is the same!';
             $alert_type = 'warning';
         }
         else {
             $id = Auth::user()->id;
             $user = User::find($id);
-            if (Hash::check($old_pw, $user->password)) {
-                $user->password = bcrypt($new_pw);
+            if (Hash::check($request->input('current_password'), $user->password)) {
+                $user->password = bcrypt($request->input('new_password'));
                 $user->save();
-                $result = 'Password successfully changed!';
+                $result = 'Password successfully updated!';
                 $alert_type = 'success';
             }
             else {
-                $result = 'Your old password field is not correct!';
+                $result = 'The current password does not match!';
                 $alert_type = 'warning';
             }
         }
-        return view('admin.changePasswordResult', compact('result', 'alert_type'));
+        return view('admin.changePasswordForm', compact('result', 'alert_type'));
     }
 }
