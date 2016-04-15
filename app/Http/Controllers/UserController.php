@@ -16,26 +16,36 @@ class UserController extends Controller
     // Return form: Update password
     public function updatePasswordForm()
     {
-        return view('admin.changePasswordForm');
+        return view('admin.updatePasswordForm');
     }
 
+    // Update user password
+    // @param: Request
+    // @return: update result (alert message)
     public function updatePassword(Request $request)
     {
+        // Validate params from $request->input
         $this->validate($request, [
             'current_password' => 'bail|required|string|min:6',
             'new_password' => 'required|string|min:6',
             'password_confirm' => 'required|string|min:6|same:new_password'
         ]);
+
+        // If the new password is the same as the old one
+        // return an alert message
         if ($request->input('current_password') === $request->input('new_password')) {
             $result = 'The current password and new password is the same!';
             $alert_type = 'warning';
         }
+        // Else: update password in database
+        // return an alert message
         else {
             $id = Auth::user()->id;
             $user = User::find($id);
             if (Hash::check($request->input('current_password'), $user->password)) {
                 $user->password = bcrypt($request->input('new_password'));
                 $user->save();
+
                 $result = 'Password successfully updated!';
                 $alert_type = 'success';
             }
@@ -44,6 +54,6 @@ class UserController extends Controller
                 $alert_type = 'warning';
             }
         }
-        return view('admin.changePasswordForm', compact('result', 'alert_type'));
+        return view('admin.updatePasswordForm', compact('result', 'alert_type'));
     }
 }
