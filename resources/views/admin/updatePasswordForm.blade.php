@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="container">
         <div class="row">
             @if(isset($result) && isset($alert_type))
@@ -20,11 +19,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Update password
-                        <div class="pull-right">
-                            <a href="{{url('/')}}" class="btn btn-primary btn-xs">
-                                <i class="fa fa-btn fa-chevron-left" aria-hidden="true"></i>Back
-                            </a>
-                        </div>
                     </div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/update/password') }}">
@@ -74,6 +68,9 @@
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-btn fa-floppy-o"></i>Save
                                     </button>
+                                    <a href="{{url('/')}}" type="button" class="btn btn-default">
+                                        Cancel
+                                    </a>
                                 </div>
                             </div>
                         </form>
