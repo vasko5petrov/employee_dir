@@ -5,7 +5,14 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Department details</div>
+                    <div class="panel-heading">
+                        Department details
+                        <div class="pull-right">
+                            <a href="{{url('/department')}}" class="btn btn-primary btn-xs">
+                                <i class="fa fa-btn fa-chevron-left" aria-hidden="true"></i>Back
+                            </a>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <table class="table">
                             <thead>
