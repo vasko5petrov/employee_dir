@@ -111,4 +111,13 @@ class DepartmentController extends Controller
         }
         return redirect('/department');
     }
+    
+    //Show a department details
+    public function show($id) 
+    {
+        $dp = Department::find($id);
+        $dp->manager_name = Employee::find($dp->manager_id)->name;
+        $number_employees = count($dp->employees);
+        return view('department.showDepartmentDetails', compact('dp', 'number_employees'));
+    }
 }
