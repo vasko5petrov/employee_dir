@@ -33,5 +33,5 @@ Route::get('/department/{id}/detail', 'DepartmentController@show');
 Route::get('/employee', 'EmployeeController@index');
 
 // Admin routes
-Route::get('/change-password', 'UserController@changePasswordForm')->middleware('auth');
-Route::post('/change-password', 'UserController@changePassword')->middleware('auth');
+Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');
+Route::post('/update/password', 'UserController@updatePassword')->middleware('auth');
