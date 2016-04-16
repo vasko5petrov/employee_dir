@@ -6,7 +6,7 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Department details
+                        <span>Department details</span>
                         <div class="pull-right">
                             <a href="{{URL::previous()}}" class="btn btn-primary btn-xs">
                                 <i class="fa fa-btn fa-chevron-left" aria-hidden="true"></i>Back
@@ -14,13 +14,8 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </thead>
+                        <link href="{{URL::asset('css/table_details.css')}}" rel="stylesheet" ><br>
+                        <table class="table table-details">
                             <tbody>
                                 <tr>
                                     <th>Name</th>

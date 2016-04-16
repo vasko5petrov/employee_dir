@@ -20,11 +20,11 @@
                     <div class="panel-heading">Add employee</div>
                     <div class="panel-body">
                         {!! Form::open(array('route' => 'auth.employee.add', 'class' => 'form-horizontal','files' => true, 'method' => 'post')) !!}
-                        {{--<form class="form-horizontal" role="form" method="POST" action="{{ url('/employee/add') }}">--}}
-                            {{--{!! csrf_field() !!}--}}
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <img src="{{url('/uploads/icon-user-default.png')}}" class="img-thumbnail" alt="Profile picture">
+                                    <div align="center">
+                                        <img alt="Employee picture" src="{{url('/uploads/images/icon-user-default.png')}}" class="img-circle img-responsive">
+                                    </div>
                                     <hr>
                                     {!! Form::file('image', null) !!}
                                     @if($errors->has('image'))
@@ -118,7 +118,6 @@
                                     </div>
                                 </div>
                             </div>
-                        {{--</form>--}}
                         {!! Form::close() !!}
                     </div>
                 </div>

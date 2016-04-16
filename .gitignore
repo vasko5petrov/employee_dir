@@ -2,3 +2,5 @@ vendor/
 node_modules/
 .idea/
 .env
+/public/uploads/images/*
+!/public/uploads/images/icon-user-default.png

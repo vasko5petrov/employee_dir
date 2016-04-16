@@ -1,0 +1,15 @@
+.table-details > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-details > tbody > tr:first-child {
+    border-top: 0;
+}
+
+.table-details > tbody > tr > td {
+    border-top: 0;
+}
+
+.table-details > tbody > tr > th {
+    border-top: 0;
+}
