@@ -8,7 +8,7 @@
                     <div class="panel-heading">
                         Department details
                         <div class="pull-right">
-                            <a href="{{url('/department')}}" class="btn btn-primary btn-xs">
+                            <a href="{{URL::previous()}}" class="btn btn-primary btn-xs">
                                 <i class="fa fa-btn fa-chevron-left" aria-hidden="true"></i>Back
                             </a>
                         </div>
