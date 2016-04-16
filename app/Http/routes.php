@@ -32,7 +32,7 @@ Route::get('/department/{id}/detail', 'DepartmentController@show');
 // Employee routes
 Route::get('/employee', 'EmployeeController@index');
 Route::get('/employee/add', 'EmployeeController@addForm');
-Route::post('/employee/add', 'EmployeeController@add');
+Route::post('/employee/add', ['as' => 'auth.employee.add', 'uses' => 'EmployeeController@add']);
 
 // Admin routes
 Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');

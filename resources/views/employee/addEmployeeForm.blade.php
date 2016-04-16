@@ -19,92 +19,107 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Add employee</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/employee/add') }}">
-                            {!! csrf_field() !!}
-
-                            <div class="form-group{{$errors->has('em-name') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Name</label>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="em-name" value="{{old('em-name')}}">
-                                    @if($errors->has('em-name'))
+                        {!! Form::open(array('route' => 'auth.employee.add', 'class' => 'form-horizontal','files' => true, 'method' => 'post')) !!}
+                        {{--<form class="form-horizontal" role="form" method="POST" action="{{ url('/employee/add') }}">--}}
+                            {{--{!! csrf_field() !!}--}}
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <img src="{{url('/uploads/icon-user-default.png')}}" class="img-thumbnail" alt="Profile picture">
+                                    <hr>
+                                    {!! Form::file('image', null) !!}
+                                    @if($errors->has('image'))
                                         <span class="help-block">
+                                            <strong>{{$errors->first('image')}}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="form-group{{$errors->has('em-name') ? ' has-error' : ''}}">
+                                    <label class="col-md-4 control-label">Name</label>
+
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="em-name" value="{{old('em-name')}}">
+                                        @if($errors->has('em-name'))
+                                            <span class="help-block">
                                             <strong>{{$errors->first('em-name')}}</strong>
                                         </span>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group{{$errors->has('em-job-title') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Job title</label>
+                                <div class="form-group{{$errors->has('em-job-title') ? ' has-error' : ''}}">
+                                    <label class="col-md-4 control-label">Job title</label>
 
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="em-job-title" value="{{old('em-job-title')}}">
-                                    @if($errors->has('em-job-title'))
-                                        <span class="help-block">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="em-job-title" value="{{old('em-job-title')}}">
+                                        @if($errors->has('em-job-title'))
+                                            <span class="help-block">
                                             <strong>{{$errors->first('em-job-title')}}</strong>
                                         </span>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group{{$errors->has('em-email') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Email</label>
+                                <div class="form-group{{$errors->has('em-email') ? ' has-error' : ''}}">
+                                    <label class="col-md-4 control-label">Email</label>
 
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="em-email" value="{{old('em-email')}}">
-                                    @if($errors->has('em-email'))
-                                        <span class="help-block">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="em-email" value="{{old('em-email')}}">
+                                        @if($errors->has('em-email'))
+                                            <span class="help-block">
                                             <strong>{{$errors->first('em-email')}}</strong>
                                         </span>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group{{$errors->has('em-phone-number') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Phone number</label>
+                                <div class="form-group{{$errors->has('em-phone-number') ? ' has-error' : ''}}">
+                                    <label class="col-md-4 control-label">Phone number</label>
 
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="em-phone-number" value="{{old('em-phone-number')}}">
-                                    @if($errors->has('em-phone-number'))
-                                        <span class="help-block">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="em-phone-number" value="{{old('em-phone-number')}}">
+                                        @if($errors->has('em-phone-number'))
+                                            <span class="help-block">
                                             <strong>{{$errors->first('em-phone-number')}}</strong>
                                         </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group {{$errors->has('em-department-id') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Department</label>
-
-                                <div class="col-md-6">
-                                    <select class="form-control" name="em-department-id" >
-                                        <option hidden>Select one</option>
-                                        @if(sizeof($departments))
-                                            @foreach($departments as $dp)
-                                                <option value="{{$dp->id}}">{{$dp->name}}</option>
-                                            @endforeach
                                         @endif
-                                    </select>
-                                    @if($errors->has('em-department-id'))
-                                        <span class="help-block">
+                                    </div>
+                                </div>
+
+                                <div class="form-group {{$errors->has('em-department-id') ? ' has-error' : ''}}">
+                                    <label class="col-md-4 control-label">Department</label>
+
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="em-department-id" >
+                                            <option hidden>Select one</option>
+                                            @if(sizeof($departments))
+                                                @foreach($departments as $dp)
+                                                    <option value="{{$dp->id}}">{{$dp->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                        @if($errors->has('em-department-id'))
+                                            <span class="help-block">
                                             <strong>{{$errors->first('em-department-id')}}</strong>
                                         </span>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-btn fa-floppy-o"></i>Save
-                                    </button>
-                                    <a type="button" class="btn btn-default" href="{{url('/employee')}}">
-                                        Cancel
-                                    </a>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-btn fa-floppy-o"></i>Save
+                                        </button>
+                                        <a type="button" class="btn btn-default" href="{{url('/employee')}}">
+                                            Cancel
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
+                        {{--</form>--}}
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
