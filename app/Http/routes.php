@@ -31,6 +31,7 @@ Route::get('/department/{id}/detail', 'DepartmentController@show');
 
 // Employee routes
 Route::get('/employee', 'EmployeeController@index');
+Route::get('/employee/{id}/detail', 'EmployeeController@show');
 
 // Admin routes
 Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');
