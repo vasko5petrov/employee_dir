@@ -8,6 +8,7 @@ use App\Employee;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Validation\Validator;
 use Symfony\Component\Finder\Iterator\DepthRangeFilterIterator;
 
 class DepartmentController extends Controller
@@ -37,28 +38,45 @@ class DepartmentController extends Controller
     }
 
     // Add a new department
-    // Need to be enhanced with validation
     public function add(Request $request)
     {
+        // Customize validation messages
+        $messages = [
+            'dp-name.required' => 'The name field is required.',
+            'dp-office-number.required' => 'The office number field is required.',
+            'dp-manager-id.required' => 'The manager field is required.',
+            'dp-name.string' => 'The name field must be a string.',
+            'dp-office-number.string' => 'The office number field must be a string.',
+        ];
+
+        // Validate
+        // If success, continue
+        // Else, flash errors to the session
+        $this->validate($request,[
+            'dp-name' => 'required|string',
+            'dp-office-number' => 'required|string',
+            'dp-manager-id' => 'required|integer'
+        ], $messages);
+
+        // Insert new department record to DB
         $dp_name = $request->input('dp-name');
         $dp_office_number = $request->input('dp-office-number');
         $dp_manager_id = $request->input('dp-manager-id');
 
-        if ($dp_name != '' && $dp_office_number != '' && is_numeric($dp_manager_id)) {
-            $dp = new Department();
-            $dp->name = $dp_name;
-            $dp->office_number = $dp_office_number;
-            $dp->manager_id = $dp_manager_id;
-            $dp->save();
+        $dp = new Department();
+        $dp->name = $dp_name;
+        $dp->office_number = $dp_office_number;
+        $dp->manager_id = $dp_manager_id;
+        $dp->save();
 
-            $result = 'New department successfully added!';
-            $alert_type = 'success';
-        }
-        else {
-            $result = "Something's wrong. Check your input!";
-            $alert_type = 'warning';
-        }
-        return view('department.addDepartmentResult', compact('result', 'alert_type'));
+        // Get list of employee (for selecting manager field)
+        $employees = Employee::all();
+        $employees = $employees->sortBy('name');
+        // Create success flag
+        $flag = true;
+
+
+        return view('department.addDepartmentForm', compact('flag', 'employees'));
     }
 
     // Return form: Edit a department information
