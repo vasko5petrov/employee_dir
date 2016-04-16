@@ -5,7 +5,16 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Employees</div>
+                    <div class="panel-heading">
+                        Employees
+                        @if(!Auth::guest())
+                            <div class="pull-right">
+                                <a href="{{url('/employee/add')}}" class="btn btn-primary btn-xs" title="Add new employee">
+                                    <i class="fa fa-btn fa-plus" aria-hidden="true"></i>Add
+                                </a>
+                            </div>
+                        @endif
+                    </div>
 
                     <div class="panel-body">
                         <table class="table table-hover">
