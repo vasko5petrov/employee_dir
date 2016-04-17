@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span>Employee details</span>
@@ -14,11 +14,13 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <link href="{{URL::asset('css/table_details.css')}}" rel="stylesheet" ><br>
-                        <div class="col-md-3 col-lg-3 " align="center">
-                            <img alt="Employee picture" src="{{url('/').'/'.$em->picture}}" class="img-circle img-responsive">
+                        <link href="{{URL::asset('css/table_details.css')}}" rel="stylesheet" >
+                        <link href="{{URL::asset('css/avatar.css')}}" rel="stylesheet" >
+                        <br>
+                        <div class="col-md-4" align="center">
+                            <img alt="Employee picture" src="{{url('/').'/'.$em->picture}}" class="avatar img-responsive">
                         </div>
-                        <div class=" col-md-9 col-lg-9 "> 
+                        <div class=" col-md-8"> 
                             <table class="table table-details">
                                 <tbody>
                                     <tr>

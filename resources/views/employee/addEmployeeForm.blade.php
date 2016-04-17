@@ -20,25 +20,24 @@
                     <div class="panel-heading">Add employee</div>
                     <div class="panel-body">
                         {!! Form::open(array('route' => 'auth.employee.add', 'class' => 'form-horizontal','files' => true, 'method' => 'post')) !!}
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <div align="center">
-                                        <img alt="Employee picture" src="{{url('/uploads/images/icon-user-default.png')}}" class="img-circle img-responsive">
-                                    </div>
-                                    <hr>
-                                    {!! Form::file('image', null) !!}
-                                    @if($errors->has('image'))
-                                        <span class="help-block">
-                                            <strong>{{$errors->first('image')}}</strong>
-                                        </span>
-                                    @endif
+                            <link href="{{URL::asset('css/avatar.css')}}" rel="stylesheet" >
+                            <div class="col-sm-4">
+                                <div align="center">
+                                    <img alt="Employee picture" src="{{url('/uploads/images/icon-user-default.png')}}" class="avatar img-responsive">
                                 </div>
+                                <hr>
+                                {!! Form::file('image', null) !!}
+                                @if($errors->has('image'))
+                                    <span class="help-block">
+                                        <strong>{{$errors->first('image')}}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <div class="form-group{{$errors->has('em-name') ? ' has-error' : ''}}">
                                     <label class="col-md-4 control-label">Name</label>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control" name="em-name" value="{{old('em-name')}}" autofocus>
                                         @if($errors->has('em-name'))
                                             <span class="help-block">
@@ -51,7 +50,7 @@
                                 <div class="form-group{{$errors->has('em-job-title') ? ' has-error' : ''}}">
                                     <label class="col-md-4 control-label">Job title</label>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control" name="em-job-title" value="{{old('em-job-title')}}">
                                         @if($errors->has('em-job-title'))
                                             <span class="help-block">
@@ -64,7 +63,7 @@
                                 <div class="form-group{{$errors->has('em-email') ? ' has-error' : ''}}">
                                     <label class="col-md-4 control-label">Email</label>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control" name="em-email" value="{{old('em-email')}}">
                                         @if($errors->has('em-email'))
                                             <span class="help-block">
@@ -77,7 +76,7 @@
                                 <div class="form-group{{$errors->has('em-phone-number') ? ' has-error' : ''}}">
                                     <label class="col-md-4 control-label">Phone number</label>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control" name="em-phone-number" value="{{old('em-phone-number')}}">
                                         @if($errors->has('em-phone-number'))
                                             <span class="help-block">
@@ -90,7 +89,7 @@
                                 <div class="form-group {{$errors->has('em-department-id') ? ' has-error' : ''}}">
                                     <label class="col-md-4 control-label">Department</label>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <select class="form-control" name="em-department-id" >
                                             <option hidden>Select one</option>
                                             @if(sizeof($departments))

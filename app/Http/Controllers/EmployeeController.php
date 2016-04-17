@@ -66,7 +66,7 @@ class EmployeeController extends Controller
                     $image->move('uploads/images', $em_profile_picture);
             }
             else {
-                    $em_profile_picture = 'uploads/images/icon-user-default.png';
+                    $em_profile_picture = 'icon-user-default.png';
             }
 
             // Insert new employee record into database
@@ -112,12 +112,11 @@ class EmployeeController extends Controller
         // Customize validation messages
         $messages = [
             'em-name.required' => 'The name field is required.',
-            'em-department-id.required' => 'The department field is required.',
             'em-job-title.required' => 'The job title field is required.',
-            'em-name.string' => 'The name field must be a string.',
+            'em-email.email' => 'Please provide a valid email address.',
+            'em-phone-number.string' => 'Please provide a valid phone number.',
+            'em-department-id.required' => 'The department field is required.',
             'em-department-id.integer' => 'You must select one department.',
-            'em-job-title.string' => 'The job title field must be a string.',
-            'em-email.email' => 'You must enter a valid email adress'
         ];
 
         // Validate
@@ -125,9 +124,11 @@ class EmployeeController extends Controller
         // Else, flash errors to the session
         $this->validate($request,[
             'em-name' => 'required|string',
-            'em-department-id' => 'required|integer',
             'em-job-title' => 'required|string',
-            'em-email' => 'email'
+            'em-email' => 'email',
+            'em-phone-number' => 'string',
+            'em-department-id' => 'required|integer',
+            'image' => 'image'
         ], $messages);
         
         $em_id = $request->input('em-id');
@@ -136,6 +137,13 @@ class EmployeeController extends Controller
         $new_em_job_title = $request->input('em-job-title');
         $new_em_phone_number = $request->input('em-phone-number');
         $new_em_email = $request->input('em-email');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $img_name = $image->getClientOriginalName();
+            $upload_name = time() . '.' . $img_name;
+            $new_em_picture = '/uploads/images/' . $upload_name;
+            $image->move('uploads/images', $upload_name);
+        }
 
         // Find the employee with provided id
         $em = Employee::find($em_id);
@@ -143,7 +151,7 @@ class EmployeeController extends Controller
         $departments = Department::all();
 
         // If the provided information from Edit form is not modified, do nothing
-        if ($em->name === $new_em_name && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
+        if ($em->name === $new_em_name && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email && !isset($new_em_picture)) {
             $result = 'Employee information remains unchanged!';
             $alert_type = 'warning';
         }
@@ -154,6 +162,7 @@ class EmployeeController extends Controller
             $em->job_title = $new_em_job_title;
             $em->phone_number = $new_em_phone_number;
             $em->email = $new_em_email;
+            if (isset($new_em_picture)) $em->picture = $new_em_picture;
             $em->save();
 
             // Create alert message to flash back to session
