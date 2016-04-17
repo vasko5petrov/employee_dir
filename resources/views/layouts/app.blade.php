@@ -40,7 +40,8 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Employee Directory
+                    <img src="{{URL::asset('logo.png')}}" width="24" style="vertical-align: middle; display: inline-block;">
+                    <div style="vertical-align: middle; display: inline-block;">Employee Directory</div>
                 </a>
             </div>
 
