@@ -39,9 +39,36 @@
                                     <td>{{$em->phone_number}}</td>
                                     @if(!Auth::guest())
                                         <td>
-                                            <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn btn-primary btn-xs" title="Edit department">
+                                            <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn btn-primary btn-xs" title="Edit employee">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
+
+                                            {{--Modal for delete confirmation--}}
+                                            <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                            <h4 class="modal-title">Delete employee</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are you sure want to delete this?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                            <button type="button" class="btn btn-danger" id="confirm">Delete</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <form role="form" method="POST" action="{{url('/employee').'/'.$em->id.'/delete'}}" accept-charset="UTF-8" style="display:inline">
+                                                {{csrf_field()}}
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" class="form-control" name="dp-id" value="{{$em->id}}">
+                                                <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" title="Delete employee">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     @endif
                                 </tr>
