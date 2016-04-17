@@ -33,7 +33,11 @@
                                 <tr>
                                     <td>{{$index+1}}</td>
                                     <td><a href="{{url('/employee').'/'.$em->id.'/detail'}}">{{$em->name}}</a></td>
-                                    <td><a href="{{url('/department').'/'.$em->department->id.'/detail'}}">{{$em->department->name}}</a></td>
+                                    <td>
+                                        @if($em->department)
+                                            <a href="{{url('/department').'/'.$em->department->id.'/detail'}}">{{$em->department->name}}</a>
+                                        @endif
+                                    </td>
                                     <td>{{$em->job_title}}</td>
                                     <td>{{$em->email}}</td>
                                     <td>{{$em->phone_number}}</td>

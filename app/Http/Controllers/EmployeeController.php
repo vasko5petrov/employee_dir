@@ -37,8 +37,6 @@ class EmployeeController extends Controller
                 'em-job-title.required' => 'The job title field is required.',
                 'em-email.email' => 'Please provide a valid email address.',
                 'em-phone-number.string' => 'Please provide a valid phone number.',
-                'em-department-id.required' => 'The department field is required.',
-                'em-department-id.integer' => 'You must select one department.',
             ];
 
             // Validation rules
@@ -47,7 +45,6 @@ class EmployeeController extends Controller
                 'em-job-title' => 'required|string',
                 'em-email' => 'email',
                 'em-phone-number' => 'string',
-                'em-department-id' => 'required|integer',
                 'image' => 'image'
             ];
 
@@ -59,7 +56,9 @@ class EmployeeController extends Controller
             $em_email = $request->input('em-email');
             $em_phone_number = $request->input('em-phone-number');
             $em_department_id = $request->input('em-department-id');
-
+            if (!is_numeric($em_department_id)) {
+                $em_department_id = null;
+            }
             if ($request->hasFile('image')) {
                     $image = $request->file('image');
                     $img_name = $image->getClientOriginalName();
@@ -93,7 +92,9 @@ class EmployeeController extends Controller
     public function show($id) 
     {
         $em = Employee::find($id);
-        $em->department_name = Department::find($em->department_id)->name;
+        if ($em->department_id){
+            $em->department_name = Department::find($em->department_id)->name;
+        }
         return view('employee.showEmployeeDetails', compact('em'));
     }
     
@@ -115,8 +116,6 @@ class EmployeeController extends Controller
             'em-job-title.required' => 'The job title field is required.',
             'em-email.email' => 'Please provide a valid email address.',
             'em-phone-number.string' => 'Please provide a valid phone number.',
-            'em-department-id.required' => 'The department field is required.',
-            'em-department-id.integer' => 'You must select one department.',
         ];
 
         // Validate
@@ -127,7 +126,6 @@ class EmployeeController extends Controller
             'em-job-title' => 'required|string',
             'em-email' => 'email',
             'em-phone-number' => 'string',
-            'em-department-id' => 'required|integer',
             'image' => 'image'
         ], $messages);
         
@@ -137,6 +135,9 @@ class EmployeeController extends Controller
         $new_em_job_title = $request->input('em-job-title');
         $new_em_phone_number = $request->input('em-phone-number');
         $new_em_email = $request->input('em-email');
+        if (!is_numeric($new_em_department_id)) {
+            $new_em_department_id = null;
+        }
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $img_name = $image->getClientOriginalName();

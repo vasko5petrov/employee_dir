@@ -58,6 +58,7 @@
 
                                 <div class="col-md-8">
                                     <select class="form-control" name="em-department-id" >
+                                        <option hidden>Select one</option>
                                         @foreach($departments as $dp)
                                             @if ($dp->id == $em->department_id)
                                                 <option value="{{$dp->id}}" selected>{{$dp->name}}</option>
@@ -65,6 +66,7 @@
                                                 <option value="{{$dp->id}}">{{$dp->name}}</option>
                                             @endif
                                         @endforeach
+                                        <option></option>
                                     </select>
                                     @if($errors->has('em-department-id'))
                                         <span class="help-block">

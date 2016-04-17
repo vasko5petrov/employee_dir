@@ -21,7 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
             $table->string('picture')->nullable()->default('uploads/images/icon-user-default.png');
-            $table->integer('department_id');
+            $table->integer('department_id')->nullable();
             $table->timestamps();
         });
     }
