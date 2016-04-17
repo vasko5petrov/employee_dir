@@ -106,7 +106,6 @@ class EmployeeController extends Controller
     }
     
     // Edit a employee information
-    // Need to be enhanced with validation
     public function edit(Request $request)
     {
         // Customize validation messages

@@ -26,6 +26,7 @@
                                 <th>Job Title</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
+                                <th></th>
                             </tr>
                             <tbody>
                             @foreach($employees as $index=>$em)
@@ -36,6 +37,13 @@
                                     <td>{{$em->job_title}}</td>
                                     <td>{{$em->email}}</td>
                                     <td>{{$em->phone_number}}</td>
+                                    @if(!Auth::guest())
+                                        <td>
+                                            <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn btn-primary btn-xs" title="Edit department">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>
