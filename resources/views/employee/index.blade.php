@@ -64,7 +64,7 @@
                                             <form role="form" method="POST" action="{{url('/employee').'/'.$em->id.'/delete'}}" accept-charset="UTF-8" style="display:inline">
                                                 {{csrf_field()}}
                                                 <input type="hidden" name="_method" value="DELETE">
-                                                <input type="hidden" class="form-control" name="dp-id" value="{{$em->id}}">
+                                                <input type="hidden" class="form-control" name="em-id" value="{{$em->id}}">
                                                 <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" title="Delete employee">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
@@ -81,4 +81,26 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('script')
+    <script>
+        {{--Modal confirm script--}}
+        $('#confirmDelete').on('show.bs.modal', function (e) {
+            $message = $(e.relatedTarget).attr('data-message');
+            $(this).find('.modal-body p').text($message);
+            $title = $(e.relatedTarget).attr('data-title');
+            $(this).find('.modal-title').text($title);
+
+            // Pass form reference to modal for submission on yes/ok
+            var form = $(e.relatedTarget).closest('form');
+            $(this).find('.modal-footer #confirm').data('form', form);
+        });
+
+        <!-- Form confirm (yes/ok) handler, submits form -->
+        $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
+            $(this).data('form').submit();
+        });
+    </script>
 @endsection

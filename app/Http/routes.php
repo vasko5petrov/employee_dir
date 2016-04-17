@@ -34,6 +34,7 @@ Route::get('/employee/add', 'EmployeeController@addForm')->middleware('auth');
 Route::post('/employee/add', 'EmployeeController@add')->middleware('auth');
 Route::get('/employee/{id}/edit', 'EmployeeController@editForm')->middleware('auth');
 Route::post('/employee/{id}/edit', 'EmployeeController@edit')->middleware('auth');
+Route::delete('employee/{id}/delete', 'EmployeeController@delete')->middleware('auth');
 
 // Admin routes
 Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');

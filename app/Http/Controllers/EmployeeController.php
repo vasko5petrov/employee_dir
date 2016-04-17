@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Validation\Validator;
 use Symfony\Component\Console\Input\Input;
+use Symfony\Component\HttpFoundation\Response;
 
 class EmployeeController extends Controller
 {
@@ -169,5 +170,21 @@ class EmployeeController extends Controller
             $alert_type = 'success';
         }
         return view('employee.editEmployeeForm', compact('result', 'alert_type', 'em', 'departments'));
+    }
+
+    // Delete an employee
+    public function delete(Request $request)
+    {
+        $delete_id = $request->input('em-id');
+        if (is_numeric($delete_id)) {
+            try {
+                $em = Employee::find($delete_id);
+                $em->delete();
+            }
+            catch (\PDOException $exception) {
+                return Response::make('Error! '.$exception->getCode());
+            }
+        }
+        return redirect('/employee');
     }
 }
