@@ -8,6 +8,7 @@ use Faker\Provider\Image;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Validation\Validator;
 use Symfony\Component\Console\Input\Input;
 
 class EmployeeController extends Controller
@@ -93,5 +94,72 @@ class EmployeeController extends Controller
         $em = Employee::find($id);
         $em->department_name = Department::find($em->department_id)->name;
         return view('employee.showEmployeeDetails', compact('em'));
+    }
+    
+    // Return form: Edit a employee information
+    public function editForm($id)
+    {
+        $em = Employee::find($id);
+        $departments = Department::all();
+        $departments = $departments->sortBy('name');
+        return view('employee.editEmployeeForm', compact('em', 'departments'));
+    }
+    
+    // Edit a employee information
+    // Need to be enhanced with validation
+    public function edit(Request $request)
+    {
+        // Customize validation messages
+        $messages = [
+            'em-name.required' => 'The name field is required.',
+            'em-department-id.required' => 'The department field is required.',
+            'em-job-title.required' => 'The job title field is required.',
+            'em-name.string' => 'The name field must be a string.',
+            'em-department-id.integer' => 'You must select one department.',
+            'em-job-title.string' => 'The job title field must be a string.',
+            'em-email.email' => 'You must enter a valid email adress'
+        ];
+
+        // Validate
+        // If success, continue
+        // Else, flash errors to the session
+        $this->validate($request,[
+            'em-name' => 'required|string',
+            'em-department-id' => 'required|integer',
+            'em-job-title' => 'required|string',
+            'em-email' => 'email'
+        ], $messages);
+        
+        $em_id = $request->input('em-id');
+        $new_em_name = $request->input('em-name');
+        $new_em_department_id = $request->input('em-department-id');
+        $new_em_job_title = $request->input('em-job-title');
+        $new_em_phone_number = $request->input('em-phone-number');
+        $new_em_email = $request->input('em-email');
+
+        // Find the employee with provided id
+        $em = Employee::find($em_id);
+        // and all departments
+        $departments = Department::all();
+
+        // If the provided information from Edit form is not modified, do nothing
+        if ($em->name === $new_em_name && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
+            $result = 'Employee information remains unchanged!';
+            $alert_type = 'warning';
+        }
+        else {
+            // Update to database
+            $em->name = $new_em_name;
+            $em->department_id = $new_em_department_id;
+            $em->job_title = $new_em_job_title;
+            $em->phone_number = $new_em_phone_number;
+            $em->email = $new_em_email;
+            $em->save();
+
+            // Create alert message to flash back to session
+            $result = 'Employee information successfully updated!';
+            $alert_type = 'success';
+        }
+        return view('employee.editEmployeeForm', compact('result', 'alert_type', 'em', 'departments'));
     }
 }

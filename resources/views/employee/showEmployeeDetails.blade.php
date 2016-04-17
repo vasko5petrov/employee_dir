@@ -15,7 +15,7 @@
                     </div>
                     <div class="panel-body">
                         <link href="{{URL::asset('css/table_details.css')}}" rel="stylesheet" ><br>
-                        <div class="col-md-3 col-lg-3 " align="center"> 
+                        <div class="col-md-3 col-lg-3 " align="center">
                             <img alt="Employee picture" src="{{url('/').'/'.$em->picture}}" class="img-circle img-responsive">
                         </div>
                         <div class=" col-md-9 col-lg-9 "> 

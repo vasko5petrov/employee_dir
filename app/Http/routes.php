@@ -34,6 +34,8 @@ Route::get('/employee', 'EmployeeController@index');
 Route::get('/employee/add', 'EmployeeController@addForm');
 Route::post('/employee/add', ['as' => 'auth.employee.add', 'uses' => 'EmployeeController@add']);
 Route::get('/employee/{id}/detail', 'EmployeeController@show');
+Route::get('/employee/{id}/edit', 'EmployeeController@editForm')->middleware('auth');
+Route::post('/employee/{id}/edit', 'EmployeeController@edit')->middleware('auth');
 
 // Admin routes
 Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');
