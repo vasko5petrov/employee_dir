@@ -26,7 +26,7 @@
                                 <label class="col-md-4 control-label">Name</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-name" value="{{$dp->name}}">
+                                    <input type="text" class="form-control" name="dp-name" value="{{$dp->name}}" autofocus>
                                     <input type="hidden" class="form-control" name="dp-id" value="{{$dp->id}}">
                                     @if($errors->has('dp-name'))
                                         <span class="help-block">

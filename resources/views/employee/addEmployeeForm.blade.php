@@ -39,7 +39,7 @@
                                     <label class="col-md-4 control-label">Name</label>
 
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="em-name" value="{{old('em-name')}}">
+                                        <input type="text" class="form-control" name="em-name" value="{{old('em-name')}}" autofocus>
                                         @if($errors->has('em-name'))
                                             <span class="help-block">
                                             <strong>{{$errors->first('em-name')}}</strong>
