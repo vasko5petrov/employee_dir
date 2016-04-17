@@ -17,8 +17,6 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
-
 // Department routes
 Route::get('/department', 'DepartmentController@index');
 Route::get('/department/{id}/employee', 'DepartmentController@employeeList');
@@ -31,9 +29,9 @@ Route::get('/department/{id}/detail', 'DepartmentController@show');
 
 // Employee routes
 Route::get('/employee', 'EmployeeController@index');
-Route::get('/employee/add', 'EmployeeController@addForm');
-Route::post('/employee/add', ['as' => 'auth.employee.add', 'uses' => 'EmployeeController@add']);
 Route::get('/employee/{id}/detail', 'EmployeeController@show');
+Route::get('/employee/add', 'EmployeeController@addForm')->middleware('auth');
+Route::post('/employee/add', 'EmployeeController@add')->middleware('auth');
 Route::get('/employee/{id}/edit', 'EmployeeController@editForm')->middleware('auth');
 Route::post('/employee/{id}/edit', 'EmployeeController@edit')->middleware('auth');
 

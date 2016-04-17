@@ -19,7 +19,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Add employee</div>
                     <div class="panel-body">
-                        {!! Form::open(array('route' => 'auth.employee.add', 'class' => 'form-horizontal','files' => true, 'method' => 'post')) !!}
+                        {!! Form::open([
+                            'action' => 'EmployeeController@add',
+                            'class' => 'form-horizontal',
+                            'files' => true,
+                            'method' => 'post'
+                        ]) !!}
                             <link href="{{URL::asset('css/avatar.css')}}" rel="stylesheet" >
                             <div class="col-sm-4">
                                 <div align="center">
