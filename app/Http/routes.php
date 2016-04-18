@@ -39,3 +39,7 @@ Route::delete('employee/{id}/delete', 'EmployeeController@delete')->middleware('
 // Admin routes
 Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');
 Route::post('/update/password', 'UserController@updatePassword')->middleware('auth');
+
+// Mail service
+Route::get('/invite', 'MailController@showInvitationForm')->middleware('auth');
+Route::post('/invite/send-invitation', 'MailController@sendInvitation')->middleware('auth');
