@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\PendingUser;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -23,7 +25,8 @@ class MailController extends Controller
             'admin-email.email' => 'Please provide a valid email address.',
         ];
         $rules = [
-            'admin-email' => 'required|email'
+            'admin-email' => 'required|email',
+            'admin-username' => 'required|string'
         ];
 
         $this->validate($request, $rules, $messages);
@@ -35,23 +38,42 @@ class MailController extends Controller
             $randomPassword = $randomPassword.$chars[rand(0, strlen($chars)-1)];
         }
         $link = env('APP_URL').'/login';
-        
-        // Send email
-        Mail::send('mail.invitationEmail', [
+
+        $user = User::where('email', $request->input('admin-email'))->first();
+        if (!$user) {
+            $pending_user = PendingUser::where('email', $request->input('admin-email'))->first();
+            if ($pending_user) {
+                // Update new random generated password
+                $pending_user->username = $request->input('admin-username');
+                $pending_user->password = bcrypt($randomPassword);
+                $pending_user->save();
+            }
+            else {
+                // Create pending user
+                $pending_user = new PendingUser();
+                $pending_user->email = $request->input('admin-email');
+                $pending_user->username = $request->input('admin-username');
+                $pending_user->password = bcrypt($randomPassword);
+                $pending_user->save();
+            }
+
+            // Send email
+            Mail::send('mail.invitationEmail', [
                 'link' => $link,
                 'email' => $request->input('admin-email'),
-                'password' => $randomPassword
+                'password' => $randomPassword,
             ],
-            function ($m) use ($request) {
-                $m->from('employee.directory.team@gmail.com', 'Employee Directory Team');
-                $m->to($request->input('admin-email'))->subject('Admin invitation letter');
-        });
+                function ($m) use ($request) {
+                    $m->from('employee.directory.team@gmail.com', 'Employee Directory Team');
+                    $m->to($request->input('admin-email'))->subject('Admin invitation letter');
+                });
 
-        return $randomPassword;
-
-//        Mail::send('mail.invitationEmail', ['name' => 'Hihihi'], function($message) {
-//            $message->to('dangtrieu25@gmail.com', 'Very nice developer')->subject('Nananan');
-//        });
-        return 'Sent';
+            // Success flag
+            $flag = true;
+        }
+        else {
+            $flag = false;
+        }
+        return view('mail.showInvitationForm', compact('flag'));
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\PendingUser;
 use App\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Request;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -76,5 +79,20 @@ class AuthController extends Controller
     public function showRegistrationForm()
     {
         return redirect('/');
+    }
+
+    // Override method
+    public function postLogin(\Illuminate\Http\Request $request)
+    {
+        $pending_user = PendingUser::where('email', $request->input('email'))->first();
+        if ($pending_user) {
+            $new_user = new User();
+            $new_user->username = $pending_user->username;
+            $new_user->email = $pending_user->email;
+            $new_user->password = $pending_user->password;
+            $new_user->save();
+            $pending_user->delete();
+        }
+        return $this->login($request);
     }
 }

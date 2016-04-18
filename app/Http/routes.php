@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::auth();
-
+Route::post('/login', 'Auth\AuthController@postLogin');
 // Department routes
 Route::get('/department', 'DepartmentController@index');
 Route::get('/department/{id}/employee', 'DepartmentController@employeeList');
