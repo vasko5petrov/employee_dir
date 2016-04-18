@@ -1,0 +1,70 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            @if(isset($result) && isset($alert_type))
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="alert alert-{{$alert_type}} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>{{$result}}</strong>
+                    </div>
+                </div>
+            @endif
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Change password on first login
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/login/first') }}">
+                            {!! csrf_field() !!}
+
+                            <div class="form-group{{$errors->has('new_password') ? ' has-error' : ''}}">
+                                <label class="col-md-4 control-label">New password</label>
+
+                                <div class="col-md-6">
+                                    <input type="hidden" class="form-control" name="hashed_id" value="{{$hashed_id}}">
+                                    <input type="password" class="form-control" name="new_password">
+                                    @if($errors->has('new_password'))
+                                        <span class="help-block">
+                                            <strong>{{$errors->first('new_password')}}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{$errors->has('password_confirm') ? ' has-error' : ''}}">
+                                <label class="col-md-4 control-label">Confirm new password</label>
+
+                                <div class="col-md-6">
+                                    <input type="password" class="form-control" name="password_confirm">
+                                    @if($errors->has('password_confirm'))
+                                        <span class="help-block">
+                                            <strong>{{$errors->first('password_confirm')}}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-btn fa-floppy-o"></i>Save
+                                    </button>
+                                    <a href="{{url('/logout')}}" type="button" class="btn btn-default">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
