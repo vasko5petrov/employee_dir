@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
@@ -14,12 +15,19 @@ class MailController extends Controller
     // Show an administrator invitation form
     public function showInvitationForm()
     {
+        if (Auth::user()->email != 'example@gmail.com') {
+            return redirect('/');
+        }
         return view('mail.showInvitationForm');
     }
 
     // Send an invitation email
     public function sendInvitation(Request $request)
     {
+        if (Auth::user()->email != 'example@gmail.com') {
+            return redirect('/');
+        }
+
         $messages = [
             'admin-email.required' => 'The email field is required.',
             'admin-email.email' => 'Please provide a valid email address.',

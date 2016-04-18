@@ -65,7 +65,9 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{url('/update/password')}}"><i class="fa fa-btn fa-pencil"></i>Update password</a></li>
-                                <li><a href="{{ url('/invite') }}"><i class="fa fa-btn fa-envelope"></i>Invite admin</a></li>
+                                @if(Auth::user()->email == 'example@gmail.com')
+                                    <li><a href="{{ url('/invite') }}"><i class="fa fa-btn fa-envelope"></i>Invite admin</a></li>
+                                @endif
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
