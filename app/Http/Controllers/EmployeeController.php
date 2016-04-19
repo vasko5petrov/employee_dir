@@ -8,6 +8,7 @@ use Faker\Provider\Image;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Validator;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpFoundation\Response;
@@ -181,10 +182,15 @@ class EmployeeController extends Controller
             try {
                 // Update manager_id to null where this employee is a manager
                 $dp = Department::where('manager_id', $delete_id)->first();
-                $dp->manager_id = null;
-                $dp->save();
+                if ($dp) {
+                    $dp->manager_id = null;
+                    $dp->save();
+                }
                 // Find employee and delete
                 $em = Employee::find($delete_id);
+                if ($em->picture != '/uploads/images/icon-user-default.png') {
+                    unlink($em->picture);
+                }
                 $em->delete();
             }
             catch (\PDOException $exception) {
