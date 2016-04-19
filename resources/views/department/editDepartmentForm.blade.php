@@ -53,12 +53,19 @@
 
                                 <div class="col-md-6">
                                     <select class="form-control" name="dp-manager-id" >
-                                        <option value="{{$dp->manager_id}}">{{$manager_name}}</option>
-                                        @foreach($employees as $em)
-                                            @if ($em->id != $dp->manager_id)
-                                                <option value="{{$em->id}}">{{$em->name}}</option>
-                                            @endif
-                                        @endforeach
+                                        @if($manager_name)
+                                            <option value="{{$dp->manager_id}}" selected>{{$manager_name}}</option>
+                                        @endif
+                                        @if(sizeof($employees))
+                                            @foreach($employees as $em)
+                                                @if ($em->id != $dp->manager_id)
+                                                    <option value="{{$em->id}}">{{$em->name}}</option>
+                                                @endif
+                                            @endforeach
+                                            <option {{$manager_name ? '' : 'selected'}}></option>
+                                        @else
+                                            <option {{$manager_name ? '' : 'selected'}}></option>
+                                        @endif
                                     </select>
                                     @if($errors->has('dp-manager-id'))
                                         <span class="help-block">

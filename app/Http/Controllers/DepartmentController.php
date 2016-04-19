@@ -83,7 +83,14 @@ class DepartmentController extends Controller
     public function editForm($id)
     {
         $dp = Department::find($id);
-        $manager_name = Employee::find($dp->manager_id)->name;
+        $em = Employee::find($dp->manager_id);
+        if ($em) {
+            $manager_name = $em->name;
+        }
+        else {
+            $manager_name = null;
+        }
+
         $employees = $dp->employees;
         return view('department.editDepartmentForm', compact('dp', 'employees', 'manager_name'));
     }
@@ -96,10 +103,8 @@ class DepartmentController extends Controller
         $messages = [
             'dp-name.required' => 'The name field is required.',
             'dp-office-number.required' => 'The office number field is required.',
-            'dp-manager-id.required' => 'The manager field is required.',
             'dp-name.string' => 'The name field must be a string.',
             'dp-office-number.string' => 'The office number field must be a string.',
-            'dp-manager-id.integer' => 'You must select one manager.'
         ];
 
         // Validate
@@ -108,7 +113,6 @@ class DepartmentController extends Controller
         $this->validate($request,[
             'dp-name' => 'required|string',
             'dp-office-number' => 'required|string',
-            'dp-manager-id' => 'required|integer'
         ], $messages);
         
         $dp_id = $request->input('dp-id');
@@ -121,7 +125,13 @@ class DepartmentController extends Controller
         // and its employees
         $employees = $dp->employees;
         // and name of the manager
-        $manager_name = Employee::find($dp->manager_id)->name;
+        $em = Employee::find($dp->manager_id);
+        if ($em) {
+            $manager_name = $em->name;
+        }
+        else {
+            $manager_name = null;
+        }
 
         // If the provided information from Edit form is not modified, do nothing
         if ($dp->name === $new_dp_name && $dp->office_number === $new_dp_office_number && $dp->manager_id === $new_dp_manager_id) {
