@@ -15,10 +15,18 @@ use Symfony\Component\HttpFoundation\Response;
 class EmployeeController extends Controller
 {
     // show list of employees
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::all();
-        return view('employee.index', compact('employees'));
+        $search = $request->get('search');
+        $em_search_name = $request->get('em-search-name');
+        $em_search_dp = $request->get('em-search-dp');
+        $query = Employee::where('name', 'like', '%' . $em_search_name . '%');
+        if ($em_search_dp != '') {
+            $query = $query->where('department_id', '=', $em_search_dp);
+        }
+        $employees = $query->get();
+        $departments = Department::all();
+        return view('employee.index', compact('employees', 'departments', 'em_search_name', 'em_search_dp', 'search'));
     }
 
     // Return form: Add a new employee

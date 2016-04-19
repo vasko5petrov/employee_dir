@@ -7,27 +7,53 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Employees
-                        @if(!Auth::guest())
-                            <div class="pull-right">
+                        <div class="pull-right">
+                            @if(!Auth::guest())
                                 <a href="{{url('/employee/add')}}" class="btn btn-primary btn-xs" title="Add new employee">
                                     <i class="fa fa-btn fa-plus" aria-hidden="true"></i>Add
                                 </a>
-                            </div>
-                        @endif
+                            @endif
+                            <a href="#" class="btn btn-primary btn-xs" title="Search employees" id ="show-search">
+                                <i class="fa fa-btn fa-search" aria-hidden="true"></i>Search
+                            </a>
+                        </div>
                     </div>
 
                     <div class="panel-body">
+                        <center {!! $search ? '' : 'hidden' !!} id="search-form">
+                            <form method="GET", url="employee", class="form navbar-form">
+                                <input type="hidden" name="search" value=1>
+                                <div class="form-group">
+                                    <input type="text" class="input-sm form-control" name="em-search-name" placeholder="Employee Name" value="{{$em_search_name}}">
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control input-sm" name="em-search-dp">
+                                        <option value="">Department</option>
+                                        @foreach($departments as $dp)
+                                            @if ($dp->id == $em_search_dp) 
+                                                <option value="{{$dp->id}}" selected>{{$dp->name}}</option>
+                                            @else
+                                                <option value="{{$dp->id}}">{{$dp->name}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn-sm btn btn-default">
+                                    Search
+                                </button>
+                            </form>
+                        </center>
                         <table class="table table-hover">
                             <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Department</th>
-                                <th>Job Title</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Job Title</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th></th>
+                                </tr>
                             <tbody>
                             @foreach($employees as $index=>$em)
                                 <tr>
@@ -106,5 +132,12 @@
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
             $(this).data('form').submit();
         });
+        
+        <!-- Show search form -->
+        $('#show-search').on('click', function() {
+            $('#search-form').toggle('fast');
+            $("input:text:visible:first").focus();
+        });
+        
     </script>
 @endsection
