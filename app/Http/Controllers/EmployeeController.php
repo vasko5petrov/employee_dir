@@ -179,6 +179,11 @@ class EmployeeController extends Controller
         $delete_id = $request->input('em-id');
         if (is_numeric($delete_id)) {
             try {
+                // Update manager_id to null where this employee is a manager
+                $dp = Department::where('manager_id', $delete_id)->first();
+                $dp->manager_id = null;
+                $dp->save();
+                // Find employee and delete
                 $em = Employee::find($delete_id);
                 $em->delete();
             }
