@@ -96,7 +96,7 @@
 
                                     <div class="col-md-8">
                                         <select class="form-control" name="em-department-id" >
-                                            <option hidden>Select one</option>
+                                            <option></option>
                                             @if(sizeof($departments))
                                                 @foreach($departments as $dp)
                                                     <option value="{{$dp->id}}">{{$dp->name}}</option>

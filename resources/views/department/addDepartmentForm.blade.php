@@ -53,6 +53,7 @@
 
                                 <div class="col-md-6">
                                     <select class="form-control" name="dp-manager-id" >
+                                        <option></option>
                                         @if(sizeof($employees))
                                             @foreach($employees as $em)
                                                 <option value="{{$em->id}}">{{$em->name}}</option>
