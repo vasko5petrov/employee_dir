@@ -45,7 +45,7 @@ class DepartmentController extends Controller
             'dp-name.required' => 'The name field is required.',
             'dp-office-number.required' => 'The office number field is required.',
             'dp-name.string' => 'The name field must be a string.',
-            'dp-office-number.string' => 'The office number field must be a string.',
+            'dp-office-number.phone' => 'The office number field contains an invalid number.',
         ];
 
         // Validate
@@ -53,7 +53,8 @@ class DepartmentController extends Controller
         // Else, flash errors to the session
         $this->validate($request,[
             'dp-name' => 'required|string',
-            'dp-office-number' => 'required|string',
+            'dp-office-number' => 'required|phone:VN',
+            'dp-manager-id' => 'required|integer'
         ], $messages);
 
         // Insert new department record to DB
@@ -107,7 +108,8 @@ class DepartmentController extends Controller
             'dp-name.required' => 'The name field is required.',
             'dp-office-number.required' => 'The office number field is required.',
             'dp-name.string' => 'The name field must be a string.',
-            'dp-office-number.string' => 'The office number field must be a string.',
+            'dp-office-number.phone' => 'The office number field contains an invalid number.',
+            'dp-manager-id.integer' => 'You must select one manager.',
         ];
 
         // Validate
@@ -115,7 +117,8 @@ class DepartmentController extends Controller
         // Else, flash errors to the session
         $this->validate($request,[
             'dp-name' => 'required|string',
-            'dp-office-number' => 'required|string',
+            'dp-office-number' => 'required|phone:VN',
+            'dp-manager-id' => 'required|integer',
         ], $messages);
         
         $dp_id = $request->input('dp-id');

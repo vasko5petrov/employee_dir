@@ -45,7 +45,7 @@ class EmployeeController extends Controller
                 'em-name.required' => 'The name field is required.',
                 'em-job-title.required' => 'The job title field is required.',
                 'em-email.email' => 'Please provide a valid email address.',
-                'em-phone-number.string' => 'Please provide a valid phone number.',
+                'em-phone-number.phone' => 'The phone number field contains an invalid number.',
             ];
 
             // Validation rules
@@ -53,7 +53,7 @@ class EmployeeController extends Controller
                 'em-name' => 'required|string',
                 'em-job-title' => 'required|string',
                 'em-email' => 'email',
-                'em-phone-number' => 'string',
+                'em-phone-number' => 'phone:VN',
                 'image' => 'image'
             ];
 
@@ -124,7 +124,7 @@ class EmployeeController extends Controller
             'em-name.required' => 'The name field is required.',
             'em-job-title.required' => 'The job title field is required.',
             'em-email.email' => 'Please provide a valid email address.',
-            'em-phone-number.string' => 'Please provide a valid phone number.',
+            'em-phone-number.phone' => 'The phone number field contains an invalid number.',
         ];
 
         // Validate
@@ -134,7 +134,7 @@ class EmployeeController extends Controller
             'em-name' => 'required|string',
             'em-job-title' => 'required|string',
             'em-email' => 'email',
-            'em-phone-number' => 'string',
+            'em-phone-number' => 'phone:VN',
             'image' => 'image'
         ], $messages);
         
