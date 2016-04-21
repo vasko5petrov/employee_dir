@@ -28,10 +28,10 @@
                         <link href="{{URL::asset('css/avatar.css')}}" rel="stylesheet" >
                         <div class="col-md-4">
                             <div align="center">
-                                <img alt="Employee picture" src="{{url('/').'/'.$em->picture}}" class="avatar img-responsive">
+                                <img alt="Employee picture" src="{{url('/').'/'.$em->picture}}" class="avatar img-responsive" id="avatar">
                             </div>
                             <hr>
-                            {!! Form::file('image', null) !!}
+                            {!! Form::file('image', ['id'=>'picture']) !!}
                             @if($errors->has('image'))
                                 <span class="help-block">
                                     <strong>{{$errors->first('image')}}</strong>
