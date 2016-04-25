@@ -79,6 +79,9 @@
                             </tbody>
                             </thead>
                         </table>
+                        <center>
+                            {!! $departments->render() !!}
+                        </center>
                     </div>
                 </div>
             </div>

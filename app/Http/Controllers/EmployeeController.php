@@ -25,7 +25,11 @@ class EmployeeController extends Controller
         if ($em_search_dp != '') {
             $query = $query->where('department_id', '=', $em_search_dp);
         }
-        $employees = $query->get();
+        $employees = $query->paginate(10)->appends([
+            'search' => $search, 
+            'em-search-name' => $em_search_name,
+            'em-search-dp' => $em_search_dp
+        ]);
         $departments = Department::all();
         return view('employee.index', compact('employees', 'departments', 'em_search_name', 'em_search_dp', 'search'));
     }

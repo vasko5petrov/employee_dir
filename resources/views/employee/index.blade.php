@@ -20,6 +20,7 @@
                     </div>
 
                     <div class="panel-body">
+                        <link href="{{URL::asset('css/search_form.css')}}" rel="stylesheet" >
                         <center {!! $search ? '' : 'hidden' !!} id="search-form">
                             <form method="GET", url="employee", class="form navbar-form">
                                 <input type="hidden" name="search" value=1>
@@ -106,6 +107,9 @@
                             </tbody>
                             </thead>
                         </table>
+                        <center>
+                            {!! $employees->render() !!}
+                        </center>
                     </div>
                 </div>
             </div>
