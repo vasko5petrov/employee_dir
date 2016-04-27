@@ -58,7 +58,7 @@
                             <tbody>
                             @foreach($employees as $index=>$em)
                                 <tr>
-                                    <td>{{$index+1}}</td>
+                                    <td>{{($employees->currentPage()-1)*10+$index+1}}</td>
                                     <td><a href="{{url('/employee').'/'.$em->id.'/detail'}}">{{$em->name}}</a></td>
                                     <td>
                                         @if($em->department)
