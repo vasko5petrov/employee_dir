@@ -40,7 +40,8 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Employee Directory
+                    <img src="{{URL::asset('logo.png')}}" width="24" style="vertical-align: middle; display: inline-block;">
+                    <div style="vertical-align: middle; display: inline-block;">Employee Directory</div>
                 </a>
             </div>
 
@@ -64,6 +65,9 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{url('/update/password')}}"><i class="fa fa-btn fa-pencil"></i>Update password</a></li>
+                                @if(Auth::user()->email == 'example@gmail.com')
+                                    <li><a href="{{ url('/invite') }}"><i class="fa fa-btn fa-envelope"></i>Invite admin</a></li>
+                                @endif
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
@@ -79,6 +83,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script>
+        $('#picture').change(function(){
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#avatar').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    </script>
     @yield('script')
 </body>
 </html>

@@ -26,7 +26,7 @@
                                 <label class="col-md-4 control-label">Name</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-name" value="{{old('dp-name')}}">
+                                    <input type="text" class="form-control" name="dp-name" value="{{old('dp-name')}}" autofocus>
                                     @if($errors->has('dp-name'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('dp-name')}}</strong>
@@ -53,6 +53,7 @@
 
                                 <div class="col-md-6">
                                     <select class="form-control" name="dp-manager-id" >
+                                        <option></option>
                                         @if(sizeof($employees))
                                             @foreach($employees as $em)
                                                 <option value="{{$em->id}}">{{$em->name}}</option>

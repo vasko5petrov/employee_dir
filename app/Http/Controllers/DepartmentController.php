@@ -16,8 +16,7 @@ class DepartmentController extends Controller
     // show list of departments
     public function index()
     {
-        $departments = Department::all();
-        $departments = $departments->sortBy('name')->values()->all();
+        $departments = Department::orderBy('name')->paginate(10);
         return view('department.index', compact('departments'));
     }
 
@@ -25,7 +24,7 @@ class DepartmentController extends Controller
     public function employeeList($id)
     {
         $dp = Department::find($id);
-        $employees = $dp->employees;
+        $employees = Employee::where('department_id', '=', $id)->paginate(10);
         return view('department.employeeList', compact('dp', 'employees'));
     }
 
@@ -44,7 +43,6 @@ class DepartmentController extends Controller
         $messages = [
             'dp-name.required' => 'The name field is required.',
             'dp-office-number.required' => 'The office number field is required.',
-            'dp-manager-id.required' => 'The manager field is required.',
             'dp-name.string' => 'The name field must be a string.',
             'dp-office-number.phone' => 'The office number field contains an invalid number.',
         ];
@@ -83,8 +81,20 @@ class DepartmentController extends Controller
     public function editForm($id)
     {
         $dp = Department::find($id);
-        $manager_name = Employee::find($dp->manager_id)->name;
-        $employees = $dp->employees;
+        // Get list of employee (for selecting manager field)
+        $employees = Employee::all();
+        $employees = $employees->sortBy('name')->values()->all();
+        $manager_name = null;
+        foreach ($employees as $index => $em) {
+            if ($em->id == $dp->manager_id) {
+                $manager_name = $em->name;
+                $tmp = $employees[0];
+                $employees[0] = $employees[$index];
+                $employees[$index] = $tmp;
+            }
+        }
+
+//        $employees = $dp->employees;
         return view('department.editDepartmentForm', compact('dp', 'employees', 'manager_name'));
     }
     
@@ -96,7 +106,6 @@ class DepartmentController extends Controller
         $messages = [
             'dp-name.required' => 'The name field is required.',
             'dp-office-number.required' => 'The office number field is required.',
-            'dp-manager-id.required' => 'The manager field is required.',
             'dp-name.string' => 'The name field must be a string.',
             'dp-office-number.phone' => 'The office number field contains an invalid number.',
             'dp-manager-id.integer' => 'You must select one manager.',
@@ -118,13 +127,23 @@ class DepartmentController extends Controller
 
         // Find the department with provided id
         $dp = Department::find($dp_id);
-        // and its employees
-        $employees = $dp->employees;
-        // and name of the manager
-        $manager_name = Employee::find($dp->manager_id)->name;
+
+        // Get list of employee (for selecting manager field)
+        $employees = Employee::all();
+        $employees = $employees->sortBy('name')->values()->all();
+//        $employees = $dp->employees;
+        $manager_name = null;
+        foreach ($employees as $index => $em) {
+            if ($em->id == $dp->manager_id) {
+                $manager_name = $em->name;
+                $tmp = $employees[0];
+                $employees[0] = $employees[$index];
+                $employees[$index] = $tmp;
+            }
+        }
 
         // If the provided information from Edit form is not modified, do nothing
-        if ($dp->name === $new_dp_name && $dp->office_number === $new_dp_office_number && $dp->manager_id === $new_dp_manager_id) {
+        if ($dp->name == $new_dp_name && $dp->office_number == $new_dp_office_number && $dp->manager_id == $new_dp_manager_id) {
             $result = 'Department information remains unchanged!';
             $alert_type = 'warning';
         }

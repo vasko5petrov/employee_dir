@@ -16,9 +16,7 @@ Route::get('/', function () {
 });
 
 Route::auth();
-
-Route::get('/home', 'HomeController@index');
-
+Route::post('/login', 'Auth\AuthController@postLogin');
 // Department routes
 Route::get('/department', 'DepartmentController@index');
 Route::get('/department/{id}/employee', 'DepartmentController@employeeList');
@@ -31,7 +29,19 @@ Route::get('/department/{id}/detail', 'DepartmentController@show');
 
 // Employee routes
 Route::get('/employee', 'EmployeeController@index');
+Route::get('/employee/{id}/detail', 'EmployeeController@show');
+Route::get('/employee/add', 'EmployeeController@addForm')->middleware('auth');
+Route::post('/employee/add', 'EmployeeController@add')->middleware('auth');
+Route::get('/employee/{id}/edit', 'EmployeeController@editForm')->middleware('auth');
+Route::post('/employee/{id}/edit', 'EmployeeController@edit')->middleware('auth');
+Route::delete('employee/{id}/delete', 'EmployeeController@delete')->middleware('auth');
 
 // Admin routes
 Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');
 Route::post('/update/password', 'UserController@updatePassword')->middleware('auth');
+Route::get('/login/first/{hashed_id}', 'Auth\AuthController@firstLoginForm');
+Route::post('login/first', 'Auth\AuthController@firstLogin');
+
+// Mail service
+Route::get('/invite', 'MailController@showInvitationForm')->middleware('auth');
+Route::post('/invite/send-invitation', 'MailController@sendInvitation')->middleware('auth');

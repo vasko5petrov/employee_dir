@@ -38,6 +38,9 @@
                             </tbody>
                             </thead>
                         </table>
+                        <center>
+                            {!! $employees->render() !!}
+                        </center>
                     </div>
                 </div>
             </div>
