@@ -155,7 +155,7 @@ class EmployeeController extends Controller
             $image = $request->file('image');
             $img_name = $image->getClientOriginalName();
             $upload_name = time() . '.' . $img_name;
-            $new_em_picture = '/uploads/images/' . $upload_name;
+            $new_em_picture = 'uploads/images/' . $upload_name;
             $image->move('uploads/images', $upload_name);
         }
 
@@ -200,7 +200,7 @@ class EmployeeController extends Controller
                 }
                 // Find employee and delete
                 $em = Employee::find($delete_id);
-                if ($em->picture != '/uploads/images/icon-user-default.png') {
+                if ($em->picture != 'uploads/images/icon-user-default.png') {
                     unlink($em->picture);
                 }
                 $em->delete();
