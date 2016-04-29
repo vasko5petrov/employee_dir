@@ -26,7 +26,8 @@
                                 <label class="col-md-4 control-label">Name</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-name" value="{{old('dp-name')}}" autofocus>
+                                    <input type="text" class="form-control" name="dp-name" value="{{old('dp-name')}}" id="dp-name" autofocus>
+
                                     @if($errors->has('dp-name'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('dp-name')}}</strong>
@@ -39,7 +40,8 @@
                                 <label class="col-md-4 control-label">Office number</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-office-number" value="{{old('dp-office-number')}}">
+                                    <input type="text" class="form-control" name="dp-office-number" value="{{old('dp-office-number')}}" id="dp-office-number">
+
                                     @if($errors->has('dp-office-number'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('dp-office-number')}}</strong>
@@ -70,7 +72,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" id="dp_button">
                                         <i class="fa fa-btn fa-floppy-o"></i>Save
                                     </button>
                                     <a type="button" class="btn btn-default" href="{{url('/department')}}">

@@ -20,10 +20,10 @@
                     <div class="panel-heading">Edit Employee</div>
                     <div class="panel-body">
                         {!! Form::open([
-                            'action'=>array('EmployeeController@edit', $em->id), 
+                            'action'=>array('EmployeeController@edit', $em->id),
                             'files'=>true,
                             'class'=>'form-horizontal',
-                            'method'=>"post"
+                            'method'=>"post",
                         ])!!}
                         <link href="{{URL::asset('css/avatar.css')}}" rel="stylesheet" >
                         <div class="col-md-4">
@@ -38,12 +38,14 @@
                                 </span>
                             @endif
                         </div>
-                        <div class=" col-md-8"> 
+                        <div class=" col-md-8">
                             <div class="form-group{{$errors->has('em-name') ? ' has-error' : ''}}">
                                 <label class="col-md-4 control-label">Name</label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="em-name" value="{{$em->name}}" autofocus>
+                                    <input type="text" class="form-control" name="em-name"  value="{{$em->name}}" id="edit-em-name" autofocus>
+                                    <p><span id="emsg_name"></span></p>
+
                                     <input type="hidden" class="form-control" name="em-id" value="{{$em->id}}">
                                     @if($errors->has('em-name'))
                                         <span class="help-block">
@@ -80,7 +82,8 @@
                                 <label class="col-md-4 control-label">Job Title</label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="em-job-title" value="{{$em->job_title}}">
+                                    <input type="text" class="form-control" name="edit-em-job-title" id="em-job-title" value="{{$em->job_title}}">
+
                                     @if($errors->has('em-job-title'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('em-job-title')}}</strong>
@@ -117,7 +120,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" id="edit_em_button">
                                         <i class="fa fa-btn fa-floppy-o"></i>Save
                                     </button>
                                     <a type="button" class="btn btn-default" href="{{url('/employee')}}">

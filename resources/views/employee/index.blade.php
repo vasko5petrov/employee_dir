@@ -30,7 +30,7 @@
                                     <select class="form-control input-sm" name="em-search-dp">
                                         <option value="">Department</option>
                                         @foreach($departments as $dp)
-                                            @if ($dp->id == $em_search_dp) 
+                                            @if ($dp->id == $em_search_dp)
                                                 <option value="{{$dp->id}}" selected>{{$dp->name}}</option>
                                             @else
                                                 <option value="{{$dp->id}}">{{$dp->name}}</option>
@@ -132,12 +132,12 @@
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
             $(this).data('form').submit();
         });
-        
+
         <!-- Show search form -->
         $('#show-search').on('click', function() {
             $('#search-form').toggle('fast');
             $("input:text:visible:first").focus();
         });
-        
+
     </script>
 @endsection

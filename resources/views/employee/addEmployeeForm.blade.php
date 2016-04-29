@@ -23,7 +23,7 @@
                             'action' => 'EmployeeController@add',
                             'class' => 'form-horizontal',
                             'files' => true,
-                            'method' => 'post'
+                            'method' => 'post',
                         ]) !!}
                             <link href="{{URL::asset('css/avatar.css')}}" rel="stylesheet" >
                             <div class="col-sm-4">
@@ -43,7 +43,7 @@
                                     <label class="col-md-4 control-label">Name</label>
 
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="em-name" value="{{old('em-name')}}" autofocus>
+                                        <input type="text" class="form-control" name="em-name" id="em-name" value="{{old('em-name')}}" autofocus>
                                         @if($errors->has('em-name'))
                                             <span class="help-block">
                                             <strong>{{$errors->first('em-name')}}</strong>
@@ -56,7 +56,7 @@
                                     <label class="col-md-4 control-label">Job title</label>
 
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="em-job-title" value="{{old('em-job-title')}}">
+                                        <input type="text" class="form-control" name="em-job-title" id="em-job-title" value="{{old('em-job-title')}}">
                                         @if($errors->has('em-job-title'))
                                             <span class="help-block">
                                             <strong>{{$errors->first('em-job-title')}}</strong>
@@ -113,7 +113,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary" id="em_button">
                                             <i class="fa fa-btn fa-floppy-o"></i>Save
                                         </button>
                                         <a type="button" class="btn btn-default" href="{{url('/employee')}}">
