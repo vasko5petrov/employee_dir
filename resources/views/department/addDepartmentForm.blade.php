@@ -87,3 +87,7 @@
         </div>
     </div>
 @endsection
+
+@section('script')
+    <script type="text/javascript" src="{{URL::asset('js/dp_validation.js')}}"></script>
+@endsection

@@ -129,3 +129,7 @@
         </div>
     </div>
 @endsection
+
+@section('script')
+    <script type="text/javascript" src="{{URL::asset('js/add_em_validation.js')}}"></script>
+@endsection
