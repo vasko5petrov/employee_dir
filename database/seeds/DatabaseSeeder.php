@@ -131,22 +131,12 @@ class DatabaseSeeder extends Seeder
         $employee->picture = 'uploads/images/icon-user-default.png';
         $employee->save();
 
-        $deparment = new App\Department();
-        $deparment->name = 'KTLab, UET-VNU';
-        $deparment->office_number = '0166334225';
-        $deparment->manager_id = '3';
-        $deparment->save();
-
-        $deparment = new App\Department();
-        $deparment->name = 'Bla bla bla';
-        $deparment->office_number = '0432254566';
-        $deparment->manager_id = '2';
-        $deparment->save();
-
-        $deparment = new App\Department();
-        $deparment->name = 'Example Department';
-        $deparment->office_number = '097856125625';
-        $deparment->manager_id = '1';
-        $deparment->save();
+        for ($i =0; $i < 20; $i++) {
+            $deparment = new App\Department();
+            $deparment->name = 'Example Department '.strval($i + 1);
+            $deparment->office_number = '0978561225';
+            $deparment->manager_id = $i + 1;
+            $deparment->save();
+        }
     }
 }
