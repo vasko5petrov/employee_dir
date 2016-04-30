@@ -34,28 +34,30 @@
 * Delete an employee - need login
 * Search employees (by name)
 
-## Installation (for developers) - updating
+**Other notes**
+* All form inputs have validation: email format, Vietnam phone number, image types (jpeg, png),...
+* Department & Employee main pages have pagination (if over 10 rows).
+* Responsive views.
+
+## Installation (for developers)
 * Step 1: Clone this repository:
 ```
 git clone https://github.com/trieudh58/employee_dir.git
 ```
-* Step 2: Rename `.env.example` (from root directory) to `.env`. Then, set up your local environment variables:
+* Step 2: Rename `.env.example` to `.env`. Then, set up your local environment variables:
 ```
 ...
 APP_URL=http://localhost
 ...
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
 DB_DATABASE=<your_database_name>
 DB_USERNAME=<your_mysql_username>
 DB_PASSWORD=<your_mysql_password>
 ```
-* Step 3: From Terminal of this project root directory, run:
+* Step 3: Update dependencies:
 ```
 composer update
 ```
-* Step 4: Generate a app_key, migrate database, seed data into database:
+* Step 4: Generate a app_key, migrate database and seed some data into database:
 ```
 php artisan generate:key
 php artisan migrate
@@ -65,9 +67,9 @@ php artisan db:seed
 ```
 php artisan serve
 ```
-and visit `localhost:8000` to see the miracle :)
+and visit `localhost:8000` to see the miracle. :)
 
 ## Contributors
-* [@trieudh58](https://github.com/trieudh58)
-* [@tungnt-580](https://github.com/tungnt-580)
-* [@hieunk58](https://github.com/hieunk58)
+* Đặng Hải Triều - [@trieudh58](https://github.com/trieudh58)
+* Nguyễn Thế Tùng - [@tungnt-580](https://github.com/tungnt-580)
+* Nguyễn Khắc Hiếu - [@hieunk58](https://github.com/hieunk58)
