@@ -20,19 +20,19 @@
 
 **Department management**
 * [Show departments](http://trieudh.me/department)
-* [Add new department](http://trieudh.me/department/add) - need login
 * [Show department detail](http://trieudh.me/department/2/detail)
 * [Show list of employees in a department](http://trieudh.me/department/2/employee)
+* [Add new department](http://trieudh.me/department/add) - need login
 * [Edit a department](http://trieudh.me/department/2/edit) - need login
 * Delete a department - need login
 
 **Employee management**
 * [Show employees](http://trieudh.me/employee)
-* [Add new employee](http://trieudh.me/employee/add) - need login
 * [Show employee profile](http://trieudh.me/employee/1/detail)
+* [Add new employee](http://trieudh.me/employee/add) - need login
 * [Edit an employee](http://trieudh.me/employee/1/edit) - need login
-* Search employees (by name)
 * Delete an employee - need login
+* Search employees (by name)
 
 ## Installation (for developers) - updating
 
