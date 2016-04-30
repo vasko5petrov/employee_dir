@@ -35,6 +35,37 @@
 * Search employees (by name)
 
 ## Installation (for developers) - updating
+* Step 1: Clone this repository:
+```
+git clone https://github.com/trieudh58/employee_dir.git
+```
+* Step 2: Rename `.env.example` (from root directory) to `.env`. Then, set up your local environment variables:
+```
+...
+APP_URL=http://localhost
+...
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=<your_database_name>
+DB_USERNAME=<your_mysql_username>
+DB_PASSWORD=<your_mysql_password>
+```
+* Step 3: From Terminal of this project root directory, run:
+```
+composer update
+```
+* Step 4: Generate a app_key, migrate database, seed data into database:
+```
+php artisan generate:key
+php artisan migrate
+php artisan db:seed
+```
+* Step 5: Now, you can start your app with the following command:
+```
+php artisan serve
+```
+and visit `localhost:8000` to see the miracle :)
 
 ## Contributors
 * [@trieudh58](https://github.com/trieudh58)
