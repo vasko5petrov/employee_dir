@@ -5,11 +5,11 @@
 * It's free for all of you. Open source, too. :)
 
 **Releases**
-* [1.1.0](https://github.com/trieudh58/employee_dir/releases/tag/1.1.0) (latest-master-stable)
+* [1.1.0](https://github.com/trieudh58/employee_dir/releases/tag/1.1.0) (latest-stable)
 * [1.0.0](https://github.com/trieudh58/employee_dir/releases/tag/1.0.0)
 
 **Demo deployment**
-* Step 1: Visit our [website](http://trieudh.me) and take a look on the guide, or go directly to [login page](http://trieudh.me/login)
+* Step 1: Visit our [website](http://trieudh.me), or go directly to [login page](http://trieudh.me/login)
 * Step 2: Login with admin account (example@gmail.com - 123456) then enjoy!
 
 ## Functionalities
