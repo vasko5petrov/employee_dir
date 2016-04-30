@@ -58,7 +58,7 @@ class EmployeeController extends Controller
                 'em-job-title' => 'required|string',
                 'em-email' => 'email',
                 'em-phone-number' => 'phone:VN',
-                'image' => 'image'
+                'image' => 'image|max:2048'
             ];
 
             // Make validation
@@ -139,7 +139,7 @@ class EmployeeController extends Controller
             'em-job-title' => 'required|string',
             'em-email' => 'email',
             'em-phone-number' => 'phone:VN',
-            'image' => 'image'
+            'image' => 'image|max:2048'
         ], $messages);
         
         $em_id = $request->input('em-id');
