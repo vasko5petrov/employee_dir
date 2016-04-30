@@ -21,12 +21,11 @@
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/department').'/'.$dp->id.'/edit'}}">
                             {!! csrf_field() !!}
-
                             <div class="form-group{{$errors->has('dp-name') ? ' has-error' : ''}}">
                                 <label class="col-md-4 control-label">Name</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-name" value="{{$dp->name}}" autofocus>
+                                    <input type="text" class="form-control" name="dp-name" value="{{$dp->name}}" id="dp-name" autofocus>
                                     <input type="hidden" class="form-control" name="dp-id" value="{{$dp->id}}">
                                     @if($errors->has('dp-name'))
                                         <span class="help-block">
@@ -40,7 +39,8 @@
                                 <label class="col-md-4 control-label">Office number</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-office-number" value="{{$dp->office_number}}">
+                                    <input type="text" class="form-control" name="dp-office-number" id="dp-office-number" value="{{$dp->office_number}}">
+
                                     @if($errors->has('dp-office-number'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('dp-office-number')}}</strong>
@@ -50,7 +50,6 @@
                             </div>
                             <div class="form-group{{$errors->has('dp-manager-id')? ' has-error' : ''}}">
                                 <label class="col-md-4 control-label">Manager</label>
-
                                 <div class="col-md-6">
                                     <select class="form-control" name="dp-manager-id" >
                                         @if(sizeof($employees))
@@ -77,7 +76,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" id="dp_button">
                                         <i class="fa fa-btn fa-floppy-o"></i>Save
                                     </button>
                                     <a type="button" class="btn btn-default" href="{{url('/department')}}">
