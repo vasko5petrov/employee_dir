@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container animated fadeInUp">
     <div class="row">
         @if(isset($result) && isset($alert_type))
             <div class="col-md-8 col-md-offset-2">
