@@ -43,7 +43,7 @@
                                 <label class="col-md-4 control-label">Name</label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="em-name"  value="{{$em->name}}" id="edit-em-name" autofocus>
+                                    <input type="text" class="form-control{{$errors->first('em-name') ? ' animated shake' : ''}}" name="em-name"  value="{{$em->name}}" id="edit-em-name" autofocus>
                                     <p><span id="emsg_name"></span></p>
 
                                     <input type="hidden" class="form-control" name="em-id" value="{{$em->id}}">
@@ -59,7 +59,7 @@
                                 <label class="col-md-4 control-label">Department</label>
 
                                 <div class="col-md-8">
-                                    <select class="form-control" name="em-department-id" id="edit-em-department-id">
+                                    <select class="form-control{{$errors->first('em-department-id') ? ' animated shake' : ''}}" name="em-department-id" id="edit-em-department-id">
                                         <option hidden>Select one</option>
                                         @foreach($departments as $dp)
                                             @if ($dp->id == $em->department_id)
@@ -82,7 +82,7 @@
                                 <label class="col-md-4 control-label">Job Title</label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="em-job-title" id="edit-em-job-title" value="{{$em->job_title}}">
+                                    <input type="text" class="form-control{{$errors->first('em-job-title') ? ' animated shake' : ''}}" name="em-job-title" id="edit-em-job-title" value="{{$em->job_title}}">
 
                                     @if($errors->has('em-job-title'))
                                         <span class="help-block">
@@ -96,7 +96,7 @@
                                 <label class="col-md-4 control-label">Phone Number</label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="em-phone-number" id="edit-em-phone-number" value="{{$em->phone_number}}">
+                                    <input type="text" class="form-control{{$errors->first('em-phone-number') ? ' animated shake' : ''}}" name="em-phone-number" id="edit-em-phone-number" value="{{$em->phone_number}}">
                                     @if($errors->has('em-phone-number'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('em-phone-number')}}</strong>
@@ -109,7 +109,7 @@
                                 <label class="col-md-4 control-label">Email</label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="em-email" id="edit-em-email" value="{{$em->email}}">
+                                    <input type="text" class="form-control{{$errors->first('em-email') ? ' animated shake' : ''}}" name="em-email" id="edit-em-email" value="{{$em->email}}">
                                     @if($errors->has('em-email'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('em-email')}}</strong>

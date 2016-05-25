@@ -26,7 +26,7 @@
                                 <label class="col-md-4 control-label">Name</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-name" value="{{old('dp-name')}}" id="dp-name" autofocus>
+                                    <input type="text" class="form-control{{$errors->first('dp-name') ? ' animated shake' : ''}}" name="dp-name" value="{{old('dp-name')}}" id="dp-name" autofocus>
 
                                     @if($errors->has('dp-name'))
                                         <span class="help-block">
@@ -40,7 +40,7 @@
                                 <label class="col-md-4 control-label">Office number</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-office-number" value="{{old('dp-office-number')}}" id="dp-office-number">
+                                    <input type="text" class="form-control{{$errors->first('dp-office-number') ? ' animated shake' : ''}}" name="dp-office-number" value="{{old('dp-office-number')}}" id="dp-office-number">
 
                                     @if($errors->has('dp-office-number'))
                                         <span class="help-block">
@@ -54,7 +54,7 @@
                                 <label class="col-md-4 control-label">Manager</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" name="dp-manager-id" >
+                                    <select class="form-control{{$errors->first('dp-manager-id') ? ' animated shake' : ''}}" name="dp-manager-id" >
                                         <option></option>
                                         @if(sizeof($employees))
                                             @foreach($employees as $em)

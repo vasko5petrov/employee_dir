@@ -25,7 +25,7 @@
                                 <label class="col-md-4 control-label">Name</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-name" value="{{$dp->name}}" id="dp-name" autofocus>
+                                    <input type="text" class="form-control{{$errors->first('dp-name') ? ' animated shake' : ''}}" name="dp-name" value="{{$dp->name}}" id="dp-name" autofocus>
                                     <input type="hidden" class="form-control" name="dp-id" value="{{$dp->id}}">
                                     @if($errors->has('dp-name'))
                                         <span class="help-block">
@@ -39,7 +39,7 @@
                                 <label class="col-md-4 control-label">Office number</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dp-office-number" id="dp-office-number" value="{{$dp->office_number}}">
+                                    <input type="text" class="form-control{{$errors->first('dp-office-number') ? ' animated shake' : ''}}" name="dp-office-number" id="dp-office-number" value="{{$dp->office_number}}">
 
                                     @if($errors->has('dp-office-number'))
                                         <span class="help-block">
@@ -51,7 +51,7 @@
                             <div class="form-group{{$errors->has('dp-manager-id')? ' has-error' : ''}}">
                                 <label class="col-md-4 control-label">Manager</label>
                                 <div class="col-md-6">
-                                    <select class="form-control" name="dp-manager-id" >
+                                    <select class="form-control{{$errors->first('dp-manager-id') ? ' animated shake' : ''}}" name="dp-manager-id" >
                                         @if(sizeof($employees))
                                             @foreach($employees as $em)
                                                 <option value="{{$em->id}}">{{$em->name}}</option>

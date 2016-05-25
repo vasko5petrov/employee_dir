@@ -32,7 +32,7 @@
                                 <label class="col-md-4 control-label">Username</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="admin-username" value="{{old('admin-username')}}" autofocus>
+                                    <input type="text" class="form-control{{$errors->first('admin-username') ? ' animated shake' : ''}}" name="admin-username" value="{{old('admin-username')}}" autofocus>
                                     @if($errors->has('admin-username'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('admin-username')}}</strong>
@@ -45,7 +45,7 @@
                                 <label class="col-md-4 control-label">Email</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="admin-email" value="{{old('admin-email')}}" autofocus>
+                                    <input type="text" class="form-control{{$errors->first('admin-email') ? ' animated shake' : ''}}" name="admin-email" value="{{old('admin-email')}}" autofocus>
                                     @if($errors->has('admin-email'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('admin-email')}}</strong>

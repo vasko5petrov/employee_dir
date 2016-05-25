@@ -29,7 +29,7 @@
 
                                 <div class="col-md-6">
                                     <input type="hidden" class="form-control" name="hashed_id" value="{{$hashed_id}}">
-                                    <input type="password" class="form-control" name="new_password">
+                                    <input type="password" class="form-control{{$errors->first('new_password') ? ' animated shake' : ''}}" name="new_password">
                                     @if($errors->has('new_password'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('new_password')}}</strong>
@@ -42,7 +42,7 @@
                                 <label class="col-md-4 control-label">Confirm new password</label>
 
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password_confirm">
+                                    <input type="password" class="form-control{{$errors->first('password_confirm') ? ' animated shake' : ''}}" name="password_confirm">
                                     @if($errors->has('password_confirm'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('password_confirm')}}</strong>

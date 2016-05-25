@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     <link href="{{url('/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url('/css/animate.css')}}" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
