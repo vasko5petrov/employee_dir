@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container animated fadeInUp">
         <div class="row">
             @if(isset($result) && isset($alert_type))
                 <div class="col-md-8 col-md-offset-2">
@@ -28,7 +28,7 @@
                                 <label class="col-md-4 control-label">Current password</label>
 
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="current_password" value="{{old('current_password')}}">
+                                    <input type="password" class="form-control{{$errors->first('current_password') ? ' animated shake' : ''}}" name="current_password" value="{{old('current_password')}}">
                                     @if($errors->has('current_password'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('current_password')}}</strong>
@@ -41,7 +41,7 @@
                                 <label class="col-md-4 control-label">New password</label>
 
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="new_password">
+                                    <input type="password" class="form-control{{$errors->first('new_password') ? ' animated shake' : ''}}" name="new_password">
                                     @if($errors->has('new_password'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('new_password')}}</strong>
@@ -54,7 +54,7 @@
                                 <label class="col-md-4 control-label">Confirm new password</label>
 
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password_confirm">
+                                    <input type="password" class="form-control{{$errors->first('password_confirm') ? ' animated shake' : ''}}" name="password_confirm">
                                     @if($errors->has('password_confirm'))
                                         <span class="help-block">
                                             <strong>{{$errors->first('password_confirm')}}</strong>

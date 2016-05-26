@@ -25,7 +25,7 @@ class EmployeeController extends Controller
         if ($em_search_dp != '') {
             $query = $query->where('department_id', '=', $em_search_dp);
         }
-        $employees = $query->orderBy('name')->paginate(10)->appends([
+        $employees = $query->orderBy('name')->paginate(8)->appends([
             'search' => $search, 
             'em-search-name' => $em_search_name,
             'em-search-dp' => $em_search_dp

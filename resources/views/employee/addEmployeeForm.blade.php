@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container animated fadeInUp">
         <div class="row">
             @if(count($errors) == 0 && isset($flag))
                 <div class="col-md-8 col-md-offset-2">
@@ -43,7 +43,7 @@
                                     <label class="col-md-4 control-label">Name</label>
 
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="em-name" id="em-name" value="{{old('em-name')}}" autofocus>
+                                        <input type="text" class="form-control{{$errors->first('em-name') ? ' animated shake' : ''}}" name="em-name" id="em-name" value="{{old('em-name')}}" autofocus>
                                         @if($errors->has('em-name'))
                                             <span class="help-block">
                                             <strong>{{$errors->first('em-name')}}</strong>
@@ -56,7 +56,7 @@
                                     <label class="col-md-4 control-label">Job title</label>
 
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="em-job-title" id="em-job-title" value="{{old('em-job-title')}}">
+                                        <input type="text" class="form-control{{$errors->first('em-job-title') ? ' animated shake' : ''}}" name="em-job-title" id="em-job-title" value="{{old('em-job-title')}}">
                                         @if($errors->has('em-job-title'))
                                             <span class="help-block">
                                             <strong>{{$errors->first('em-job-title')}}</strong>
@@ -69,7 +69,7 @@
                                     <label class="col-md-4 control-label">Email</label>
 
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="em-email" value="{{old('em-email')}}">
+                                        <input type="text" class="form-control{{$errors->first('em-email') ? ' animated shake' : ''}}" name="em-email" value="{{old('em-email')}}">
                                         @if($errors->has('em-email'))
                                             <span class="help-block">
                                             <strong>{{$errors->first('em-email')}}</strong>
@@ -82,7 +82,7 @@
                                     <label class="col-md-4 control-label">Phone number</label>
 
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="em-phone-number" value="{{old('em-phone-number')}}">
+                                        <input type="text" class="form-control{{$errors->first('em-phone-number') ? ' animated shake' : ''}}" name="em-phone-number" value="{{old('em-phone-number')}}">
                                         @if($errors->has('em-phone-number'))
                                             <span class="help-block">
                                             <strong>{{$errors->first('em-phone-number')}}</strong>
@@ -95,7 +95,7 @@
                                     <label class="col-md-4 control-label">Department</label>
 
                                     <div class="col-md-8">
-                                        <select class="form-control" name="em-department-id" >
+                                        <select class="form-control{{$errors->first('em-department-id') ? ' animated shake' : ''}}" name="em-department-id" >
                                             <option></option>
                                             @if(sizeof($departments))
                                                 @foreach($departments as $dp)
