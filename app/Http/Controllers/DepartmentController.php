@@ -17,7 +17,11 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::orderBy('name')->paginate(8);
-        return view('department.index', compact('departments'));
+        
+        // Get list of employee (for selecting manager field)
+        $employees = Employee::all();
+        $employees = $employees->sortBy('name')->values()->all();
+        return view('department.index', compact('departments', 'employees'));
     }
 
     // show list of employees in this department
@@ -102,6 +106,13 @@ class DepartmentController extends Controller
     // Need to be enhanced with validation
     public function edit(Request $request)
     {
+        
+        if(Request::ajax()) {
+            $data = Input::all();
+            print_r($data);
+            die;
+        }
+        
         // Customize validation messages
         $messages = [
             'dp-name.required' => 'The name field is required.',

@@ -15,7 +15,6 @@
                             </div>
                         @endif
                     </div>
-
                     <div class="panel-body">
                         <table class="table table-hover">
                             <thead>
@@ -28,8 +27,8 @@
                                 </tr>
                             <tbody>
                                 @foreach($departments as $index=>$dp)
-                                    <tr>
-                                        <td>{{($departments->currentPage()-1)*10+$index+1}}</td>
+                                    <tr id="{{'info-'.$dp->id}}">
+                                        <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
                                         <td><a href="{{url('/department').'/'.$dp->id.'/detail'}}">{{$dp->name}}</a></td>
                                         <td>{{$dp->office_number}}</td>
                                         <td>
@@ -42,7 +41,7 @@
                                                 <i class="fa fa-list" aria-hidden="true"></i>
                                             </a>
                                             @if(!Auth::guest())
-                                                <a href="{{url('/department').'/'.$dp->id.'/edit'}}" class="btn btn-primary btn-xs" title="Edit department">
+                                                <a href="#" class="btn btn-primary btn-xs" title="Edit department" id="{{'show-edit-'.$dp->id}}">
                                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </a>
 
@@ -75,7 +74,47 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    <style>
+                                        .table>tbody>tr[id^='edit-']>td:not(:first-child) {
+                                            padding: 4px;
+                                        }
+                                    </style>
+                                    <tr id="{{'edit-'.$dp->id}}" hidden class="tr-edit">
+                                        <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
+                                        <td> 
+                                            <input type="text" class="form-control input-sm" value="{{$dp->name}}">
+                                        </td>   
+                                        <td>
+                                            <input type="text" class="form-control input-sm" value="{{$dp->office_number}}">
+                                        </td>
+                                        <td>
+                                            <select class="form-control input-sm">
+                                                @if(sizeof($employees))
+                                                    @foreach($employees as $em)
+                                                        @if($em->id==$dp->manager_id)
+                                                            <option value="{{$em->id}}"selected>{{$em->name}}</option>
+                                                        @else
+                                                            <option value="{{$em->id}}">{{$em->name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    <option selected></option>
+                                                @endif
+                                            </select>
+                                        </td>
+                                        <td>
+                                            @if(!Auth::guest())
+                                                <button class="btn btn-primary btn-sm" title="Save" id="{{'save-'.$dp->id}}">
+                                                    <i class="fa fa-btn fa-floppy-o"></i>Save
+                                                </button>
+                                                <button class="btn btn-default btn-sm" title="Cancel" id="{{'cancel-'.$dp->id}}">
+                                                    Cancel
+                                                </button>
+                                            @endif
+                                        </td>
+                                    </tr>
                                 @endforeach
+                                
                             </tbody>
                             </thead>
                         </table>
@@ -106,6 +145,41 @@
         <!-- Form confirm (yes/ok) handler, submits form -->
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
             $(this).data('form').submit();
+        });
+        
+        {{--Show/hide edit form--}}
+        
+        $('[id^="show-edit-"]').on('click', function() {
+            id = $(this).attr('id').substr(10);
+            $('#info-' + id).hide();
+            $('#edit-' + id).show();    
+        });
+        
+        $('[id^="cancel-"]').on('click', function() {
+            id = $(this).attr('id').substr(7);
+            $('#info-' + id).show();
+            $('#edit-' + id).hide();
+        });
+        
+        $('[id^="save-"]').on('click', function() {
+            id = $(this).attr('id').substr(5);
+            edit_data = $('#edit-' + id).children();
+            $.ajax({
+                type: 'POST',
+                url:  '/department/' + id + '/edit',
+                data: {
+                    'dp-name': edit_data.eq(1).children().eq(0).val(),
+                    'dp-office-number': edit_data.eq(2).children().eq(0).val(),
+                    'dp-manager-id': edit_data.eq(3).children().eq(0).val(),
+                    '_token': $('input[name=_token]').val()
+                },
+                success: function(data){
+                    alert(data);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
         });
     </script>
 @endsection
