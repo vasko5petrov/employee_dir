@@ -107,12 +107,6 @@ class DepartmentController extends Controller
     public function edit(Request $request)
     {
         
-        if(Request::ajax()) {
-            $data = Input::all();
-            print_r($data);
-            die;
-        }
-        
         // Customize validation messages
         $messages = [
             'dp-name.required' => 'The name field is required.',
@@ -164,11 +158,18 @@ class DepartmentController extends Controller
             $dp->office_number = $new_dp_office_number;
             $dp->manager_id = $new_dp_manager_id;
             $dp->save();
+            $dp->manager_name = Employee::find($dp->manager_id)->name;
 
             // Create alert message to flash back to session
             $result = 'Department information successfully updated!';
             $alert_type = 'success';
         }
+        return json_encode(array(
+            'result'=>$result, 
+            'alert_type'=>$alert_type, 
+            'dp'=>$dp, 
+            'employees'=>$employees,
+        ));
         return view('department.editDepartmentForm', compact('result', 'alert_type', 'dp', 'employees', 'manager_name'));
     }
 

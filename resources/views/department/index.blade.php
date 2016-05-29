@@ -29,11 +29,11 @@
                                 @foreach($departments as $index=>$dp)
                                     <tr id="{{'info-'.$dp->id}}">
                                         <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
-                                        <td><a href="{{url('/department').'/'.$dp->id.'/detail'}}">{{$dp->name}}</a></td>
-                                        <td>{{$dp->office_number}}</td>
+                                        <td><a href="{{url('/department').'/'.$dp->id.'/detail'}}" id="dpName">{{$dp->name}}</a></td>
+                                        <td id="dpOfficeNumber">{{$dp->office_number}}</td>
                                         <td>
                                             @if($dp->manager())
-                                                <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}">{{$dp->manager()->name}}</a>
+                                                <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}"id="dpManager">{{$dp->manager()->name}}</a>
                                             @endif
                                         </td>
                                         <td>
@@ -114,6 +114,13 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                <!-- Edit reslut modal -->
+                                <div class="modal fade" id="editResult" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="col-md-8 col-md-offset-2" id="editAlert">
+                                        </div>
+                                    </div>
+                                </div>
                                 
                             </tbody>
                             </thead>
@@ -157,8 +164,8 @@
         
         $('[id^="cancel-"]').on('click', function() {
             id = $(this).attr('id').substr(7);
-            $('#info-' + id).show();
             $('#edit-' + id).hide();
+            $('#info-' + id).show();
         });
         
         $('[id^="save-"]').on('click', function() {
@@ -168,16 +175,30 @@
                 type: 'POST',
                 url:  '/department/' + id + '/edit',
                 data: {
+                    'dp-id': $('input[name="dp-id"]').val(),
                     'dp-name': edit_data.eq(1).children().eq(0).val(),
                     'dp-office-number': edit_data.eq(2).children().eq(0).val(),
                     'dp-manager-id': edit_data.eq(3).children().eq(0).val(),
                     '_token': $('input[name=_token]').val()
                 },
                 success: function(data){
-                    alert(data);
+                    data = JSON.parse(data);
+                    if (data.alert_type == 'success') {
+                        $('#dpName').html(data.dp.name);
+                        $('#dpOfficeNumber').html(data.dp.office_number);
+                        $('#dpManager').html(data.dp.manager_name);
+                        
+                        $('#edit-' + id).hide();
+                        $('#info-' + id).show();
+                    }
+                    $('#editAlert').html('<div class="alert alert-' + data.alert_type +' alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="modal">&times;</button><strong>' + data.result + '</strong></div>');
+                    $('#editResult').modal();
                 },
                 error: function(data) {
-                    console.log(data);
+                    var errors = data.responseJSON;
+                    error = errors[Object.keys(errors)[0]][0];
+                    $('#editAlert').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="modal">&times;</button><strong>' + error + '</strong></div>');
+                    $('#editResult').modal();
                 }
             });
         });
