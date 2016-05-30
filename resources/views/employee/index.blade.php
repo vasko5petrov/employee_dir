@@ -16,13 +16,8 @@
                             <a href="#" class="btn btn-primary btn-xs" title="Search employees" id ="show-search">
                                 <i class="fa fa-btn fa-search" aria-hidden="true"></i>Search
                             </a>
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <link href="{{URL::asset('css/search_form.css')}}" rel="stylesheet" >
-                        <center {!! $search ? '' : 'hidden' !!} id="search-form">
-                            <form method="GET", url="employee", class="form navbar-form">
+                            
+                            <form method="GET", url="employee", class="form navbar-form {!! $search ? 'search-ed' : 'search' !!}" id="search-form" >
                                 <input type="hidden" name="search" value=1>
                                 <div class="form-group">
                                     <input type="text" class="input-sm form-control" name="em-search-name" placeholder="Employee Name" value="{{$em_search_name}}">
@@ -43,7 +38,11 @@
                                     Search
                                 </button>
                             </form>
-                        </center>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <link href="{{URL::asset('css/search_form.css')}}" rel="stylesheet" >
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -58,50 +57,52 @@
                             <tbody>
                             @foreach($employees as $index=>$em)
                                 <tr>
-                                    <td>{{($employees->currentPage()-1)*10+$index+1}}</td>
-                                    <td><a href="{{url('/employee').'/'.$em->id.'/detail'}}">{{$em->name}}</a></td>
-                                    <td>
-                                        @if($em->department)
-                                            <a href="{{url('/department').'/'.$em->department->id.'/detail'}}">{{$em->department->name}}</a>
-                                        @endif
-                                    </td>
-                                    <td>{{$em->job_title}}</td>
-                                    <td>{{$em->email}}</td>
-                                    <td>{{$em->phone_number}}</td>
-                                    @if(!Auth::guest())
+                                    <div>
+                                        <td>{{($employees->currentPage()-1)*8+$index+1}}</td>
+                                        <td><a href="{{url('/employee').'/'.$em->id.'/detail'}}">{{$em->name}}</a></td>
                                         <td>
-                                            <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn btn-primary btn-xs" title="Edit employee">
-                                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                                            </a>
+                                            @if($em->department)
+                                                <a href="{{url('/department').'/'.$em->department->id.'/detail'}}">{{$em->department->name}}</a>
+                                            @endif
+                                        </td>
+                                        <td>{{$em->job_title}}</td>
+                                        <td>{{$em->email}}</td>
+                                        <td>{{$em->phone_number}}</td>
+                                        @if(!Auth::guest())
+                                            <td>
+                                                <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn btn-primary btn-xs" title="Edit employee">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </a>
 
-                                            {{--Modal for delete confirmation--}}
-                                            <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                            <h4 class="modal-title">Delete employee</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>Are you sure want to delete this?</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                            <button type="button" class="btn btn-danger" id="confirm">Delete</button>
+                                                {{--Modal for delete confirmation--}}
+                                                <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Delete employee</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Are you sure want to delete this?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                                <button type="button" class="btn btn-danger" id="confirm">Delete</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <form role="form" method="POST" action="{{url('/employee').'/'.$em->id.'/delete'}}" accept-charset="UTF-8" style="display:inline">
-                                                {{csrf_field()}}
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <input type="hidden" class="form-control" name="em-id" value="{{$em->id}}">
-                                                <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" title="Delete employee">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    @endif
+                                                <form role="form" method="POST" action="{{url('/employee').'/'.$em->id.'/delete'}}" accept-charset="UTF-8" style="display:inline">
+                                                    {{csrf_field()}}
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" class="form-control" name="em-id" value="{{$em->id}}">
+                                                    <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" title="Delete employee">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @endif
+                                    </div>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -139,8 +140,12 @@
 
         <!-- Show search form -->
         $('#show-search').on('click', function() {
-            $('#search-form').toggle('fast');
-            $("input:text:visible:first").focus();
+            $('#search-form').toggle('fast', function() {
+                if ($(this).is(':visible')) {
+                    $(this).css('display', 'inline');
+                }
+            });
+            $('input:text:visible:first').focus();
         });
 
     </script>

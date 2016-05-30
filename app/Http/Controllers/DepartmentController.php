@@ -17,7 +17,11 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::orderBy('name')->paginate(8);
-        return view('department.index', compact('departments'));
+        
+        // Get list of employee (for selecting manager field)
+        $employees = Employee::all();
+        $employees = $employees->sortBy('name')->values()->all();
+        return view('department.index', compact('departments', 'employees'));
     }
 
     // show list of employees in this department
@@ -102,6 +106,7 @@ class DepartmentController extends Controller
     // Need to be enhanced with validation
     public function edit(Request $request)
     {
+        
         // Customize validation messages
         $messages = [
             'dp-name.required' => 'The name field is required.',
@@ -153,11 +158,18 @@ class DepartmentController extends Controller
             $dp->office_number = $new_dp_office_number;
             $dp->manager_id = $new_dp_manager_id;
             $dp->save();
+            $dp->manager_name = Employee::find($dp->manager_id)->name;
 
             // Create alert message to flash back to session
             $result = 'Department information successfully updated!';
             $alert_type = 'success';
         }
+        return json_encode(array(
+            'result'=>$result, 
+            'alert_type'=>$alert_type, 
+            'dp'=>$dp, 
+            'employees'=>$employees,
+        ));
         return view('department.editDepartmentForm', compact('result', 'alert_type', 'dp', 'employees', 'manager_name'));
     }
 

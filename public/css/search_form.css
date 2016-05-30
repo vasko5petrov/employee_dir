@@ -1,3 +1,9 @@
+.search {
+    display: none
+}
+.search-ed {
+    display: inline
+}
 #search-form {
-    margin: 20px;
+    margin: 0px;
 }
