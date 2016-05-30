@@ -14,8 +14,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    <link href="{{url('/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{url('/css/animate.css')}}" rel="stylesheet">
+    <link href="{{url('/css/bootstrap-flatly.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url('/css/animate.css')}}" rel="stylesheet" type="text/css">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>

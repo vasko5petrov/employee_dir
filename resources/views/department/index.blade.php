@@ -104,10 +104,10 @@
                                         </td>
                                         <td>
                                             @if(!Auth::guest())
-                                                <button class="btn btn-primary btn-xs" title="Save" id="{{'save-'.$dp->id}}">
+                                                <button class="btn btn-primary btn-sm" title="Save" id="{{'save-'.$dp->id}}">
                                                     Save
                                                 </button>
-                                                <button class="btn btn-default btn-xs" title="Cancel" id="{{'cancel-'.$dp->id}}">
+                                                <button class="btn btn-default btn-sm" title="Cancel" id="{{'cancel-'.$dp->id}}">
                                                     Cancel
                                                 </button>
                                             @endif
