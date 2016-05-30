@@ -114,10 +114,10 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                <!-- Edit reslut modal -->
+                                <!-- Edit result modal -->
                                 <div class="modal fade" id="editResult" role="dialog">
-                                    <div class="modal-dialog">
-                                        <div class="col-md-8 col-md-offset-2" id="editAlert">
+                                    <div class="modal-dialog" style="margin-top: 5%">
+                                        <div class="col-md-8 col-md-offset-2" id="editAlert" style="text-align: center">
                                         </div>
                                     </div>
                                 </div>
