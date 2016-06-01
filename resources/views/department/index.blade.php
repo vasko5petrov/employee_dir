@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-sm-10 col-sm-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Departments
@@ -117,7 +117,7 @@
                                 <!-- Edit result modal -->
                                 <div class="modal fade" id="editResult" role="dialog">
                                     <div class="modal-dialog" style="margin-top: 5%">
-                                        <div class="col-md-8 col-md-offset-2" id="editAlert" style="text-align: center">
+                                        <div class="col-sm-8 col-sm-offset-2" id="editAlert" style="text-align: center">
                                         </div>
                                     </div>
                                 </div>
