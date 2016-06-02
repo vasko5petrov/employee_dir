@@ -40,7 +40,7 @@
                                     <button id="confirm" class="modal-action modal-close waves-effect waves-light btn-flat red">Delete</button>
                                 </div>
                             </div>
-                            <form role="form" method="POST" action="{{url('/department').'/'.$dp->id.'/delete'}}" accept-charset="UTF-8" style="display:inline">
+                            <form role="form" method="POST" action="{{url('/department').'/'.$dp->id.'/delete'}}" accept-charset="UTF-8" style="display:inline" id="deleteForm">
                                 {{csrf_field()}}
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" class="form-control" name="dp-id" value="{{$dp->id}}">
@@ -125,7 +125,8 @@
 
         <!-- Form confirm (yes/ok) handler, submits form -->
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-            $(this).data('form').submit();
+            console.log($('#deleteForm'));
+            $('#deleteForm').submit();
         });
         
         {{--Show/hide edit form--}}
