@@ -161,7 +161,7 @@ class DepartmentController extends Controller
             $dp->manager_name = Employee::find($dp->manager_id)->name;
 
             // Create alert message to flash back to session
-            $result = 'Department information successfully updated!';
+            $result = 'Department information updated!';
             $alert_type = 'success';
         }
         return json_encode(array(
