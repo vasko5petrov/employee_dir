@@ -2,141 +2,115 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Departments
-                        @if(!Auth::guest())
-                            <div class="pull-right">
-                                <a href="{{url('/department/add')}}" class="btn btn-primary btn-xs" title="Add new department">
-                                    <i class="fa fa-btn fa-plus" aria-hidden="true"></i>Add
-                                </a>
-                            </div>
+        <h4>Departments</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Office Number</th>
+                    <th>Manager</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($departments as $index=>$dp)
+                <tr id="{{'info-'.$dp->id}}">
+                    <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
+                    <td><a href="{{url('/department').'/'.$dp->id.'/detail'}}" id="dpName">{{$dp->name}}</a></td>
+                    <td id="dpOfficeNumber">{{$dp->office_number}}</td>
+                    <td>
+                        @if($dp->manager())
+                            <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}"id="dpManager">{{$dp->manager()->name}}</a>
                         @endif
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Office Number</th>
-                                    <th>Manager</th>
-                                    <th></th>
-                                </tr>
-                            <tbody>
-                                @foreach($departments as $index=>$dp)
-                                    <tr id="{{'info-'.$dp->id}}">
-                                        <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
-                                        <td><a href="{{url('/department').'/'.$dp->id.'/detail'}}" id="dpName">{{$dp->name}}</a></td>
-                                        <td id="dpOfficeNumber">{{$dp->office_number}}</td>
-                                        <td>
-                                            @if($dp->manager())
-                                                <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}"id="dpManager">{{$dp->manager()->name}}</a>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn btn-default btn-xs" title="Show employees">
-                                                <i class="fa fa-list" aria-hidden="true"></i>
-                                            </a>
-                                            @if(!Auth::guest())
-                                                <a href="#" class="btn btn-primary btn-xs" title="Edit department" id="{{'show-edit-'.$dp->id}}">
-                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                </a>
-
-                                                {{--Modal for delete confirmation--}}
-                                                <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4 class="modal-title">Delete department</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Are you sure want to delete this?</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                                <button type="button" class="btn btn-danger" id="confirm">Delete</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <form role="form" method="POST" action="{{url('/department').'/'.$dp->id.'/delete'}}" accept-charset="UTF-8" style="display:inline">
-                                                    {{csrf_field()}}
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" class="form-control" name="dp-id" value="{{$dp->id}}">
-                                                    <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" title="Delete department">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </button>
-                                                </form>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <style>
-                                        .table>tbody>tr[id^='edit-']>td:not(:first-child) {
-                                            padding: 4px;
-                                        }
-                                    </style>
-                                    <tr id="{{'edit-'.$dp->id}}" hidden class="tr-edit">
-                                        <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
-                                        <td> 
-                                            <input type="text" class="form-control input-sm" value="{{$dp->name}}">
-                                        </td>   
-                                        <td>
-                                            <input type="text" class="form-control input-sm" value="{{$dp->office_number}}">
-                                        </td>
-                                        <td>
-                                            <select class="form-control input-sm">
-                                                @if(sizeof($employees))
-                                                    @foreach($employees as $em)
-                                                        @if($em->id==$dp->manager_id)
-                                                            <option value="{{$em->id}}"selected>{{$em->name}}</option>
-                                                        @else
-                                                            <option value="{{$em->id}}">{{$em->name}}</option>
-                                                        @endif
-                                                    @endforeach
-                                                @else
-                                                    <option selected></option>
-                                                @endif
-                                            </select>
-                                        </td>
-                                        <td>
-                                            @if(!Auth::guest())
-                                                <button class="btn btn-primary btn-sm" title="Save" id="{{'save-'.$dp->id}}">
-                                                    Save
-                                                </button>
-                                                <button class="btn btn-default btn-sm" title="Cancel" id="{{'cancel-'.$dp->id}}">
-                                                    Cancel
-                                                </button>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                <!-- Edit result modal -->
-                                <div class="modal fade" id="editResult" role="dialog">
-                                    <div class="modal-dialog" style="margin-top: 5%">
-                                        <div class="col-sm-8 col-sm-offset-2" id="editAlert" style="text-align: center">
-                                        </div>
-                                    </div>
+                    </td>
+                    <td>
+                        @if(!Auth::guest())
+                            <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn-floating blue" title="Employee list"><i class="material-icons">view_list</i></a>
+                            <a href="#" class="btn-floating blue" title="Edit" id="{{'show-edit-'.$dp->id}}">
+                                <i class="material-icons">mode_edit</i>
+                            </a>
+                            <div id="confirmDelete" class="modal">
+                                <div class="modal-content">
+                                    <h4>Delete department</h4>
+                                    <p>Are you sure want to delete this?</p>
                                 </div>
-                                
-                            </tbody>
-                            </thead>
-                        </table>
-                        <center>
-                            {!! $departments->render() !!}
-                        </center>
-                    </div>
-                </div>
+                                <div class="modal-footer">
+                                    <button href="#" class="modal-action modal-close waves-effect waves-light btn-flat">Cancel</button>
+                                    <button id="confirm" class="modal-action modal-close waves-effect waves-light btn-flat red">Delete</button>
+                                </div>
+                            </div>
+                            <form role="form" method="POST" action="{{url('/department').'/'.$dp->id.'/delete'}}" accept-charset="UTF-8" style="display:inline">
+                                {{csrf_field()}}
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" class="form-control" name="dp-id" value="{{$dp->id}}">
+                                <button class="btn-floating red modal-trigger" type="button" href="#confirmDelete" title="Delete">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                            </form>
+                        @endif
+                    </td>
+                </tr>
+                <tr id="{{'edit-'.$dp->id}}" hidden class="tr-edit">
+                    <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
+                    <td>
+                        <input type="text" class="form-control input-sm" value="{{$dp->name}}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control input-sm" value="{{$dp->office_number}}">
+                    </td>
+                    <td>
+                        <select class="form-control input-sm">
+                            @if(sizeof($employees))
+                                @foreach($employees as $em)
+                                    @if($em->id==$dp->manager_id)
+                                        <option value="{{$em->id}}"selected>{{$em->name}}</option>
+                                    @else
+                                        <option value="{{$em->id}}">{{$em->name}}</option>
+                                    @endif
+                                @endforeach
+                            @else
+                                <option selected></option>
+                            @endif
+                        </select>
+                    </td>
+                    <td>
+                        @if(!Auth::guest())
+                            <button class="btn btn-primary btn-sm" title="Save" id="{{'save-'.$dp->id}}">
+                                Save
+                            </button>
+                            <button class="btn btn-default btn-sm" title="Cancel" id="{{'cancel-'.$dp->id}}">
+                                Cancel
+                            </button>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <!-- Edit result modal -->
+    <div class="modal fade" id="editResult" role="dialog">
+        <div class="modal-dialog" style="margin-top: 5%">
+            <div class="col-sm-8 col-sm-offset-2" id="editAlert" style="text-align: center">
             </div>
         </div>
     </div>
+
+
+    <center>
+        {!! $departments->render() !!}
+    </center>
 @endsection
 
 @section('script')
     <script>
+        $('.modal-trigger').leanModal({
+            ready: function () {
+                var form = $(e.relatedTarget).closest('form');
+                $(this).find('.modal-footer #confirm').data('form', form);
+            }
+        });
         {{--Modal confirm script--}}
         $('#confirmDelete').on('show.bs.modal', function (e) {
             $message = $(e.relatedTarget).attr('data-message');
