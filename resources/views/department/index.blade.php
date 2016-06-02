@@ -65,7 +65,7 @@
                         <input type="text" class="form-control input-sm" value="{{$dp->office_number}}">
                     </td>
                     <td>
-                        <select>
+                        <select id="selectManager">
                             @if(sizeof($employees))
                                 @foreach($employees as $em)
                                     @if($em->id==$dp->manager_id)
@@ -140,7 +140,7 @@
                     'dp-id': $('input[name="dp-id"]').val(),
                     'dp-name': edit_data.eq(1).children().eq(0).val(),
                     'dp-office-number': edit_data.eq(2).children().eq(0).val(),
-                    'dp-manager-id': edit_data.eq(3).children().eq(0).val(),
+                    'dp-manager-id': $('#selectManager').val(),
                     '_token': $('input[name=_token]').val()
                 },
                 success: function(data){
@@ -154,13 +154,13 @@
                         $('#info-' + id).show();
                     }
                     $('#editAlert').html('<div class="alert alert-' + data.alert_type +' alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="modal">&times;</button><strong>' + data.result + '</strong></div>');
-                    $('#editResult').modal();
+                    $('#editResult').openModal();
                 },
                 error: function(data) {
                     var errors = data.responseJSON;
                     error = errors[Object.keys(errors)[0]][0];
                     $('#editAlert').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="modal">&times;</button><strong>' + error + '</strong></div>');
-                    $('#editResult').modal();
+                    $('#editResult').openModal();
                 }
             });
         });
