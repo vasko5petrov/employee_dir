@@ -6,7 +6,7 @@
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">Welcome</span>
+                    <h5 class="card-title">Welcome</h5>
                     <p>
                         Hi there. You're using Employee Directory application.
                         </br>

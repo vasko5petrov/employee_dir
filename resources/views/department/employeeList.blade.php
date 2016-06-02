@@ -1,22 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container animated zoomIn">
+    <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a href="{{url('/department').'/'.$dp->id.'/detail'}}">{{$dp->name}} </a>
-                        <i class="fa fa-chevron-right" aria-hidden="true"></i> Employees ({{sizeof($employees)}})
-                        <div class="pull-right">
-                            <a href="{{URL::previous()}}" class="btn btn-primary btn-xs">
-                                <i class="fa fa-btn fa-chevron-left" aria-hidden="true"></i>Back
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <table class="table table-hover">
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <h5 class="card-title">
+                            <a href="{{url('/department').'/'.$dp->id.'/detail'}}">{{$dp->name}}</a>
+                            <span class="chip right">{{ sizeof($employees) }} {{ sizeof($employees) != 1 ? 'employees' : 'employee' }}</span>
+                        </h5>
+                        <table class="responsive-table">
                             <thead>
                             <tr>
                                 <th>#</th>
