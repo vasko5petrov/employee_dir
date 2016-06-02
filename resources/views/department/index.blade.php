@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h4>Departments</h4>
+        <h5>Departments</h5>
         @if(!Auth::guest())
             <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
                 <a href="{{url('/department/add')}}" class="btn-floating btn-large waves-effect waves-light green" title="Add department">
@@ -10,7 +10,7 @@
                 </a>
             </div>
         @endif
-        <table>
+        <table class="responsive-table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -37,7 +37,6 @@
                             <a class="btn-floating green" title="Edit" id="{{'show-edit-'.$dp->id}}"><i class="material-icons">mode_edit</i></a>
                             <div id="confirmDelete" class="modal">
                                 <div class="modal-content">
-                                    <h4>Delete department</h4>
                                     <p>Are you sure want to delete this?</p>
                                 </div>
                                 <div class="modal-footer">

@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
         
         $user = new App\User();
         $user->email = 'example@gmail.com';
-        $user->username = 'Admin';
+        $user->username = 'Administrator';
         $user->password = bcrypt('123456');
         $user->save();
 
         for ($i = 0; $i < 40; $i++) {
             $employee = new App\Employee();
-            $employee->name = 'Example Employee '.strval($i + 1);
+            $employee->name = 'Employee '.strval($i + 1);
             $employee->job_title = 'Assistant';
             $employee->department_id = $i + 1;
             $employee->email = 'example_employee'.strval($i + 1).'@gmail.com';
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
         for ($i =0; $i < 40; $i++) {
             $deparment = new App\Department();
-            $deparment->name = 'Example Department '.strval($i + 1);
+            $deparment->name = 'Department '.strval($i + 1);
             $deparment->office_number = '0978561225';
             $deparment->manager_id = $i + 1;
             $deparment->save();
