@@ -53,7 +53,7 @@
                 @else
                     <li>
                         <a href="#" class="dropdown-button"  data-activates="menu-dropdown">
-                            <span style="width: 50px;">Welcome, {{ Auth::user()->username }}<i class="material-icons right">arrow_drop_down</i></span>
+                            <span style="width: 50px;">{{ Auth::user()->username }}<i class="material-icons right">arrow_drop_down</i></span>
                         </a>
                         <ul id="menu-dropdown" class="dropdown-content">
                             <li><a href="{{url('/update/password')}}"><i class="tiny material-icons left" style="font-size: 18px;">mode_edit</i>Edit password</a></li>
@@ -75,7 +75,7 @@
                 @else
                     <li>
                         <a href="#" class="dropdown-button"  data-activates="mobile-menu-dropdown">
-                            <span style="width: 50px;">Welcome, {{ Auth::user()->username }}<i class="material-icons right">arrow_drop_down</i></span>
+                            <span style="width: 50px;">{{ Auth::user()->username }}<i class="material-icons right">arrow_drop_down</i></span>
                         </a>
                     </li>
                     <ul id="mobile-menu-dropdown" class="dropdown-content">

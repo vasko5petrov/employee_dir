@@ -16,8 +16,8 @@
                     </p>
                 </div>
                 <div class="card-action">
-                    <a href="{{ url('/department') }}">View departments</a>
-                    <a href="{{ url('/employee') }}">View employees</a>
+                    <a href="{{ url('/department') }}">Departments</a>
+                    <a href="{{ url('/employee') }}">Employees</a>
                 </div>
             </div>
         </div>

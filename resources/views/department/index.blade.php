@@ -152,14 +152,16 @@
                         $('#edit-' + id).hide();
                         $('#info-' + id).show();
                     }
-                    $('#editAlert').html('<div class="alert alert-' + data.alert_type +' alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="modal">&times;</button><strong>' + data.result + '</strong></div>');
-                    $('#editResult').openModal();
+                    $toastContent = $('<span style="text-align: center;"><strong>' + data.result + '</strong></span>');
+                    Materialize.toast($toastContent, 5000);
+//                    $('#editAlert').html('<div class="alert alert-' + data.alert_type +' alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="modal">&times;</button><strong>' + data.result + '</strong></div>');
+//                    $('#editResult').openModal();
                 },
                 error: function(data) {
                     var errors = data.responseJSON;
                     error = errors[Object.keys(errors)[0]][0];
-                    $('#editAlert').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="modal">&times;</button><strong>' + error + '</strong></div>');
-                    $('#editResult').openModal();
+                    $toastContent = $('<strong>' + error + '</strong>');
+                    Materialize.toast($toastContent, 5000);
                 }
             });
         });
