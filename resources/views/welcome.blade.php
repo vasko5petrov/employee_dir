@@ -1,16 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" xmlns="http://www.w3.org/1999/html">
+<div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Welcome</div>
-
-                <div class="panel-body">
-                    Hi there. You're using Employee Directory application.
-                    </br>
-                    Enjoy!
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Welcome</span>
+                    <p>
+                        Hi there. You're using Employee Directory application.
+                        </br>
+                        Enjoy!
+                        <br>
+                        Check out our <a href="https://github.com/trieudh58/employee_dir">repo on Github</a>, or visit demo <a href="http://www.velocityteam.xyz">here</a>
+                    </p>
+                </div>
+                <div class="card-action">
+                    <a href="{{ url('/department') }}">View departments</a>
+                    <a href="{{ url('/employee') }}">View employees</a>
                 </div>
             </div>
         </div>

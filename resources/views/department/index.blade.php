@@ -3,6 +3,13 @@
 @section('content')
     <div class="container">
         <h4>Departments</h4>
+        @if(!Auth::guest())
+            <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                <a href="{{url('/department/add')}}" class="btn-floating btn-large waves-effect waves-light green" title="Add department">
+                    <i class="large material-icons">add</i>
+                </a>
+            </div>
+        @endif
         <table>
             <thead>
                 <tr>
@@ -10,7 +17,7 @@
                     <th>Name</th>
                     <th>Office Number</th>
                     <th>Manager</th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,11 +32,9 @@
                         @endif
                     </td>
                     <td>
+                        <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn-floating blue" title="Employee list"><i class="material-icons">view_list</i></a>
                         @if(!Auth::guest())
-                            <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn-floating blue" title="Employee list"><i class="material-icons">view_list</i></a>
-                            <a href="#" class="btn-floating blue" title="Edit" id="{{'show-edit-'.$dp->id}}">
-                                <i class="material-icons">mode_edit</i>
-                            </a>
+                            <a class="btn-floating green" title="Edit" id="{{'show-edit-'.$dp->id}}"><i class="material-icons">mode_edit</i></a>
                             <div id="confirmDelete" class="modal">
                                 <div class="modal-content">
                                     <h4>Delete department</h4>
@@ -60,11 +65,11 @@
                         <input type="text" class="form-control input-sm" value="{{$dp->office_number}}">
                     </td>
                     <td>
-                        <select class="form-control input-sm">
+                        <select>
                             @if(sizeof($employees))
                                 @foreach($employees as $em)
                                     @if($em->id==$dp->manager_id)
-                                        <option value="{{$em->id}}"selected>{{$em->name}}</option>
+                                        <option value="{{$em->id}}" selected>{{$em->name}}</option>
                                     @else
                                         <option value="{{$em->id}}">{{$em->name}}</option>
                                     @endif
@@ -76,17 +81,21 @@
                     </td>
                     <td>
                         @if(!Auth::guest())
-                            <button class="btn btn-primary btn-sm" title="Save" id="{{'save-'.$dp->id}}">
-                                Save
-                            </button>
-                            <button class="btn btn-default btn-sm" title="Cancel" id="{{'cancel-'.$dp->id}}">
-                                Cancel
-                            </button>
+                            <a class="waves-effect waves-light btn white" id="{{'save-'.$dp->id}}">
+                                <i class="material-icons" style="color: green;">done</i>
+                            </a>
+                            <a class="waves-effect waves-light btn white" id="{{'cancel-'.$dp->id}}">
+                                <i class="material-icons" style="color: red;">cancel</i>
+                            </a>
                         @endif
                     </td>
                 </tr>
             @endforeach
         </table>
+        <div class="divider"></div>
+        <center>
+            {!! $departments->render() !!}
+        </center>
     </div>
 
     <!-- Edit result modal -->
@@ -96,36 +105,14 @@
             </div>
         </div>
     </div>
-
-
-    <center>
-        {!! $departments->render() !!}
-    </center>
 @endsection
 
 @section('script')
     <script>
-        $('.modal-trigger').leanModal({
-            ready: function () {
-                var form = $(e.relatedTarget).closest('form');
-                $(this).find('.modal-footer #confirm').data('form', form);
-            }
-        });
-        {{--Modal confirm script--}}
-        $('#confirmDelete').on('show.bs.modal', function (e) {
-            $message = $(e.relatedTarget).attr('data-message');
-            $(this).find('.modal-body p').text($message);
-            $title = $(e.relatedTarget).attr('data-title');
-            $(this).find('.modal-title').text($title);
-
-            // Pass form reference to modal for submission on yes/ok
-            var form = $(e.relatedTarget).closest('form');
-            $(this).find('.modal-footer #confirm').data('form', form);
-        });
-
+        $('.modal-trigger').leanModal();
+        $('select').material_select();
         <!-- Form confirm (yes/ok) handler, submits form -->
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-            console.log($('#deleteForm'));
             $('#deleteForm').submit();
         });
         

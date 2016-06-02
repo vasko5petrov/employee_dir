@@ -37,7 +37,8 @@
             <a class="brand-logo" href="{{ url('/') }}">
                 <!-- Branding Image -->
                 {{--<img src="{{URL::asset('logo.png')}}" width="24" style="vertical-align: middle; display: inline-block;">--}}
-                <div style="vertical-align: middle; display: inline-block;">Employee Directory</div>
+                {{--<div style="vertical-align: middle; display: inline-block;">Employee Directory</div>--}}
+                Employee Directory
             </a>
             <a href="#" data-activates="nav-mobile" class="button-collapse">
                 <i class="material-icons">menu</i>
@@ -50,17 +51,16 @@
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>
                 @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->username }} <span class="caret"></span>
+                    <li>
+                        <a href="#" class="dropdown-button"  data-activates="menu-dropdown">
+                            <span style="width: 50px;">Welcome, {{ Auth::user()->username }}<i class="material-icons right">arrow_drop_down</i></span>
                         </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{url('/update/password')}}"><i class="fa fa-btn fa-pencil"></i>Update password</a></li>
+                        <ul id="menu-dropdown" class="dropdown-content">
+                            <li><a href="{{url('/update/password')}}"><i class="tiny material-icons left" style="font-size: 18px;">mode_edit</i>Edit password</a></li>
                             @if(Auth::user()->email == 'example@gmail.com')
-                                <li><a href="{{ url('/invite') }}"><i class="fa fa-btn fa-envelope"></i>Invite admin</a></li>
+                                <li><a href="{{ url('/invite') }}"><i class="tiny material-icons left" style="font-size: 18px;">email</i>Invite admin</a></li>
                             @endif
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            <li><a href="{{ url('/logout') }}"><i class="tiny material-icons left" style="font-size: 18px;">chevron_left</i>Logout</a></li>
                         </ul>
                     </li>
                 @endif
@@ -73,19 +73,18 @@
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>
                 @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->username }} <span class="caret"></span>
+                    <li>
+                        <a href="#" class="dropdown-button"  data-activates="mobile-menu-dropdown">
+                            <span style="width: 50px;">Welcome, {{ Auth::user()->username }}<i class="material-icons right">arrow_drop_down</i></span>
                         </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{url('/update/password')}}"><i class="fa fa-btn fa-pencil"></i>Update password</a></li>
-                            @if(Auth::user()->email == 'example@gmail.com')
-                                <li><a href="{{ url('/invite') }}"><i class="fa fa-btn fa-envelope"></i>Invite admin</a></li>
-                            @endif
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                        </ul>
                     </li>
+                    <ul id="mobile-menu-dropdown" class="dropdown-content">
+                        <li><a href="{{url('/update/password')}}"><i class="tiny material-icons left" style="font-size: 18px;">mode_edit</i>Edit password</a></li>
+                        @if(Auth::user()->email == 'example@gmail.com')
+                            <li><a href="{{ url('/invite') }}"><i class="tiny material-icons left" style="font-size: 18px;">email</i>Invite admin</a></li>
+                        @endif
+                        <li><a href="{{ url('/logout') }}"><i class="tiny material-icons left" style="font-size: 18px;">chevron_left</i>Logout</a></li>
+                    </ul>
                 @endif
             </ul>
         </div>
@@ -102,6 +101,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".button-collapse").sideNav();
+            $(".dropdown-button").dropdown();
             $(function() {
                 $.ajaxSetup({
                     headers: {
