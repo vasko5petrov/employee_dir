@@ -160,7 +160,7 @@
                 error: function(data) {
                     var errors = data.responseJSON;
                     error = errors[Object.keys(errors)[0]][0];
-                    $toastContent = $('<strong>' + error + '</strong>');
+                    $toastContent = $('<span style="text-align: center;"><strong>' + error + '</strong></span>');
                     Materialize.toast($toastContent, 5000);
                 }
             });
