@@ -33,7 +33,7 @@
 </head>
 <body id="app-layout">
     <nav>
-        <div class="nav-wrapper">
+        <div class="nav-wrapper light-green darken-2">
             <a class="brand-logo" href="{{ url('/') }}">
                 <!-- Branding Image -->
                 {{--<img src="{{URL::asset('logo.png')}}" width="24" style="vertical-align: middle; display: inline-block;">--}}
