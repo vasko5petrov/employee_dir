@@ -1,73 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container animated fadeInUp">
+<div class="container">
     <div class="row">
-        @if(isset($result) && isset($alert_type))
-            <div class="col-md-8 col-md-offset-2">
-                <div class="alert alert-{{$alert_type}} alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>{{$result}}</strong>
-                </div>
-            </div>
-        @endif
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {!! csrf_field() !!}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input type="email" class="form-control{{$errors->first('email') ? ' animated shake' : ''}}" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+        <div class="col s12 m8 offset-m2">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="card-title"><strong>Login</strong></h5>
+                    <div>
+                        <form method="post" action="{{ url('/login') }}">
+                            <div class="row">
+                                {!! csrf_field() !!}
+                                <div class="input-field col s12">
+                                    <input type="email" class="validate" data-error="{{ $errors->first('email') }}" name="email">
+                                    <label for="email">Email</label>
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="input-field col s12">
+                                    <input type="password" class="validate" name="password">
+                                    <label for="password">Password</label>
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('password') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control{{$errors->first('password') ? ' animated shake' : ''}}" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
+                                    @endif
+                                </div>
+                                <div class="input-field col s12">
+                                    <input type="checkbox" name="remember" id="remember" class="filled-in">
+                                    <label for="remember">Remember me</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <button class="btn waves-effect waves-light" type="submit" name="submit">Login</button>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>Login
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
