@@ -20,7 +20,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody">
             @foreach($departments as $index=>$dp)
                 <tr id="{{'info-'.$dp->id}}">
                     <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
@@ -110,6 +110,35 @@
     <script>
         $('.modal-trigger').leanModal();
         $('select').material_select();
+
+        // Show/hide floating button on scroll
+        $(window).scroll(function () {
+            var btn  = $('.fixed-action-btn');
+            btn.fadeOut();
+        });
+        $('#tbody').scroll(function () {
+            var btn  = $('.fixed-action-btn');
+            btn.fadeOut();
+        });
+        // Scroll end extension
+        $.fn.scrollEnd = function(callback, timeout) {
+            $(this).scroll(function(){
+                var $this = $(this);
+                if ($this.data('scrollTimeout')) {
+                    clearTimeout($this.data('scrollTimeout'));
+                }
+                $this.data('scrollTimeout', setTimeout(callback,timeout));
+            });
+        };
+        $(window).scrollEnd(function () {
+            var btn  = $('.fixed-action-btn');
+            btn.fadeIn();
+        }, 1000);
+        $('#tbody').scrollEnd(function () {
+            var btn  = $('.fixed-action-btn');
+            btn.fadeIn();
+        }, 1000);
+
         <!-- Form confirm (yes/ok) handler, submits form -->
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
             $('#deleteForm').submit();
