@@ -1,75 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container animated fadeInUp">
-        <div class="row">
-            @if(isset($result) && isset($alert_type))
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="alert alert-{{$alert_type}} alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>{{$result}}</strong>
-                    </div>
-                </div>
-            @endif
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Update password
-                    </div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/update/password') }}">
-                            {!! csrf_field() !!}
-
-                            <div class="form-group{{$errors->has('current_password') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Current password</label>
-
-                                <div class="col-md-6">
-                                    <input type="password" class="form-control{{$errors->first('current_password') ? ' animated shake' : ''}}" name="current_password" value="{{old('current_password')}}">
-                                    @if($errors->has('current_password'))
+<div class="container">
+    <div class="row">
+        @if(isset($result) && isset($alert_type))
+            <div class="col s12 m8 offset-m2" hidden>
+                <span id="result" value="{{ $result }}">{{ $result }}</span>
+            </div>
+        @endif
+        <div class="col s12 m8 offset-m2">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="card-title">Update password</h5>
+                    <div>
+                        <form method="POST" action="{{ url('/update/password') }}">
+                            <div class="row">
+                                {!! csrf_field() !!}
+                                <div class="input-field col s12">
+                                    <input type="password" class="validate" data-error="{{ $errors->first('current_password') }}" name="current_password" value="{{ old('current_password') }}">
+                                    <label for="current_password">Current password</label>
+                                    @if ($errors->has('current_password'))
                                         <span class="help-block">
-                                            <strong>{{$errors->first('current_password')}}</strong>
+                                            <strong style="color: red;">{{ $errors->first('current_password') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-
-                            <div class="form-group{{$errors->has('new_password') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">New password</label>
-
-                                <div class="col-md-6">
-                                    <input type="password" class="form-control{{$errors->first('new_password') ? ' animated shake' : ''}}" name="new_password">
-                                    @if($errors->has('new_password'))
+                                <div class="input-field col s12">
+                                    <input type="password" class="validate" data-error="{{ $errors->first('new_password') }}" name="new_password" value="{{ old('new_password') }}">
+                                    <label for="new_password">New password</label>
+                                    @if ($errors->has('new_password'))
                                         <span class="help-block">
-                                            <strong>{{$errors->first('new_password')}}</strong>
+                                            <strong style="color: red;">{{ $errors->first('new_password') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-
-                            <div class="form-group{{$errors->has('password_confirm') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Confirm new password</label>
-
-                                <div class="col-md-6">
-                                    <input type="password" class="form-control{{$errors->first('password_confirm') ? ' animated shake' : ''}}" name="password_confirm">
-                                    @if($errors->has('password_confirm'))
+                                <div class="input-field col s12">
+                                    <input type="password" class="validate" data-error="{{ $errors->first('password_confirm') }}" name="password_confirm" value="{{ old('password_confirm') }}">
+                                    <label for="password_confirm">Confirm password</label>
+                                    @if ($errors->has('password_confirm'))
                                         <span class="help-block">
-                                            <strong>{{$errors->first('password_confirm')}}</strong>
+                                            <strong style="color: red;">{{ $errors->first('password_confirm') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-btn fa-floppy-o"></i>Save
+                                <div class="input-field col s12">
+                                    <button class="btn waves-effect waves-light" type="submit" name="submit">
+                                        <i class="material-icons left">save</i>Save
                                     </button>
-                                    <a href="{{url('/')}}" type="button" class="btn btn-default">
-                                        Cancel
+                                    <a href="{{url('/')}}" type="button" class="btn waves-effect waves-light">
+                                        <i class="material-icons left">cancel</i>Cancel
                                     </a>
                                 </div>
                             </div>
@@ -79,4 +58,14 @@
             </div>
         </div>
     </div>
+</div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function () {
+        var msg = $('#result');
+        Materialize.toast(msg, 5000);
+    });
+</script>
 @endsection
