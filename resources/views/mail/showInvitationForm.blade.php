@@ -1,66 +1,45 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container animated fadeInUp">
-        <div class="row">
-            @if(count($errors) == 0 && isset($flag))
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="alert alert-{{$flag == true ? 'success' : 'warning'}} alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>
-                            @if($flag == true)
-                                Email sent!
-                            @else
-                                Email existed!
-                            @endif
-                        </strong>
-                    </div>
-                </div>
-            @endif
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Invite a new administrator</div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/invite/send-invitation') }}">
-                            {!! csrf_field() !!}
-
-                            <div class="form-group{{$errors->has('admin-username') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Username</label>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control{{$errors->first('admin-username') ? ' animated shake' : ''}}" name="admin-username" value="{{old('admin-username')}}" autofocus>
-                                    @if($errors->has('admin-username'))
+<div class="container">
+    <div class="row">
+        @if(isset($flag))
+            <div class="col s12 m8 offset-m2">
+                <input id="flag" value="{{ $flag }}" type="text" disabled hidden>
+            </div>
+        @endif
+        <div class="col s12 m8 offset-m2">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="card-title">Invite new administrator</h5>
+                    <div>
+                        <form method="POST" action="{{ url('/invite/send-invitation') }}">
+                            <div class="row">
+                                {!! csrf_field() !!}
+                                <div class="input-field col s12">
+                                    <input type="text" class="validate" data-error="{{ $errors->first('admin-username') }}" name="admin-username" value="{{ old('admin-username') }}" autofocus>
+                                    <label for="admin-username">Username</label>
+                                    @if ($errors->has('admin-username'))
                                         <span class="help-block">
-                                            <strong>{{$errors->first('admin-username')}}</strong>
+                                            <strong style="color: red;">{{ $errors->first('admin-username') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-
-                            <div class="form-group{{$errors->has('admin-email') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Email</label>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control{{$errors->first('admin-email') ? ' animated shake' : ''}}" name="admin-email" value="{{old('admin-email')}}" autofocus>
-                                    @if($errors->has('admin-email'))
+                                <div class="input-field col s12">
+                                    <input type="email" class="validate" data-error="{{ $errors->first('admin-email') }}" name="admin-email" value="{{ old('admin-email') }}">
+                                    <label for="admin-email">Email</label>
+                                    @if ($errors->has('admin-email'))
                                         <span class="help-block">
-                                            <strong>{{$errors->first('admin-email')}}</strong>
+                                            <strong style="color: red;">{{ $errors->first('admin-email') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-btn fa-paper-plane-o"></i>Send invitation
+                                <div class="input-field col s12">
+                                    <button type="submit" class="btn waves-effect waves-light" name="submit">
+                                        <i class="material-icons left">send</i>Send
                                     </button>
-                                    <a type="button" class="btn btn-default" href="{{url('/')}}">
-                                        Cancel
+                                    <a href="{{ url('/') }}" class="btn waves-effect waves-light">
+                                        <i class="material-icons left">cancel</i>Cancel
                                     </a>
                                 </div>
                             </div>
@@ -70,4 +49,23 @@
             </div>
         </div>
     </div>
+</div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function () {
+        var flag = $('#flag').val();
+        var msg = '';
+        if (flag) {
+            if (flag == 1) {
+                msg = 'Email sent.';
+            }
+            else {
+                msg = 'Error. Please try again.';
+            }
+            Materialize.toast(msg, 5000);
+        }
+    });
+</script>
 @endsection

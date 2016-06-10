@@ -31,6 +31,7 @@ class MailController extends Controller
         $messages = [
             'admin-email.required' => 'The email field is required.',
             'admin-email.email' => 'Please provide a valid email address.',
+            'admin-username.required' => 'The username field is required.',
         ];
         $rules = [
             'admin-email' => 'required|email',
@@ -77,10 +78,10 @@ class MailController extends Controller
                 });
 
             // Success flag
-            $flag = true;
+            $flag = 1;
         }
         else {
-            $flag = false;
+            $flag = 0;
         }
         return view('mail.showInvitationForm', compact('flag'));
     }
