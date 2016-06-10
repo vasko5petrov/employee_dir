@@ -20,6 +20,13 @@
                     <th>Actions</th>
                 </tr>
             </thead>
+            <style>
+                @media only screen and (min-width: 993px) {
+                    [id^='action'] {
+                        visibility: hidden;
+                    }
+                }
+            </style>
             <tbody id="tbody">
             @foreach($departments as $index=>$dp)
                 <tr id="{{'info-'.$dp->id}}">
@@ -32,6 +39,7 @@
                         @endif
                     </td>
                     <td>
+                        <div id="{{'action-'.$dp->id}}">
                         <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn-floating blue" title="Employee list"><i class="material-icons">view_list</i></a>
                         @if(!Auth::guest())
                             <a class="btn-floating green" title="Edit" id="{{'show-edit-'.$dp->id}}"><i class="material-icons">mode_edit</i></a>
@@ -53,9 +61,10 @@
                                 </button>
                             </form>
                         @endif
+                        </div>
                     </td>
                 </tr>
-                <tr id="{{'edit-'.$dp->id}}" hidden class="tr-edit">
+                <tr id="{{'edit-'.$dp->id}}" class="tr-edit" style="display: none;">
                     <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
                     <td>
                         <input type="text" class="form-control input-sm" value="{{$dp->name}}">
@@ -193,6 +202,15 @@
                     Materialize.toast($toastContent, 5000);
                 }
             });
+        });
+        
+        <!-- Mouse enter/leave a table row -->
+        $('[id^="info-"]').mouseenter(function() {
+            id = $(this).attr('id').substr(5);
+            $('#action-' + id).css('visibility', 'visible'); 
+        }).mouseleave(function() {
+            id = $(this).attr('id').substr(5);
+            $('#action-' + id).css('visibility', 'hidden'); 
         });
     </script>
 @endsection
