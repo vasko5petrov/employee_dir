@@ -12,6 +12,11 @@
                 display: block;
             }
         }
+        @media only screen and (min-width: 993px) {
+            [id^='action'] {
+                visibility: hidden;
+            }
+        }
     </style>
     <div class="container">
         <h5>Employees</h5>
@@ -66,7 +71,7 @@
                 </tr>
             <tbody id="tbody">
             @foreach($employees as $index=>$em)
-                <tr>
+                <tr id="{{'info-'.$em->id}}">
                     <div>
                         <td>{{($employees->currentPage()-1)*8+$index+1}}</td>
                         <td><a href="{{url('/employee').'/'.$em->id.'/detail'}}">{{$em->name}}</a></td>
@@ -80,6 +85,7 @@
                         <td>{{$em->phone_number}}</td>
                         @if(!Auth::guest())
                             <td>
+                                <div id="{{'action-'.$em->id}}">
                                 <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn-floating green" title="Edit" id="{{'show-edit-'.$em->id}}"><i class="material-icons">mode_edit</i></a>
                                 <div id="confirmDelete" class="modal">
                                     <div class="modal-content">
@@ -98,6 +104,7 @@
                                         <i class="material-icons">delete</i>
                                     </button>
                                 </form>
+                                </div>
                             </td>
                         @endif
                     </div>
@@ -170,6 +177,15 @@
                 $('#show-search').show();
                 $('#search-form').hide();
             });
+        });
+        
+        <!-- Mouse enter/leave a table row -->
+        $('[id^="info-"]').mouseenter(function() {
+            id = $(this).attr('id').substr(5);
+            $('#action-' + id).css('visibility', 'visible'); 
+        }).mouseleave(function() {
+            id = $(this).attr('id').substr(5);
+            $('#action-' + id).css('visibility', 'hidden'); 
         });
     </script>
 @endsection
