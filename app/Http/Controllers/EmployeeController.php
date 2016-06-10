@@ -165,7 +165,7 @@ class EmployeeController extends Controller
         $departments = Department::all();
 
         // If the provided information from Edit form is not modified, do nothing
-        if ($em->name === $new_em_name && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email && !isset($new_em_picture)) {
+        if (!isset($new_em_picture) && $em->name === $new_em_name && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
             $result = 'Employee information remains unchanged!';
             $alert_type = 'warning';
         }
