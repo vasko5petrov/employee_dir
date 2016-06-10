@@ -85,8 +85,6 @@
                         <td>{{$em->phone_number}}</td>
                         @if(!Auth::guest())
                             <td>
-                                <div id="{{'action-'.$em->id}}">
-                                <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn-floating green" title="Edit" id="{{'show-edit-'.$em->id}}"><i class="material-icons">mode_edit</i></a>
                                 <div id="confirmDelete" class="modal">
                                     <div class="modal-content">
                                         <p>Are you sure want to delete this?</p>
@@ -96,6 +94,8 @@
                                         <button id="confirm" class="modal-action modal-close waves-effect waves-light btn-flat red">Delete</button>
                                     </div>
                                 </div>
+                                <div id="{{'action-'.$em->id}}">
+                                <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn-floating green" title="Edit" id="{{'show-edit-'.$em->id}}"><i class="material-icons">mode_edit</i></a>
                                 <form role="form" method="POST" action="{{url('/employee').'/'.$em->id.'/delete'}}" accept-charset="UTF-8" style="display:inline" id="deleteForm">
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="DELETE">

@@ -39,19 +39,19 @@
                         @endif
                     </td>
                     <td>
+                        <div id="confirmDelete" class="modal">
+                            <div class="modal-content">
+                                <p>Are you sure want to delete this?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button href="#" class="modal-action modal-close waves-effect waves-light btn-flat">Cancel</button>
+                                <button id="confirm" class="modal-action modal-close waves-effect waves-light btn-flat red">Delete</button>
+                            </div>
+                        </div>
                         <div id="{{'action-'.$dp->id}}">
                         <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn-floating blue" title="Employee list"><i class="material-icons">view_list</i></a>
                         @if(!Auth::guest())
                             <a class="btn-floating green" title="Edit" id="{{'show-edit-'.$dp->id}}"><i class="material-icons">mode_edit</i></a>
-                            <div id="confirmDelete" class="modal">
-                                <div class="modal-content">
-                                    <p>Are you sure want to delete this?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button href="#" class="modal-action modal-close waves-effect waves-light btn-flat">Cancel</button>
-                                    <button id="confirm" class="modal-action modal-close waves-effect waves-light btn-flat red">Delete</button>
-                                </div>
-                            </div>
                             <form role="form" method="POST" action="{{url('/department').'/'.$dp->id.'/delete'}}" accept-charset="UTF-8" style="display:inline" id="deleteForm">
                                 {{csrf_field()}}
                                 <input type="hidden" name="_method" value="DELETE">
