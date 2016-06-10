@@ -1,135 +1,130 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container animated fadeInUp">
-        <div class="row">
-            @if(count($errors) == 0 && isset($flag))
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>New employee successfully added!</strong>
-                    </div>
-                </div>
-            @endif
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Add employee</div>
-                    <div class="panel-body">
+<div class="container">
+    <div class="row">
+        @if(isset($flag))
+            <div class="col s12 m8 offset-m2">
+                <input id="flag" value="{{ $flag }}" type="text" disabled hidden>
+            </div>
+        @endif
+        <div class="col s12 m8 offset-m2">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="card-title">Add employee</h5>
+                    <div>
+                        {{--<link href="{{URL::asset('css/avatar.css')}}" rel="stylesheet" >--}}
                         {!! Form::open([
                             'action' => 'EmployeeController@add',
-                            'class' => 'form-horizontal',
                             'files' => true,
                             'method' => 'post',
                         ]) !!}
-                            <link href="{{URL::asset('css/avatar.css')}}" rel="stylesheet" >
-                            <div class="col-sm-4">
-                                <div align="center">
-                                    <img alt="Employee picture" src="{{url('/uploads/images/icon-user-default.png')}}" class="avatar img-responsive" id="avatar">
+                        <div class="row">
+                            <div class=" file-field input-field col s12">
+                                <div align="center" class="col s12">
+                                    <img alt="Employee picture" src="{{url('/uploads/images/icon-user-default.png')}}" style="width: 40%;" class="circle responsive-img" id="avatar">
                                 </div>
-                                <hr>
-                                {!! Form::file('image', ['id'=>'picture']) !!}
-                                @if($errors->has('image'))
+                                <div class="col s12">
+                                    <div class="btn col s4">
+                                        <span>Choose file</span>
+                                        {!! Form::file('image', ['id'=>'picture']) !!}
+                                    </div>
+                                    <div class="file-path-wrapper col s8">
+                                        <input class="file-path validate" type="text">
+                                    </div>
+                                    @if($errors->has('image'))
+                                        <span class="help-block">
+                                            <strong>{{$errors->first('image')}}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" class="validate" data-error="{{ $errors->first('em-name') }}" name="em-name" value="{{ old('em-name') }}" id="em-name" autofocus>
+                                <label for="em-name">Name</label>
+                                @if ($errors->has('em-name'))
                                     <span class="help-block">
-                                        <strong>{{$errors->first('image')}}</strong>
+                                        <strong style="color: red;">{{ $errors->first('em-name') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                            <div class="col-sm-8">
-                                <div class="form-group{{$errors->has('em-name') ? ' has-error' : ''}}">
-                                    <label class="col-md-4 control-label">Name</label>
-
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control{{$errors->first('em-name') ? ' animated shake' : ''}}" name="em-name" id="em-name" value="{{old('em-name')}}" autofocus>
-                                        @if($errors->has('em-name'))
-                                            <span class="help-block">
-                                            <strong>{{$errors->first('em-name')}}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group{{$errors->has('em-job-title') ? ' has-error' : ''}}">
-                                    <label class="col-md-4 control-label">Job title</label>
-
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control{{$errors->first('em-job-title') ? ' animated shake' : ''}}" name="em-job-title" id="em-job-title" value="{{old('em-job-title')}}">
-                                        @if($errors->has('em-job-title'))
-                                            <span class="help-block">
-                                            <strong>{{$errors->first('em-job-title')}}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group{{$errors->has('em-email') ? ' has-error' : ''}}">
-                                    <label class="col-md-4 control-label">Email</label>
-
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control{{$errors->first('em-email') ? ' animated shake' : ''}}" name="em-email" value="{{old('em-email')}}">
-                                        @if($errors->has('em-email'))
-                                            <span class="help-block">
-                                            <strong>{{$errors->first('em-email')}}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group{{$errors->has('em-phone-number') ? ' has-error' : ''}}">
-                                    <label class="col-md-4 control-label">Phone number</label>
-
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control{{$errors->first('em-phone-number') ? ' animated shake' : ''}}" name="em-phone-number" value="{{old('em-phone-number')}}">
-                                        @if($errors->has('em-phone-number'))
-                                            <span class="help-block">
-                                            <strong>{{$errors->first('em-phone-number')}}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group {{$errors->has('em-department-id') ? ' has-error' : ''}}">
-                                    <label class="col-md-4 control-label">Department</label>
-
-                                    <div class="col-md-8">
-                                        <select class="form-control{{$errors->first('em-department-id') ? ' animated shake' : ''}}" name="em-department-id" >
-                                            <option></option>
-                                            @if(sizeof($departments))
-                                                @foreach($departments as $dp)
-                                                    <option value="{{$dp->id}}">{{$dp->name}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                        @if($errors->has('em-department-id'))
-                                            <span class="help-block">
-                                            <strong>{{$errors->first('em-department-id')}}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary" id="em_button">
-                                            <i class="fa fa-btn fa-floppy-o"></i>Save
-                                        </button>
-                                        <a type="button" class="btn btn-default" href="{{url('/employee')}}">
-                                            Cancel
-                                        </a>
-                                    </div>
-                                </div>
+                            <div class="input-field col s12">
+                                <input type="text" class="validate" data-error="{{ $errors->first('em-job-title') }}" name="em-job-title" value="{{ old('em-job-title') }}" id="em-job-title">
+                                <label for="em-job-title">Job title</label>
+                                @if ($errors->has('em-job-title'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('em-job-title') }}</strong>
+                                    </span>
+                                @endif
                             </div>
+                            <div class="input-field col s12">
+                                <input type="email" class="validate" data-error="{{ $errors->first('em-email') }}" name="em-email" value="{{ old('em-email') }}" id="em-email">
+                                <label for="em-email">Email</label>
+                                @if ($errors->has('em-email'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('em-email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" class="validate" data-error="{{ $errors->first('em-phone-number') }}" name="em-phone-number" value="{{ old('em-phone-number') }}" id="em-phone-number">
+                                <label for="em-phone-number">Phone number</label>
+                                @if ($errors->has('em-phone-number'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('em-phone-number') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="input-field col s12">
+                                <select name="em-department-id" >
+                                    <option value=""></option>
+                                    @if(sizeof($departments))
+                                        @foreach($departments as $dp)
+                                            <option value="{{$dp->id}}">{{$dp->name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <label for="em-department-id">Department</label>
+                                @if($errors->has('em-department-id'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{$errors->first('em-department-id')}}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="input-field col s12">
+                                <button class="btn waves-effect waves-light" type="submit">
+                                    <i class="material-icons left">save</i>Save
+                                </button>
+                                <a href="{{ url('/employee') }}" class="btn waves-effect waves-light">
+                                    <i class="material-icons left">cancel</i>Cancel
+                                </a>
+                            </div>
+                        </div>
                         {!! Form::close() !!}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('script')
-    <script type="text/javascript" src="{{URL::asset('js/add_em_validation.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+
+            var flag = $('#flag').val();
+            var msg = '';
+            if (flag) {
+                if (flag == 1) {
+                    msg = 'New employee successfully added.';
+                }
+                else {
+                    msg = 'Error. Please try again.';
+                }
+                Materialize.toast(msg, 5000);
+            }
+        });
+    </script>
 @endsection
