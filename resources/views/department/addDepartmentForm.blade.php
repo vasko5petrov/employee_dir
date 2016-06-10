@@ -1,82 +1,61 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container animated fadeInUp">
-        <div class="row">
-            @if(count($errors) == 0 && isset($flag))
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>New department successfully added!</strong>
-                    </div>
-                </div>
-            @endif
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Add department</div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/department/add') }}">
-                            {!! csrf_field() !!}
-
-                            <div class="form-group{{$errors->has('dp-name') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Name</label>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control{{$errors->first('dp-name') ? ' animated shake' : ''}}" name="dp-name" value="{{old('dp-name')}}" id="dp-name" autofocus>
-
-                                    @if($errors->has('dp-name'))
+<div class="container">
+    <div class="row">
+        @if(isset($flag))
+            <div class="col s12 m8 offset-m2">
+                <input id="flag" value="{{ $flag }}" type="text" disabled hidden>
+            </div>
+        @endif
+        <div class="col s12 m8 offset-m2">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="card-title">Add department</h5>
+                    <div>
+                        <form method="POST" action="{{ url('/department/add') }}">
+                            <div class="row">
+                                {!! csrf_field() !!}
+                                <div class="input-field col s12">
+                                    <input type="text" class="validate" data-error="{{ $errors->first('dp-name') }}" name="dp-name" value="{{ old('dp-name') }}" id="dp-name" autofocus>
+                                    <label for="dp-name">Name</label>
+                                    @if ($errors->has('dp-name'))
                                         <span class="help-block">
-                                            <strong>{{$errors->first('dp-name')}}</strong>
+                                            <strong style="color: red;">{{ $errors->first('dp-name') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-
-                            <div class="form-group{{$errors->has('dp-office-number') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Office number</label>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control{{$errors->first('dp-office-number') ? ' animated shake' : ''}}" name="dp-office-number" value="{{old('dp-office-number')}}" id="dp-office-number">
-
-                                    @if($errors->has('dp-office-number'))
+                                <div class="input-field col s12">
+                                    <input type="text" class="validate" data-error="{{ $errors->first('dp-office-number') }}" name="dp-office-number" value="{{ old('dp-office-number') }}" id="dp-office-number">
+                                    <label for="dp-office-number">Office number</label>
+                                    @if ($errors->has('dp-office-number'))
                                         <span class="help-block">
-                                            <strong>{{$errors->first('dp-office-number')}}</strong>
+                                            <strong style="color: red;">{{ $errors->first('dp-office-number') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-
-                            <div class="form-group {{$errors->has('dp-manager-id') ? ' has-error' : ''}}">
-                                <label class="col-md-4 control-label">Manager</label>
-
-                                <div class="col-md-6">
-                                    <select class="form-control{{$errors->first('dp-manager-id') ? ' animated shake' : ''}}" name="dp-manager-id" >
-                                        <option></option>
+                                <div class="input-field col s12">
+                                    <select name="dp-manager-id">
+                                        <option value="" disabled selected>Choose one</option>
                                         @if(sizeof($employees))
                                             @foreach($employees as $em)
                                                 <option value="{{$em->id}}">{{$em->name}}</option>
                                             @endforeach
                                         @endif
                                     </select>
-                                    @if($errors->has('dp-manager-id'))
+                                    <label>Manager</label>
+                                    @if ($errors->has('dp-manager-id'))
                                         <span class="help-block">
-                                            <strong>{{$errors->first('dp-manager-id')}}</strong>
+                                            <strong style="color: red;">{{ $errors->first('dp-manager-id') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary" id="dp_button">
-                                        <i class="fa fa-btn fa-floppy-o"></i>Save
+                                <div class="input-field col s12">
+                                    <button class="btn waves-effect waves-light">
+                                        <i class="material-icons left">save</i>Save
                                     </button>
-                                    <a type="button" class="btn btn-default" href="{{url('/department')}}">
-                                        Cancel
+                                    <a href="{{ url('/department') }}" class="btn waves-effect waves-light">
+                                        <i class="material-icons left">cancel</i>Cancel
                                     </a>
                                 </div>
                             </div>
@@ -86,8 +65,26 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('script')
     <script type="text/javascript" src="{{URL::asset('js/dp_validation.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+
+            var flag = $('#flag').val();
+            var msg = '';
+            if (flag) {
+                if (flag == 1) {
+                    msg = 'New department successfully added.';
+                }
+                else {
+                    msg = 'Error. Please try again.';
+                }
+                Materialize.toast(msg, 5000);
+            }
+        });
+    </script>
 @endsection

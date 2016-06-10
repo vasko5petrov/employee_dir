@@ -49,6 +49,7 @@ class DepartmentController extends Controller
             'dp-office-number.required' => 'The office number field is required.',
             'dp-name.string' => 'The name field must be a string.',
             'dp-office-number.phone' => 'The office number field contains an invalid number.',
+            'dp-manager-id.required' => 'The manager field is required.'
         ];
 
         // Validate
