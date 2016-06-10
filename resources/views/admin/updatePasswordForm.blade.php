@@ -17,7 +17,7 @@
                             <div class="row">
                                 {!! csrf_field() !!}
                                 <div class="input-field col s12">
-                                    <input type="password" class="validate" data-error="{{ $errors->first('current_password') }}" name="current_password" value="{{ old('current_password') }}">
+                                    <input type="password" class="validate" data-error="{{ $errors->first('current_password') }}" name="current_password" value="{{ old('current_password') }}" autofocus>
                                     <label for="current_password">Current password</label>
                                     @if ($errors->has('current_password'))
                                         <span class="help-block">
@@ -65,7 +65,9 @@
 <script>
     $(document).ready(function () {
         var msg = $('#result');
-        Materialize.toast(msg, 5000);
+        if (msg) {
+            Materialize.toast(msg, 5000);
+        }
     });
 </script>
 @endsection
