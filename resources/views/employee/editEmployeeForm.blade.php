@@ -113,6 +113,7 @@
 @section('script')
     <script>
         $(document).ready(function () {
+            Materialize.updateTextFields();
             $('select').material_select();
 
             var msg = $('#result');
