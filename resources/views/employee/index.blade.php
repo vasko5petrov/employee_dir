@@ -73,7 +73,7 @@
             @foreach($employees as $index=>$em)
                 <tr id="{{'info-'.$em->id}}">
                     <div>
-                        <td>{{($employees->currentPage()-1)*8+$index+1}}</td>
+                        <td>{{($employees->currentPage()-1)*15+$index+1}}</td>
                         <td><a href="{{url('/employee').'/'.$em->id.'/detail'}}">{{$em->name}}</a></td>
                         <td>
                             @if($em->department)

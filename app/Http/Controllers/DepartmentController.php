@@ -16,7 +16,7 @@ class DepartmentController extends Controller
     // show list of departments
     public function index()
     {
-        $departments = Department::orderBy('name')->paginate(8);
+        $departments = Department::orderBy('name')->paginate(15);
         
         // Get list of employee (for selecting manager field)
         $employees = Employee::all();
@@ -28,7 +28,7 @@ class DepartmentController extends Controller
     public function employeeList($id)
     {
         $dp = Department::find($id);
-        $employees = Employee::where('department_id', '=', $id)->paginate(10);
+        $employees = Employee::where('department_id', '=', $id)->paginate(15);
         return view('department.employeeList', compact('dp', 'employees'));
     }
 

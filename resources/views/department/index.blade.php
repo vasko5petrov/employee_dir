@@ -30,7 +30,7 @@
             <tbody id="tbody">
             @foreach($departments as $index=>$dp)
                 <tr id="{{'info-'.$dp->id}}">
-                    <td>{{($departments->currentPage()-1)*8+$index+1}}</td>
+                    <td>{{($departments->currentPage()-1)*15+$index+1}}</td>
                     <td><a href="{{url('/department').'/'.$dp->id.'/detail'}}" id="dpName">{{$dp->name}}</a></td>
                     <td id="dpOfficeNumber">{{$dp->office_number}}</td>
                     <td>
