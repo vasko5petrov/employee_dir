@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container animated fadeInLeft">
     <div class="row">
         @if(isset($result) && isset($alert_type))
             <div class="col s12 m8 offset-m2" hidden>

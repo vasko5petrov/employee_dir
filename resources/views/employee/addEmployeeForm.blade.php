@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container animated fadeInLeft">
     <div class="row">
         @if(isset($flag))
             <div class="col s12 m8 offset-m2">
