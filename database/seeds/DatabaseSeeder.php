@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,23 +25,26 @@ class DatabaseSeeder extends Seeder
         $user->password = bcrypt('123456');
         $user->save();
 
-        for ($i = 0; $i < 40; $i++) {
-            $employee = new App\Employee();
-            $employee->name = 'Employee '.strval($i + 1);
-            $employee->job_title = 'Assistant';
-            $employee->department_id = $i + 1;
-            $employee->email = 'example_employee'.strval($i + 1).'@gmail.com';
-            $employee->phone_number = '0967162537';
-            $employee->picture = 'uploads/images/icon-user-default.png';
-            $employee->save();
+        // Using faker
+        $faker = Faker::create();
+        foreach (range(0, 20) as $index) {
+            foreach (range(0, 5) as $count) {
+                DB::table('employees')->insert([
+                    'name' => $faker->name,
+                    'job_title' => $faker->jobTitle,
+                    'department_id' => $index + 1,
+                    'email' => $faker->email,
+                    'phone_number' => $faker->phoneNumber,
+                    'picture' => 'uploads/images/icon-user-default.png'
+                ]);
+            }
         }
-
-        for ($i =0; $i < 40; $i++) {
-            $deparment = new App\Department();
-            $deparment->name = 'Department '.strval($i + 1);
-            $deparment->office_number = '0978561225';
-            $deparment->manager_id = $i + 1;
-            $deparment->save();
+        foreach (range(0, 40) as $index) {
+            DB::table('departments')->insert([
+                'name' => $faker->company,
+                'office_number' => $faker->tollFreePhoneNumber,
+                'manager_id' => $index + 1
+            ]);
         }
     }
 }
