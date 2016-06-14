@@ -40,7 +40,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <input type="hidden" name="em-id" value="{{$em->id}}">
-                                <input type="text" class="validate" data-error="{{ $errors->first('em-name') }}" name="em-name" value="{{ $em->name }}" id="em-name" autofocus>
+                                <input type="text" class="validate{{ $errors->first('em-name') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-name') }}" name="em-name" value="{{ $em->name }}" id="em-name" autofocus>
                                 <label for="em-name">Name</label>
                                 @if ($errors->has('em-name'))
                                     <span class="help-block">
@@ -49,7 +49,7 @@
                                 @endif
                             </div>
                             <div class="input-field col s12">
-                                <input type="text" class="validate" data-error="{{ $errors->first('em-job-title') }}" name="em-job-title" value="{{ $em->job_title }}" id="em-job-title">
+                                <input type="text" class="validate{{ $errors->first('em-job-title') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-job-title') }}" name="em-job-title" value="{{ $em->job_title }}" id="em-job-title">
                                 <label for="em-job-title">Job title</label>
                                 @if ($errors->has('em-job-title'))
                                     <span class="help-block">
@@ -58,7 +58,7 @@
                                 @endif
                             </div>
                             <div class="input-field col s12">
-                                <input type="email" class="validate" data-error="{{ $errors->first('em-email') }}" name="em-email" value="{{ $em->email }}" id="em-email">
+                                <input type="email" class="validate{{ $errors->first('em-email') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-email') }}" name="em-email" value="{{ $em->email }}" id="em-email">
                                 <label for="em-email">Email</label>
                                 @if ($errors->has('em-email'))
                                     <span class="help-block">
@@ -67,7 +67,7 @@
                                 @endif
                             </div>
                             <div class="input-field col s12">
-                                <input type="text" class="validate" data-error="{{ $errors->first('em-phone-number') }}" name="em-phone-number" value="{{ $em->phone_number }}" id="em-phone-number">
+                                <input type="text" class="validate{{ $errors->first('em-phone-number') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-phone-number') }}" name="em-phone-number" value="{{ $em->phone_number }}" id="em-phone-number">
                                 <label for="em-phone-number">Phone number</label>
                                 @if ($errors->has('em-phone-number'))
                                     <span class="help-block">

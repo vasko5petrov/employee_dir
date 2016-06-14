@@ -17,7 +17,7 @@
                             <div class="row">
                                 {!! csrf_field() !!}
                                 <div class="input-field col s12">
-                                    <input type="text" class="validate" data-error="{{ $errors->first('admin-username') }}" name="admin-username" value="{{ old('admin-username') }}" autofocus>
+                                    <input type="text" class="validate{{ $errors->first('admin-username') ? ' animated shake' : '' }}" data-error="{{ $errors->first('admin-username') }}" name="admin-username" value="{{ old('admin-username') }}" autofocus>
                                     <label for="admin-username">Username</label>
                                     @if ($errors->has('admin-username'))
                                         <span class="help-block">
@@ -26,7 +26,7 @@
                                     @endif
                                 </div>
                                 <div class="input-field col s12">
-                                    <input type="email" class="validate" data-error="{{ $errors->first('admin-email') }}" name="admin-email" value="{{ old('admin-email') }}">
+                                    <input type="email" class="validate{{ $errors->first('admin-email') ? ' animated shake' : '' }}" data-error="{{ $errors->first('admin-email') }}" name="admin-email" value="{{ old('admin-email') }}">
                                     <label for="admin-email">Email</label>
                                     @if ($errors->has('admin-email'))
                                         <span class="help-block">

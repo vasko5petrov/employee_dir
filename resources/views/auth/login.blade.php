@@ -12,7 +12,7 @@
                             <div class="row">
                                 {!! csrf_field() !!}
                                 <div class="input-field col s12">
-                                    <input type="email" class="validate" data-error="{{ $errors->first('email') }}" name="email">
+                                    <input type="email" class="validate{{ $errors->first('email') ? ' animated shake' : '' }}" data-error="{{ $errors->first('email') }}" name="email">
                                     <label for="email">Email</label>
                                     @if ($errors->has('email'))
                                         <span class="help-block">
@@ -21,7 +21,7 @@
                                     @endif
                                 </div>
                                 <div class="input-field col s12">
-                                    <input type="password" class="validate" name="password">
+                                    <input type="password" class="validate{{ $errors->first('password') ? ' animated shake' : '' }}" name="password">
                                     <label for="password">Password</label>
                                     @if ($errors->has('password'))
                                         <span class="help-block">

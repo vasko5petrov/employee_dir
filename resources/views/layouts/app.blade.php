@@ -16,7 +16,7 @@
 
     <!-- Styles -->
     {{--<link href="{{url('/css/bootstrap-flatly.min.css')}}" rel="stylesheet" type="text/css">--}}
-    {{--<link href="{{url('/css/animate.css')}}" rel="stylesheet" type="text/css">--}}
+    <link href="{{url('/css/animate.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ url('/materialize/css/materialize.min.css') }}" type="text/css">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">--}}

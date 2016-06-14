@@ -17,7 +17,7 @@
                             <div class="row">
                                 {!! csrf_field() !!}
                                 <div class="input-field col s12">
-                                    <input type="password" class="validate" data-error="{{ $errors->first('current_password') }}" name="current_password" value="{{ old('current_password') }}" autofocus>
+                                    <input type="password" class="validate{{ $errors->first('current_password') ? ' animated shake' : '' }}" data-error="{{ $errors->first('current_password') }}" name="current_password" value="{{ old('current_password') }}" autofocus>
                                     <label for="current_password">Current password</label>
                                     @if ($errors->has('current_password'))
                                         <span class="help-block">
@@ -26,7 +26,7 @@
                                     @endif
                                 </div>
                                 <div class="input-field col s12">
-                                    <input type="password" class="validate" data-error="{{ $errors->first('new_password') }}" name="new_password" value="{{ old('new_password') }}">
+                                    <input type="password" class="validate{{ $errors->first('new_password') ? ' animated shake' : '' }}" data-error="{{ $errors->first('new_password') }}" name="new_password" value="{{ old('new_password') }}">
                                     <label for="new_password">New password</label>
                                     @if ($errors->has('new_password'))
                                         <span class="help-block">
@@ -35,7 +35,7 @@
                                     @endif
                                 </div>
                                 <div class="input-field col s12">
-                                    <input type="password" class="validate" data-error="{{ $errors->first('password_confirm') }}" name="password_confirm" value="{{ old('password_confirm') }}">
+                                    <input type="password" class="validate{{ $errors->first('password_confirm') ? ' animated shake' : '' }}" data-error="{{ $errors->first('password_confirm') }}" name="password_confirm" value="{{ old('password_confirm') }}">
                                     <label for="password_confirm">Confirm password</label>
                                     @if ($errors->has('password_confirm'))
                                         <span class="help-block">
