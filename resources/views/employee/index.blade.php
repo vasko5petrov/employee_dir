@@ -57,65 +57,67 @@
             </button>
         </div>
 
-        <link href="{{URL::asset('css/search_form.css')}}" rel="stylesheet" >
-        <table class="responsive-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Department</th>
-                    <th>Job Title</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Actions</th>
-                </tr>
-            <tbody id="tbody">
-            @foreach($employees as $index=>$em)
-                <tr id="{{'info-'.$em->id}}">
-                    <div>
-                        <td>{{($employees->currentPage()-1)*15+$index+1}}</td>
-                        <td><a href="{{url('/employee').'/'.$em->id.'/detail'}}">{{$em->name}}</a></td>
-                        <td>
-                            @if($em->department)
-                                <a href="{{url('/department').'/'.$em->department->id.'/detail'}}">{{$em->department->name}}</a>
-                            @endif
-                        </td>
-                        <td>{{$em->job_title}}</td>
-                        <td>{{$em->email}}</td>
-                        <td>{{$em->phone_number}}</td>
-                        @if(!Auth::guest())
+        @if(sizeof($employees))
+            <link href="{{URL::asset('css/search_form.css')}}" rel="stylesheet" >
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Job Title</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Actions</th>
+                    </tr>
+                <tbody id="tbody">
+                @foreach($employees as $index=>$em)
+                    <tr id="{{'info-'.$em->id}}">
+                        <div>
+                            <td>{{($employees->currentPage()-1)*15+$index+1}}</td>
+                            <td><a href="{{url('/employee').'/'.$em->id.'/detail'}}">{{$em->name}}</a></td>
                             <td>
-                                <div id="confirmDelete" class="modal">
-                                    <div class="modal-content">
-                                        <p>Are you sure want to delete this?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button href="#" class="modal-action modal-close waves-effect waves-light btn-flat">Cancel</button>
-                                        <button id="confirm" class="modal-action modal-close waves-effect waves-light btn-flat red">Delete</button>
-                                    </div>
-                                </div>
-                                <div id="{{'action-'.$em->id}}">
-                                <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn-floating green" title="Edit" id="{{'show-edit-'.$em->id}}"><i class="material-icons">mode_edit</i></a>
-                                <form role="form" method="POST" action="{{url('/employee').'/'.$em->id.'/delete'}}" accept-charset="UTF-8" style="display:inline" id="deleteForm">
-                                    {{csrf_field()}}
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" class="form-control" name="em-id" value="{{$em->id}}">
-                                    <button class="btn-floating red modal-trigger" type="button" href="#confirmDelete" title="Delete">
-                                        <i class="material-icons">delete</i>
-                                    </button>
-                                </form>
-                                </div>
+                                @if($em->department)
+                                    <a href="{{url('/department').'/'.$em->department->id.'/detail'}}">{{$em->department->name}}</a>
+                                @endif
                             </td>
-                        @endif
-                    </div>
-                </tr>
-            @endforeach
-            </tbody>
-            </thead>
-        </table>
-        <center>
-            {!! $employees->render() !!}
-        </center>
+                            <td>{{$em->job_title}}</td>
+                            <td>{{$em->email}}</td>
+                            <td>{{$em->phone_number}}</td>
+                            @if(!Auth::guest())
+                                <td>
+                                    <div id="confirmDelete" class="modal">
+                                        <div class="modal-content">
+                                            <p>Are you sure want to delete this?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button href="#" class="modal-action modal-close waves-effect waves-light btn-flat">Cancel</button>
+                                            <button id="confirm" class="modal-action modal-close waves-effect waves-light btn-flat red">Delete</button>
+                                        </div>
+                                    </div>
+                                    <div id="{{'action-'.$em->id}}">
+                                    <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn-floating green" title="Edit" id="{{'show-edit-'.$em->id}}"><i class="material-icons">mode_edit</i></a>
+                                    <form role="form" method="POST" action="{{url('/employee').'/'.$em->id.'/delete'}}" accept-charset="UTF-8" style="display:inline" id="deleteForm">
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" class="form-control" name="em-id" value="{{$em->id}}">
+                                        <button class="btn-floating red modal-trigger" type="button" href="#confirmDelete" title="Delete">
+                                            <i class="material-icons">delete</i>
+                                        </button>
+                                    </form>
+                                    </div>
+                                </td>
+                            @endif
+                        </div>
+                    </tr>
+                @endforeach
+                </tbody>
+                </thead>
+            </table>
+            <center>
+                {!! $employees->render() !!}
+            </center>
+        @endif
     </div>
 @endsection
 
