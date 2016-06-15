@@ -68,7 +68,9 @@
                         <th>Job Title</th>
                         <th>Email</th>
                         <th>Phone Number</th>
-                        <th>Actions</th>
+                        @if(!Auth::guest())
+                            <th>Actions</th>
+                        @endif
                     </tr>
                 <tbody id="tbody">
                 @foreach($employees as $index=>$em)
@@ -85,7 +87,7 @@
                             <td>{{$em->email}}</td>
                             <td>{{$em->phone_number}}</td>
                             @if(!Auth::guest())
-                                <td>
+                                <td style="width: 100px;">
                                     <div id="confirmDelete" class="modal">
                                         <div class="modal-content">
                                             <p>Are you sure want to delete this?</p>

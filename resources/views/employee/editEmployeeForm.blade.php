@@ -33,7 +33,7 @@
                                     </div>
                                     @if($errors->has('image'))
                                         <span class="help-block">
-                                        <strong>{{$errors->first('image')}}</strong>
+                                        <strong style="color: red;">{{$errors->first('image')}}</strong>
                                     </span>
                                     @endif
                                 </div>
