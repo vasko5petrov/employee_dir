@@ -5,7 +5,8 @@
 * It's free for all of you. Open source, too. :)
 
 **Releases**
-* [1.1.0](https://github.com/trieudh58/employee_dir/releases/tag/1.1.0) (latest-stable)
+* [2.0.0](https://github.com/trieudh58/employee_dir/releases/tag/2.0.0) (latest-stable)
+* [1.1.0](https://github.com/trieudh58/employee_dir/releases/tag/1.1.0)
 * [1.0.0](https://github.com/trieudh58/employee_dir/releases/tag/1.0.0)
 
 **Demo deployment**
