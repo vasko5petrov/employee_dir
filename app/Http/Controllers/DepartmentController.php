@@ -57,7 +57,7 @@ class DepartmentController extends Controller
         // Else, flash errors to the session
         $this->validate($request,[
             'dp-name' => 'required|string',
-            'dp-office-number' => 'required|phone:VN',
+            'dp-office-number' => 'required|integer',
             'dp-manager-id' => 'required|integer'
         ], $messages);
 
@@ -122,7 +122,7 @@ class DepartmentController extends Controller
         // Else, flash errors to the session
         $this->validate($request,[
             'dp-name' => 'required|string',
-            'dp-office-number' => 'required|phone:VN',
+            'dp-office-number' => 'required|integer',
             'dp-manager-id' => 'required|integer',
         ], $messages);
         

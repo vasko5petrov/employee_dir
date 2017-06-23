@@ -28,7 +28,7 @@
             </div>
         @endif
         <div class="col s12 mobile-hide">
-            <a href="#" class="btn waves-effect waves-light right" title="Search employees" id ="show-search">
+            <a href="#" class="btn waves-effect waves-light right light-blue" title="Search employees" id ="show-search">
                 <i class="material-icons left">search</i>Search
             </a>
             <form method="GET", url="employee", class="form navbar-form {!! $search ? 'search-ed' : 'search' !!}" id="search-form" >
@@ -48,18 +48,18 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="btn waves-effect waves-light">
+                <button type="submit" class="btn waves-effect waves-light light-blue">
                     <i class="material-icons left">search</i>Search
                 </button>
             </form>
-            <button class="btn waves-effect waves-light" id="close-search-form">
+            <button class="btn waves-effect waves-light red" id="close-search-form">
                 <i class="material-icons left">close</i>Close
             </button>
         </div>
 
         @if(sizeof($employees))
             <link href="{{URL::asset('css/search_form.css')}}" rel="stylesheet" >
-            <table class="responsive-table">
+            <table class="responsive-table sortable bordered striped">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -99,14 +99,6 @@
                                     </div>
                                     <div id="{{'action-'.$em->id}}">
                                     <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn-floating green" title="Edit" id="{{'show-edit-'.$em->id}}"><i class="material-icons">mode_edit</i></a>
-                                    <form role="form" method="POST" action="{{url('/employee').'/'.$em->id.'/delete'}}" accept-charset="UTF-8" style="display:inline" id="deleteForm">
-                                        {{csrf_field()}}
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" class="form-control" name="em-id" value="{{$em->id}}">
-                                        <button class="btn-floating red modal-trigger" type="button" href="#confirmDelete" title="Delete">
-                                            <i class="material-icons">delete</i>
-                                        </button>
-                                    </form>
                                     </div>
                                 </td>
                             @endif

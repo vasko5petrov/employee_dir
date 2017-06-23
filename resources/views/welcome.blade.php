@@ -8,11 +8,9 @@
                 <div class="card-content">
                     <h5 class="card-title">Welcome</h5>
                     <p>
-                        Hi there. You're using Employee Directory application.
-                        </br>
-                        Enjoy!
-                        <br>
-                        Check out our <a href="https://github.com/trieudh58/employee_dir">repo on Github</a>, or visit demo <a href="http://www.velocityteam.xyz">here</a>
+                        This is the Anakatech Team office data website. <br>
+                        View employees and departments. <br>
+                        Check your own employee profile.
                     </p>
                 </div>
                 <div class="card-action">

@@ -11,7 +11,37 @@
             </div>
         @endif
         @if(sizeof($departments))
-            <table class="responsive-table">
+            <div class="row">
+            @foreach($departments as $index=>$dp)
+                <div class="col s12 m6">
+                  <div class="card white black-text">
+                    <div class="card-content black-text">
+                      <p class="card-title">{{$dp->name}}</p>
+                      <p><strong>Office Number:</strong> {{$dp->office_number}}</p>
+                        @if($dp->manager())
+                            <p><strong>Manager:</strong> <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}"id="dpManager">{{$dp->manager()->name}}</a></p>
+                        @endif
+                    </div>
+                    <div class="card-action">
+                        <a href="{{url('/department').'/'.$dp->id.'/detail'}}" id="dpName">View Department</a>
+                        <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn-floating blue" title="Employee list"><i class="material-icons">view_list</i></a>
+                            @if(!Auth::guest())
+                                <a class="btn-floating green" title="Edit" href="{{url('/department').'/'.$dp->id.'/edit'}}" id="{{'show-edit-'.$dp->id}}"><i class="material-icons">mode_edit</i></a>
+                                <form role="form" method="POST" action="{{url('/department').'/'.$dp->id.'/delete'}}" accept-charset="UTF-8" style="display:inline" id="deleteForm">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" class="form-control" name="dp-id" value="{{$dp->id}}">
+                                    <button class="btn-floating red modal-trigger" type="button" href="#confirmDelete" title="Delete">
+                                        <i class="material-icons">delete</i>
+                                    </button>
+                                </form>
+                            @endif
+                    </div>
+                  </div>
+                </div>
+            @endforeach
+            </div>
+            <table class="responsive-table sortable bordered">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -121,7 +151,6 @@
     <script>
         $('.modal-trigger').leanModal();
         $('select').material_select();
-
         // Show/hide floating button on scroll
         $(window).scroll(function () {
             var btn  = $('.fixed-action-btn');
@@ -149,7 +178,6 @@
             var btn  = $('.fixed-action-btn');
             btn.fadeIn();
         }, 1000);
-
         <!-- Form confirm (yes/ok) handler, submits form -->
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
             $('#deleteForm').submit();

@@ -24,7 +24,7 @@
                                     <img alt="Employee picture" src="{{url('/').'/'.$em->picture}}" style="width: 40%;" class="circle responsive-img" id="avatar">
                                 </div>
                                 <div class="col s12">
-                                    <div class="btn col s4">
+                                    <div class="btn orange col s4">
                                         <span>Choose file</span>
                                         {!! Form::file('image', ['id'=>'picture']) !!}
                                     </div>
@@ -45,6 +45,34 @@
                                 @if ($errors->has('em-name'))
                                     <span class="help-block">
                                     <strong style="color: red;">{{ $errors->first('em-name') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="input-field col s12">
+                                <select name="em-gender">
+                                    <option value="{{ $em->gender }}" selected>{{ $em->gender }}</option>
+                                    @if ($em->gender == "")
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    @elseif ($em->gender == "Male")
+                                        <option value="Female">Female</option>
+                                    @elseif ($em->gender = "Female")
+                                        <option value="Male">Male</option>
+                                    @endif
+                                </select>
+                                <label for="em-gender">Gender</label>
+                                @if($errors->has('em-gender'))
+                                    <span class="help-block">
+                                    <strong style="color: red;">{{$errors->first('em-gender')}}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" class="validate{{ $errors->first('em-location') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-location') }}" name="em-location" value="{{ $em->location }}" id="em-location" placeholder="">
+                                <label for="em-location">Location</label>
+                                @if ($errors->has('em-location'))
+                                    <span class="help-block">
+                                    <strong style="color: red;">{{ $errors->first('em-location') }}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -94,10 +122,10 @@
                                 @endif
                             </div>
                             <div class="input-field col s12">
-                                <button class="btn waves-effect waves-light" type="submit">
+                                <button class="btn waves-effect waves-light green" type="submit">
                                     <i class="material-icons left">save</i>Save
                                 </button>
-                                <a href="{{ url('/employee') }}" class="btn waves-effect waves-light">
+                                <a href="{{ url('/employee') }}" class="btn waves-effect waves-light red">
                                     <i class="material-icons left">cancel</i>Cancel
                                 </a>
                             </div>

@@ -47,17 +47,21 @@ class EmployeeController extends Controller
             // Customize validation messages
             $messages = [
                 'em-name.required' => 'The name field is required.',
+                'em-gender.required' => 'The gender field is required.',
                 'em-job-title.required' => 'The job title field is required.',
                 'em-email.email' => 'Please provide a valid email address.',
+                'em-email.unique' => 'This email address already exist.',
                 'em-phone-number.phone' => 'The phone number field contains an invalid number.',
             ];
 
             // Validation rules
             $rules = [
                 'em-name' => 'required|string',
+                'em-gender' => 'required|string',
+                'em-location' => 'string',
                 'em-job-title' => 'required|string',
-                'em-email' => 'email',
-                'em-phone-number' => 'phone:VN',
+                'em-email' => 'email|unique:employees,email',
+                'em-phone-number' => 'integer',
                 'image' => 'image|max:2048'
             ];
 
@@ -65,6 +69,8 @@ class EmployeeController extends Controller
             $this->validate($request, $rules, $messages);
 
             $em_name = $request->input('em-name');
+            $em_gender = $request->input('em-gender');
+            $em_location = $request->input('em-location');
             $em_job_title = $request->input('em-job-title');
             $em_email = $request->input('em-email');
             $em_phone_number = $request->input('em-phone-number');
@@ -85,6 +91,8 @@ class EmployeeController extends Controller
             // Insert new employee record into database
             $em = new Employee();
             $em->name = $em_name;
+            $em->gender = $em_gender;
+            $em->location = $em_location;
             $em->job_title = $em_job_title;
             $em->email = $em_email;
             $em->phone_number = $em_phone_number;
@@ -105,10 +113,10 @@ class EmployeeController extends Controller
     public function show($id) 
     {
         $em = Employee::find($id);
-        if ($em->department_id){
-            $em->department_name = Department::find($em->department_id)->name;
-        }
-        return view('employee.showEmployeeDetails', compact('em'));
+        $em_department_id = $em->department_id;
+        $dp = Department::find($em_department_id);
+
+        return view('employee.showEmployeeDetails', compact('em', 'dp'));
     }
     
     // Return form: Edit a employee information
@@ -126,6 +134,7 @@ class EmployeeController extends Controller
         // Customize validation messages
         $messages = [
             'em-name.required' => 'The name field is required.',
+            'em-gender.required' => 'The gender field is required.',
             'em-job-title.required' => 'The job title field is required.',
             'em-email.email' => 'Please provide a valid email address.',
             'em-phone-number.phone' => 'The phone number field contains an invalid number.',
@@ -136,14 +145,18 @@ class EmployeeController extends Controller
         // Else, flash errors to the session
         $this->validate($request,[
             'em-name' => 'required|string',
+            'em-gender' => 'required|string',
+            'em-location' => 'string',
             'em-job-title' => 'required|string',
             'em-email' => 'email',
-            'em-phone-number' => 'phone:VN',
+            'em-phone-number' => 'integer',
             'image' => 'image|max:2048'
         ], $messages);
         
         $em_id = $request->input('em-id');
         $new_em_name = $request->input('em-name');
+        $new_em_gender = $request->input('em-gender');
+        $new_em_location = $request->input('em-location');
         $new_em_department_id = $request->input('em-department-id');
         $new_em_job_title = $request->input('em-job-title');
         $new_em_phone_number = $request->input('em-phone-number');
@@ -165,13 +178,15 @@ class EmployeeController extends Controller
         $departments = Department::all();
 
         // If the provided information from Edit form is not modified, do nothing
-        if (!isset($new_em_picture) && $em->name === $new_em_name && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
+        if (!isset($new_em_picture) && $em->name === $new_em_name && $em->gender === $new_em_gender && $em->location === $new_em_location && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
             $result = 'Employee information remains unchanged!';
             $alert_type = 'warning';
         }
         else {
             // Update to database
             $em->name = $new_em_name;
+            $em->gender = $new_em_gender;
+            $em->location = $new_em_location;
             $em->department_id = $new_em_department_id;
             $em->job_title = $new_em_job_title;
             $em->phone_number = $new_em_phone_number;

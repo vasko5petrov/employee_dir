@@ -11,7 +11,7 @@
                             <span class="chip right">{{ sizeof($employees) }} {{ sizeof($employees) != 1 ? 'employees' : 'employee' }}</span>
                         </h5>
                         @if(sizeof($employees))
-                            <table class="responsive-table">
+                            <table class="responsive-table sortable">
                                 <thead>
                                 <tr>
                                     <th>#</th>
