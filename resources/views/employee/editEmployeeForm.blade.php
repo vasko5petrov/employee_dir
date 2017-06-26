@@ -68,6 +68,15 @@
                                 @endif
                             </div>
                             <div class="input-field col s12">
+                                <input type="date" class="datepicker birthday" name="em-birthday" value="{{ $em->birthday }}" id="em-birthday" autofocus>
+                                <label for="em-birthday">Birthday</label>
+                                @if ($errors->has('em-birthday'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('em-birthday') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="input-field col s12">
                                 <input type="text" class="validate{{ $errors->first('em-location') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-location') }}" name="em-location" value="{{ $em->location }}" id="em-location" placeholder="">
                                 <label for="em-location">Location</label>
                                 @if ($errors->has('em-location'))
@@ -119,6 +128,15 @@
                                     <span class="help-block">
                                     <strong style="color: red;">{{$errors->first('em-department-id')}}</strong>
                                 </span>
+                                @endif
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="date" class="datepicker" name="em-hiringDate" value="{{ $em->hiring_day }}" id="em-hiringDate" autofocus>
+                                <label for="em-hiringDate">Hiring Date</label>
+                                @if ($errors->has('em-hiringDate'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('em-hiringDate') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="input-field col s12">

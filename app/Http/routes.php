@@ -12,8 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/welcome');
 });
+
+//Welcome routes
+//Route::get('/', 'WelcomeController@show');
 
 Route::auth();
 Route::post('/login', 'Auth\AuthController@postLogin');

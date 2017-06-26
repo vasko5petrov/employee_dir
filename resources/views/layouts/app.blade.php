@@ -17,6 +17,7 @@
     {{--<link href="{{url('/css/bootstrap-flatly.min.css')}}" rel="stylesheet" type="text/css">--}}
     <link href="{{url('/css/animate.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ url('/materialize/css/materialize.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url('/css/custom.css') }}" type="text/css">
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Yah75rDjdUSwHjPt420XKmH1RLiSMA4&libraries=places&sensor=false&language=en"></script>
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">--}}
@@ -133,6 +134,17 @@
             $('.modal-trigger').leanModal();
             $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
                 $('#deleteForm').submit();
+            });
+            $('.datepicker.birthday').pickadate({
+                selectMonths: true,
+                selectYears: 50,
+                format: 'yyyy-mm-dd',
+                max: " "
+            });
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 50, // Creates a dropdown of 15 years to control year
+                format: 'yyyy-mm-dd'
             });
         });
     </script>

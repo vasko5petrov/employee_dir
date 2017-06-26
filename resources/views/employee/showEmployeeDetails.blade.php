@@ -39,6 +39,10 @@
                                                 <td>{{$em->gender}}</td>
                                             </tr>
                                             <tr>
+                                                <th>Birthday</th>
+                                                <td>{{$em_birthday}}</td>
+                                            </tr>
+                                            <tr>
                                                 <th>Location</th>
                                                 <td>{{$em->location}}</td>
                                             </tr>
@@ -54,6 +58,10 @@
                                             <tr>
                                                 <th>Job Title</th>
                                                 <td>{{$em->job_title}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Hiring Date</th>
+                                                <td>{{$em_hiringDate}}</td>
                                             </tr>
                                         </tbody>
                                     </table>

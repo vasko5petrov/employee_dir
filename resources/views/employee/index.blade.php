@@ -29,7 +29,7 @@
             </div>
         @endif
         <div class="col s12 mobile-hide">
-            <a href="#" class="btn waves-effect waves-light right light-blue" title="Search employees" id ="show-search">
+            <a href="#" class="btn waves-effect waves-light left light-blue" title="Search employees" id ="show-search">
                 <i class="material-icons left">search</i>Search
             </a>
             <form method="GET", url="employee", class="form navbar-form {!! $search ? 'search-ed' : 'search' !!}" id="search-form" >
@@ -52,10 +52,10 @@
                 <button type="submit" class="btn waves-effect waves-light light-blue">
                     <i class="material-icons left">search</i>Search
                 </button>
+                <button class="btn waves-effect waves-light red" id="close-search-form">
+                    <i class="material-icons left">close</i>Close
+                </button>
             </form>
-            <button class="btn waves-effect waves-light red" id="close-search-form">
-                <i class="material-icons left">close</i>Close
-            </button>
         </div>
 
         @if(sizeof($employees))
@@ -155,7 +155,7 @@
             $('#deleteForm').submit();
         });
 
-        <!-- Show search form -->
+        // Show search form 
         $(document).ready(function () {
             $('#close-search-form').hide();
             $('#search-form').hide();
@@ -176,7 +176,7 @@
             });
         });
 
-        <!-- Mouse enter/leave a table row -->
+        // Mouse enter/leave a table row
         $('[id^="info-"]').mouseenter(function() {
             id = $(this).attr('id').substr(5);
             $('#action-' + id).css('visibility', 'visible');

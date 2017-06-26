@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Validator;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpFoundation\Response;
+use Datetime;
 
 class EmployeeController extends Controller
 {
@@ -44,6 +45,9 @@ class EmployeeController extends Controller
     // Add a new employee
     public function add(Request $request)
     {
+            // Testing date field           
+
+
             // Customize validation messages
             $messages = [
                 'em-name.required' => 'The name field is required.',
@@ -58,6 +62,8 @@ class EmployeeController extends Controller
             $rules = [
                 'em-name' => 'required|string',
                 'em-gender' => 'required|string',
+                'em-birthday' => 'string',
+                'em-hiringDate' => 'string',
                 'em-location' => 'string',
                 'em-job-title' => 'required|string',
                 'em-email' => 'email|unique:employees,email',
@@ -70,6 +76,8 @@ class EmployeeController extends Controller
 
             $em_name = $request->input('em-name');
             $em_gender = $request->input('em-gender');
+            $em_birthday = $request->input('em-birthday');
+            $em_hiringDate = $request->input('em-hiringDate');
             $em_location = $request->input('em-location');
             $em_job_title = $request->input('em-job-title');
             $em_email = $request->input('em-email');
@@ -92,6 +100,8 @@ class EmployeeController extends Controller
             $em = new Employee();
             $em->name = $em_name;
             $em->gender = $em_gender;
+            $em->birthday = $em_birthday;
+            $em->hiring_day = $em_hiringDate;
             $em->location = $em_location;
             $em->job_title = $em_job_title;
             $em->email = $em_email;
@@ -115,8 +125,23 @@ class EmployeeController extends Controller
         $em = Employee::find($id);
         $em_department_id = $em->department_id;
         $dp = Department::find($em_department_id);
+        
+        $em_birthday = EmployeeController::CheckDateForUndefined($em->birthday);
+        $em_hiringDate = EmployeeController::CheckDateForUndefined($em->hiring_day);
+        return view('employee.showEmployeeDetails', compact('em', 'dp', 'em_birthday', 'em_hiringDate'));
+    }
 
-        return view('employee.showEmployeeDetails', compact('em', 'dp'));
+    public function CheckDateForUndefined($date) {
+        if($date != '0000-00-00') {
+            return EmployeeController::formatDateToView($date);
+        } else {
+            $date = "";
+        }
+    }
+
+    public function formatDateToView($date) {
+        $dateFormat = new DateTime($date); 
+        return date_format($dateFormat, 'd F Y');
     }
     
     // Return form: Edit a employee information
@@ -147,6 +172,8 @@ class EmployeeController extends Controller
             'em-name' => 'required|string',
             'em-gender' => 'required|string',
             'em-location' => 'string',
+            'em-birthday' => 'string',
+            'em-hiringDate' => 'string',
             'em-job-title' => 'required|string',
             'em-email' => 'email',
             'em-phone-number' => 'integer',
@@ -156,6 +183,8 @@ class EmployeeController extends Controller
         $em_id = $request->input('em-id');
         $new_em_name = $request->input('em-name');
         $new_em_gender = $request->input('em-gender');
+        $new_em_birthday = $request->input('em-birthday');
+        $new_em_hiringDate = $request->input('em-hiringDate');
         $new_em_location = $request->input('em-location');
         $new_em_department_id = $request->input('em-department-id');
         $new_em_job_title = $request->input('em-job-title');
@@ -178,7 +207,7 @@ class EmployeeController extends Controller
         $departments = Department::all();
 
         // If the provided information from Edit form is not modified, do nothing
-        if (!isset($new_em_picture) && $em->name === $new_em_name && $em->gender === $new_em_gender && $em->location === $new_em_location && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
+        if (!isset($new_em_picture) && $em->name === $new_em_name && $em->gender === $new_em_gender && $em->birthday === $new_em_birthday && $em->hiring_day === $new_em_hiringDate && $em->location === $new_em_location && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
             $result = 'Employee information remains unchanged!';
             $alert_type = 'warning';
         }
@@ -186,6 +215,8 @@ class EmployeeController extends Controller
             // Update to database
             $em->name = $new_em_name;
             $em->gender = $new_em_gender;
+            $em->birthday = $new_em_birthday;
+            $em->hiring_day = $new_em_hiringDate;
             $em->location = $new_em_location;
             $em->department_id = $new_em_department_id;
             $em->job_title = $new_em_job_title;
