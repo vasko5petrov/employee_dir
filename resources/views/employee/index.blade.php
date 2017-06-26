@@ -20,6 +20,7 @@
     </style>
     <div class="container">
         <h5>Employees</h5>
+        <div class="divider"></div>
         @if(!Auth::guest())
             <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
                 <a href="{{url('/employee/add')}}" class="btn-floating btn-large waves-effect waves-light green" title="Add employee">
@@ -174,14 +175,14 @@
                 $('#search-form').hide();
             });
         });
-        
+
         <!-- Mouse enter/leave a table row -->
         $('[id^="info-"]').mouseenter(function() {
             id = $(this).attr('id').substr(5);
-            $('#action-' + id).css('visibility', 'visible'); 
+            $('#action-' + id).css('visibility', 'visible');
         }).mouseleave(function() {
             id = $(this).attr('id').substr(5);
-            $('#action-' + id).css('visibility', 'hidden'); 
+            $('#action-' + id).css('visibility', 'hidden');
         });
     </script>
 @endsection

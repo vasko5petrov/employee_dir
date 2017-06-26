@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="input-field col s12">
                                     <select name="dp-manager-id">
-                                        <option value="{{ $manager_name }}" selected>{{ $manager_name }}</option>
+                                        <option value="{{ $dp->manager_id }}" selected>{{ $manager_name }}</option>
                                         @if(sizeof($employees))
                                             @foreach($employees as $em)
                                                 <option value="{{$em->id}}">{{$em->name}}</option>
@@ -73,20 +73,13 @@
 @endsection
 
 @section('script')
-    <script type="text/javascript" src="{{URL::asset('js/dp_validation.js')}}"></script>
     <script>
         $(document).ready(function () {
+            Materialize.updateTextFields();
             $('select').material_select();
 
-            var flag = $('#flag').val();
-            var msg = '';
-            if (flag) {
-                if (flag == 1) {
-                    msg = 'New department successfully added.';
-                }
-                else {
-                    msg = 'Error. Please try again.';
-                }
+            var msg = $('#result');
+            if (msg) {
                 Materialize.toast(msg, 5000);
             }
         });

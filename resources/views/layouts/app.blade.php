@@ -70,6 +70,7 @@
                             <span style="width: 50px;">{{ Auth::user()->username }}<i class="material-icons right">arrow_drop_down</i></span>
                         </a>
                         <ul id="menu-dropdown" class="dropdown-content">
+                            <li><a href="{{url('/department/add')}}" class="black-text"><i class="tiny material-icons left" style="font-size: 18px;">add</i>Add Department</a></li>
                             <li><a href="{{url('/employee/add')}}" class="black-text"><i class="tiny material-icons left" style="font-size: 18px;">add</i>Add Employee</a></li>
                             <hr>
                             <li><a href="{{url('/update/password')}}" class="black-text"><i class="tiny material-icons left" style="font-size: 18px;">mode_edit</i>Edit password</a></li>
@@ -115,7 +116,7 @@
     <script src="{{url('/js/jquery.tablesorter.js')}}"></script>
     {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.js"></script>--}}
     {{--<script src="{{url('/js/bootstrap.min.js')}}"></script>--}}
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
             $(".button-collapse").sideNav();

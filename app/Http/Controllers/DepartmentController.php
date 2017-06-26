@@ -17,7 +17,7 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::orderBy('name')->paginate(15);
-        
+
         // Get list of employee (for selecting manager field)
         $employees = Employee::all();
         $employees = $employees->sortBy('name')->values()->all();
@@ -102,12 +102,12 @@ class DepartmentController extends Controller
 //        $employees = $dp->employees;
         return view('department.editDepartmentForm', compact('dp', 'employees', 'manager_name'));
     }
-    
+
     // Edit a department information
     // Need to be enhanced with validation
-    public function edit(Request $request)
+    public function edit(Request $request, $dp_id)
     {
-        
+
         // Customize validation messages
         $messages = [
             'dp-name.required' => 'The name field is required.',
@@ -123,10 +123,10 @@ class DepartmentController extends Controller
         $this->validate($request,[
             'dp-name' => 'required|string',
             'dp-office-number' => 'required|integer',
-            'dp-manager-id' => 'required|integer',
+            'dp-manager-id' => 'required|string',
         ], $messages);
-        
-        $dp_id = $request->input('dp-id');
+
+        $dp_id = $dp_id;
         $new_dp_name = $request->input('dp-name');
         $new_dp_office_number = $request->input('dp-office-number');
         $new_dp_manager_id = $request->input('dp-manager-id');
@@ -165,12 +165,12 @@ class DepartmentController extends Controller
             $result = 'Department information updated!';
             $alert_type = 'success';
         }
-        return json_encode(array(
-            'result'=>$result, 
-            'alert_type'=>$alert_type, 
-            'dp'=>$dp, 
+        /*return json_encode(array(
+            'result'=>$result,
+            'alert_type'=>$alert_type,
+            'dp'=>$dp,
             'employees'=>$employees,
-        ));
+        ));*/
         return view('department.editDepartmentForm', compact('result', 'alert_type', 'dp', 'employees', 'manager_name'));
     }
 
@@ -184,9 +184,9 @@ class DepartmentController extends Controller
         }
         return redirect('/department');
     }
-    
+
     //Show a department details
-    public function show($id) 
+    public function show($id)
     {
         $dp = Department::find($id);
         $dp->manager_name = Employee::find($dp->manager_id)->name;
