@@ -53,6 +53,8 @@ class EmployeeController extends Controller
                 'em-name.required' => 'The name field is required.',
                 'em-gender.required' => 'The gender field is required.',
                 'em-job-title.required' => 'The job title field is required.',
+                'em-department-id.required' => 'The department field is required',
+                'em-email.required' => 'The email field is required.',
                 'em-email.email' => 'Please provide a valid email address.',
                 'em-email.unique' => 'This email address already exist.',
                 'em-phone-number.phone' => 'The phone number field contains an invalid number.',
@@ -66,7 +68,8 @@ class EmployeeController extends Controller
                 'em-hiringDate' => 'string',
                 'em-location' => 'string',
                 'em-job-title' => 'required|string',
-                'em-email' => 'email|unique:employees,email',
+                'em-department-id' => 'required|string',
+                'em-email' => 'email|required|unique:employees,email',
                 'em-phone-number' => 'integer',
                 'image' => 'image|max:2048'
             ];
@@ -161,6 +164,8 @@ class EmployeeController extends Controller
             'em-name.required' => 'The name field is required.',
             'em-gender.required' => 'The gender field is required.',
             'em-job-title.required' => 'The job title field is required.',
+            'em-department-id.required' => 'The department field is required.',
+            'em-email.required' => 'The email field is required.',
             'em-email.email' => 'Please provide a valid email address.',
             'em-phone-number.phone' => 'The phone number field contains an invalid number.',
         ];
@@ -175,7 +180,8 @@ class EmployeeController extends Controller
             'em-birthday' => 'string',
             'em-hiringDate' => 'string',
             'em-job-title' => 'required|string',
-            'em-email' => 'email',
+            'em-department-id' => 'required|string',
+            'em-email' => 'email|required',
             'em-phone-number' => 'integer',
             'image' => 'image|max:2048'
         ], $messages);
@@ -203,11 +209,12 @@ class EmployeeController extends Controller
 
         // Find the employee with provided id
         $em = Employee::find($em_id);
+
         // and all departments
         $departments = Department::all();
-
+        
         // If the provided information from Edit form is not modified, do nothing
-        if (!isset($new_em_picture) && $em->name === $new_em_name && $em->gender === $new_em_gender && $em->birthday === $new_em_birthday && $em->hiring_day === $new_em_hiringDate && $em->location === $new_em_location && $em->department_id === $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
+        if (!isset($new_em_picture) && $em->name === $new_em_name && $em->gender === $new_em_gender && $em->birthday === $new_em_birthday && $em->hiring_day === $new_em_hiringDate && $em->location === $new_em_location && $em->department_id == $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
             $result = 'Employee information remains unchanged!';
             $alert_type = 'warning';
         }
@@ -229,7 +236,7 @@ class EmployeeController extends Controller
             $result = 'Employee information successfully updated!';
             $alert_type = 'success';
         }
-        return view('employee.editEmployeeForm', compact('result', 'alert_type', 'em', 'departments'));
+        return view('employee.editEmployeeForm', compact('result', 'alert_type', 'em', 'em_birthday', 'departments'));
     }
 
     // Delete an employee

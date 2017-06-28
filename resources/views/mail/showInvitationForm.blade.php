@@ -8,38 +8,42 @@
                 <input id="flag" value="{{ $flag }}" type="text" disabled hidden>
             </div>
         @endif
-        <div class="col s12 m8 offset-m2">
-            <div class="card">
-                <div class="card-content">
-                    <h5 class="card-title">Invite new administrator</h5>
-                    <div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 style="color: white">Invite new Administrator</h3>
+                </div>
+                    
+                    <div class="panel-body" style="padding: 50px;">
                         <form method="POST" action="{{ url('/invite/send-invitation') }}">
                             <div class="row">
                                 {!! csrf_field() !!}
-                                <div class="input-field col s12">
-                                    <input type="text" class="validate{{ $errors->first('admin-username') ? ' animated shake' : '' }}" data-error="{{ $errors->first('admin-username') }}" name="admin-username" value="{{ old('admin-username') }}" autofocus>
+                                <div class="form-group">
                                     <label for="admin-username">Username</label>
+                                    <input type="text" class="form-control validate{{ $errors->first('admin-username') ? ' animated shake' : '' }}" data-error="{{ $errors->first('admin-username') }}" name="admin-username" value="{{ old('admin-username') }}" autofocus>
                                     @if ($errors->has('admin-username'))
                                         <span class="help-block">
                                             <strong style="color: red;">{{ $errors->first('admin-username') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                                <div class="input-field col s12">
-                                    <input type="email" class="validate{{ $errors->first('admin-email') ? ' animated shake' : '' }}" data-error="{{ $errors->first('admin-email') }}" name="admin-email" value="{{ old('admin-email') }}">
+                                <div class="form-group">
                                     <label for="admin-email">Email</label>
+                                    <input type="email" class="form-control validate{{ $errors->first('admin-email') ? ' animated shake' : '' }}" data-error="{{ $errors->first('admin-email') }}" name="admin-email" value="{{ old('admin-email') }}">
                                     @if ($errors->has('admin-email'))
                                         <span class="help-block">
                                             <strong style="color: red;">{{ $errors->first('admin-email') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                                <div class="input-field col s12">
-                                    <button type="submit" class="btn waves-effect waves-light" name="submit">
-                                        <i class="material-icons left">send</i>Send
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success" name="submit">
+                                        <i class="fa fa-send"></i> Send
                                     </button>
-                                    <a href="{{ url('/') }}" class="btn waves-effect waves-light">
-                                        <i class="material-icons left">cancel</i>Cancel
+                                    <a href="{{ url('/') }}" class="btn btn-danger">
+                                        <i class="fa fa-times"></i> Cancel
                                     </a>
                                 </div>
                             </div>

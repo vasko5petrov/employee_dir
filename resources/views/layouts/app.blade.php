@@ -16,7 +16,8 @@
     <!-- Styles -->
     {{--<link href="{{url('/css/bootstrap-flatly.min.css')}}" rel="stylesheet" type="text/css">--}}
     <link href="{{url('/css/animate.css')}}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ url('/materialize/css/materialize.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url('/css/bootstrap.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url('/css/bootstrap-datepicker.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('/css/custom.css') }}" type="text/css">
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Yah75rDjdUSwHjPt420XKmH1RLiSMA4&libraries=places&sensor=false&language=en"></script>
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
@@ -37,90 +38,66 @@
         .employeeDetails table th {
             width: 160px;
         }
-        #menu-dropdown.dropdown-content {
-            min-width: 200px;
-            margin-top: 70px;
-        }
     </style>
 </head>
 <body id="app-layout">
-    <nav>
-        <div class="nav-wrapper light-blue">
-            <a class="brand-logo left white" href="{{ url('/') }}" style="padding: 0 10px;">
-                <!-- Branding Image -->
-                {{--<img src="{{URL::asset('logo.png')}}" width="24" style="vertical-align: middle; display: inline-block;">--}}
-                {{--<div style="vertical-align: middle; display: inline-block;">Employee Directory</div>--}}
-                {{-- config('app.name', 'Anakatech Team') --}}
-                <img src="{{URL::asset('website-logo.png')}}" width="200" style="vertical-align: middle; display: inline-block; margin-top: -10px;">
-            </a>
-            <a href="#" data-activates="nav-mobile" class="button-collapse">
-                <i class="material-icons">menu</i>
-            </a>
-
-            <!-- Left Side Of Navbar -->
-            <ul class="left hide-on-med-and-down" style="margin-left: 220px">
+    <nav class="navbar navbar-inverse">
+          <div class="container-flex">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="{{URL::asset('website-logo.png')}}" width="200" class="website_logo"/>
+              </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
                 <li><a href="{{url('/department')}}">Departments</a></li>
                 <li><a href="{{url('/employee')}}">Employees</a></li>
-            </ul>
-            <ul class="right hide-on-med-and-down">
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>
                 @else
-                    <li>
-                        <a href="#" class="dropdown-button"  data-activates="menu-dropdown">
-                            <span style="width: 50px;">{{ Auth::user()->username }}<i class="material-icons right">arrow_drop_down</i></span>
-                        </a>
-                        <ul id="menu-dropdown" class="dropdown-content">
-                            <li><a href="{{url('/department/add')}}" class="black-text"><i class="tiny material-icons left" style="font-size: 18px;">add</i>Add Department</a></li>
-                            <li><a href="{{url('/employee/add')}}" class="black-text"><i class="tiny material-icons left" style="font-size: 18px;">add</i>Add Employee</a></li>
-                            <hr>
-                            <li><a href="{{url('/update/password')}}" class="black-text"><i class="tiny material-icons left" style="font-size: 18px;">mode_edit</i>Edit password</a></li>
-                            @if(Auth::user()->email == 'example@gmail.com')
-                                <li><a href="{{ url('/invite') }}" class="black-text"><i class="tiny material-icons left" style="font-size: 18px;">email</i>Invite admin</a></li>
-                            @endif
-                            <li><a href="{{ url('/logout') }}" class="black-text"><i class="tiny material-icons left" style="font-size: 18px;">chevron_left</i>Logout</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span style="width: 50px;">{{ Auth::user()->username }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li class="dropdown-header">Admin Actions</li>
+                          <li><a href="{{url('/department/add')}}"><i class="fa fa-plus"></i> Add Department</a></li>
+                          <li><a href="{{url('/employee/add')}}"><i class="fa fa-plus"></i> Add Employee</a></li>
+                          <li class="divider" role="separator"></li>
+                          <li><a href="{{url('/update/password')}}"><i class="fa fa-edit"></i> Edit Password</a></li>
+                          <li><a href="{{url('/invite')}}"><i class="fa fa-edit"></i> Invite admin</a></li>
+                          <li><a href="{{url('/logout')}}"><i class="fa fa-sign-out"></i> Logout</a></li>
+
                         </ul>
-                    </li>
+                    </li>                    
                 @endif
-            </ul>
-
-            {{--Mobile menu--}}
-            <ul id="nav-mobile" class="side-nav">
-                <li><a href="{{url('/department')}}">Departments</a></li>
-                <li><a href="{{url('/employee')}}">Employees</a></li>
-                @if (Auth::guest())
-                    <li><a href="{{ url('/login') }}">Login</a></li>
-                @else
-                    <li>
-                        <a href="#" class="dropdown-button"  data-activates="mobile-menu-dropdown">
-                            <span style="width: 50px;">{{ Auth::user()->username }}<i class="material-icons right">arrow_drop_down</i></span>
-                        </a>
-                    </li>
-                    <ul id="mobile-menu-dropdown" class="dropdown-content">
-                        <li><a href="{{url('/update/password')}}"><i class="tiny material-icons left" style="font-size: 18px;">mode_edit</i>Edit password</a></li>
-                        @if(Auth::user()->email == 'example@gmail.com')
-                            <li><a href="{{ url('/invite') }}"><i class="tiny material-icons left" style="font-size: 18px;">email</i>Invite admin</a></li>
-                        @endif
-                        <li><a href="{{ url('/logout') }}"><i class="tiny material-icons left" style="font-size: 18px;">chevron_left</i>Logout</a></li>
-                    </ul>
-                @endif
-            </ul>
-        </div>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>        
     </nav>
-
-    @yield('content')
-
+    <div class="content-wrap">
+        @yield('content')
+    </div>
     <!-- JavaScripts -->
     <script src="{{url('/js/jquery.min.js')}}"></script>
-    <script src="{{url('/materialize/js/materialize.js')}}"></script>
+    <script src="{{url('/js/bootstrap.min.js')}}"></script>
+    <script src="{{url('/js/bootstrap-datepicker.js')}}"></script>
+    <script src="{{url('/js/bootstrap-notify.js')}}"></script>
     <script src="{{url('/js/googleAutocomplete.js')}}"></script>
     <script src="{{url('/js/jquery.tablesorter.js')}}"></script>
+    <script src="{{url('/js/custom.js')}}"></script>
     {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.js"></script>--}}
     {{--<script src="{{url('/js/bootstrap.min.js')}}"></script>--}}
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".button-collapse").sideNav();
+            /*$(".button-collapse").sideNav();
             $(".dropdown-button").dropdown();
             $(function() {
                 $.ajaxSetup({
@@ -145,7 +122,14 @@
                 selectMonths: true, // Creates a dropdown to control month
                 selectYears: 50, // Creates a dropdown of 15 years to control year
                 format: 'yyyy-mm-dd'
+            });*/
+
+            $(".sortable").tablesorter();
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd'
             });
+
+            $(".tablesorter").tablesorter();
         });
     </script>
 

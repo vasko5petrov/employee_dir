@@ -1,1 +1,85 @@
-/* Custom CSS
+/* Custom CSS */
+.navbar-brand, .navbar-brand:hover, .navbar-brand:focus {
+	padding:20px 10px !important;
+	background-color: white !important;
+}
+.navbar-right {
+	padding-right: 15px;
+}
+.content-wrap {
+	margin-top: -20px;
+}
+.employeeDetails, .departmentDetails {
+	margin-bottom: 100px;
+}
+th.headerSortUp { 
+    background-image: url(../images/small_asc.gif); 
+    background-color: #3399FF;
+    color: white;
+}
+th.headerSortDown { 
+    background-image: url(../images/small_desc.gif); 
+    background-color: #3399FF;
+    color: white;
+} 
+th.header { 
+    background-image: url(../images/small.gif); 
+    cursor: pointer; 
+    font-weight: bold; 
+    background-repeat: no-repeat; 
+    background-position: center right; 
+    padding-left: 20px; 
+    border-right: 1px solid #dad9c7; 
+    margin-left: -1px; 
+}
+th.disabled {
+	background:none;
+	color: inherit;
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 40px;
+  height: 40px;
+  padding: 10px 10px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 17px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+img.circle {
+	border-radius: 100%;
+}

@@ -2,57 +2,37 @@
 
 @section('content')
     <div class="container">
-        <h5>Departments</h5>
-        <div class="divider"></div>
+        <h3>Departments
         @if(!Auth::guest())
-            <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                <a href="{{url('/department/add')}}" class="btn-floating btn-large waves-effect waves-light green" title="Add department">
-                    <i class="large material-icons">add</i>
-                </a>
-            </div>
+            <a href="{{url('/department/add')}}" style="float: right;" class="btn btn-lg btn-success" title="Add employee">
+                <i class="large material-icons">add</i>
+            </a>
         @endif
-        @if(sizeof($departments))
-            <div class="row">
-            @foreach($departments as $index=>$dp)
-                <div class="col s12 m6">
-                  <div class="card white black-text">
-                    <div class="card-content black-text">
-                      <p class="card-title">{{$dp->name}}</p>
-                      <p><strong>Office Number:</strong> {{$dp->office_number}}</p>
-                        @if($dp->manager())
-                            <p><strong>Manager:</strong> <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}"id="dpManager">{{$dp->manager()->name}}</a></p>
-                        @endif
-                    </div>
-                    <div class="card-action">
-                        <a href="{{url('/department').'/'.$dp->id.'/detail'}}" id="dpName">View Department</a>
-                        <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn-floating blue" title="Employee list"><i class="material-icons">view_list</i></a>
-                            @if(!Auth::guest())
-                                <a class="btn-floating green" title="Edit" href="{{url('/department').'/'.$dp->id.'/edit'}}" id="{{'show-edit-'.$dp->id}}"><i class="material-icons">mode_edit</i></a>
-                                <!--<form role="form" method="POST" action="{{url('/department').'/'.$dp->id.'/delete'}}" accept-charset="UTF-8" style="display:inline" id="deleteForm">
-                                    {{csrf_field()}}
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" class="form-control" name="dp-id" value="{{$dp->id}}">
-                                    <button class="btn-floating red modal-trigger" type="button" href="#confirmDelete" title="Delete">
-                                        <i class="material-icons">delete</i>
-                                    </button>
-                                </form>-->
-                            @endif
-                    </div>
-                  </div>
+        </h3>
+        <hr>
+        <div class="row">
+        @foreach($departments as $index=>$dp)
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">{{$dp->name}}</h3>
                 </div>
-            @endforeach
+                <div class="panel-body">
+                    <p><strong>Office Number:</strong> {{$dp->office_number}}</p>
+                    @if($dp->manager())
+                        <p><strong>Manager:</strong> <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}"id="dpManager">{{$dp->manager()->name}}</a></p>
+                    @endif
+                </div>
+                <div class="panel-footer">
+                    <a href="{{url('/department').'/'.$dp->id.'/detail'}}" id="dpName">View Department</a>
+                    <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn btn-primary btn-circle btn-lg" title="Employee list"><i class="fa fa-list" style=""></i></a>
+                    @if(!Auth::guest())
+                        <a href="{{url('/department').'/'.$dp->id.'/edit'}}" id="{{'show-edit-'.$dp->id}}" class="btn btn-success btn-circle btn-lg" title="Edit"><i class="fa fa-edit" style=""></i></a>
+                    @endif
+                </div>
             </div>
-            <center>
-                {!! $departments->render() !!}
-            </center>
-        @endif
-    </div>
-
-    <!-- Edit result modal -->
-    <div class="modal fade" id="editResult" role="dialog">
-        <div class="modal-dialog" style="margin-top: 5%">
-            <div class="col-sm-8 col-sm-offset-2" id="editAlert" style="text-align: center">
-            </div>
+        </div>
+        @endforeach
         </div>
     </div>
 @endsection

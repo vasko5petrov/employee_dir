@@ -2,16 +2,20 @@
 
 @section('content')
     <div class="container">
+        <h3 class="card-title">Department employees</h3>
+        <hr>
         <div class="row">
-            <div class="col s12">
-                <div class="card">
-                    <div class="card-content">
-                        <h5 class="card-title">
-                            <a href="{{url('/department').'/'.$dp->id.'/detail'}}">{{$dp->name}}</a>
-                            <span class="chip right">{{ sizeof($employees) }} {{ sizeof($employees) != 1 ? 'employees' : 'employee' }}</span>
-                        </h5>
-                        @if(sizeof($employees))
-                            <table class="responsive-table sortable">
+            <div class="col-md-12">
+                <h5 class="card-title">
+                    <a href="{{url('/department').'/'.$dp->id.'/detail'}}">{{$dp->name}}</a>
+                    <span class="badge pull-right">{{ sizeof($employees) }} {{ sizeof($employees) != 1 ? 'employees' : 'employee' }}</span>
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @if(sizeof($employees))
+                            <table class="table table-striped table-bordered tablesorter">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -37,8 +41,6 @@
                                 {!! $employees->render() !!}
                             </center>
                         @endif
-                    </div>
-                </div>
             </div>
         </div>
     </div>

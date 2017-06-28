@@ -1,45 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-    <style>
-        {{--Disable search functionality on mobile to use responsive table--}}
-        .mobile-hide {
-            display: none;
-        }
-
-        @media screen and (min-width: 1150px) {
-            .mobile-hide {
-                display: block;
-            }
-        }
-        @media only screen and (min-width: 993px) {
-            [id^='action'] {
-                visibility: hidden;
-            }
-        }
-    </style>
     <div class="container">
-        <h5>Employees</h5>
-        <div class="divider"></div>
+        <h3>Employees
         @if(!Auth::guest())
-            <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                <a href="{{url('/employee/add')}}" class="btn-floating btn-large waves-effect waves-light green" title="Add employee">
-                    <i class="large material-icons">add</i>
-                </a>
-            </div>
-        @endif
-        <div class="col s12 mobile-hide">
-            <a href="#" class="btn waves-effect waves-light left light-blue" title="Search employees" id ="show-search">
-                <i class="material-icons left">search</i>Search
+            <a href="{{url('/employee/add')}}" style="float: right;" class="btn btn-lg btn-success" title="Add employee">
+                <i class="large material-icons">add</i>
             </a>
-            <form method="GET", url="employee", class="form navbar-form {!! $search ? 'search-ed' : 'search' !!}" id="search-form" >
+        @endif
+        </h3>
+        <hr>
+        <div class="row">
+        <div class="col-md-12">
+            <a data-toggle="collapse" href="#collapse-search-form" class="btn btn-primary btn-block">Search</h4></a>
+            <br>
+            <div id="collapse-search-form" class="collapse">
+            <form method="GET" url="employee" id="search-form" >
                 <input type="hidden" name="search" value=1>
-                <div class="input-field s12 m6">
-                    <input type="text" class="input-sm form-control" name="em-search-name" placeholder="Employee Name" value="{{$em_search_name}}">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="em-search-name" placeholder="Employee Name" value="{{$em_search_name}}">
                 </div>
-                <div class="input-field s12 m6">
-                    <select class="form-control input-sm" name="em-search-dp">
-                        <option value="">Department</option>
+                <div class="form-group">
+                    <select class="form-control" name="em-search-dp">
+                        <option value="">All Departments</option>
                         @foreach($departments as $dp)
                             @if ($dp->id == $em_search_dp)
                                 <option value="{{$dp->id}}" selected>{{$dp->name}}</option>
@@ -49,18 +32,22 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="btn waves-effect waves-light light-blue">
-                    <i class="material-icons left">search</i>Search
+                <button type="submit" class="btn btn-sm btn-primary">
+                    <i class="fa fa-search"></i> Search
                 </button>
-                <button class="btn waves-effect waves-light red" id="close-search-form">
-                    <i class="material-icons left">close</i>Close
+                <button class="btn btn-sm btn-danger" data-toggle="collapse" href="#collapse-search-form" id="close-search-form">
+                    <i class="fa fa-close"></i> Close
                 </button>
             </form>
+            </div>
         </div>
-
+        </div>
+        <br>
+        <div class="row">
+        <div class="col-md-12">
         @if(sizeof($employees))
             <link href="{{URL::asset('css/search_form.css')}}" rel="stylesheet" >
-            <table class="responsive-table sortable bordered striped">
+            <table class="table tablesorter table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -70,7 +57,7 @@
                         <th>Email</th>
                         <th>Phone Number</th>
                         @if(!Auth::guest())
-                            <th>Actions</th>
+                            <th class="disabled">Actions</th>
                         @endif
                     </tr>
                 <tbody id="tbody">
@@ -89,17 +76,8 @@
                             <td>{{$em->phone_number}}</td>
                             @if(!Auth::guest())
                                 <td style="width: 100px;">
-                                    <div id="confirmDelete" class="modal">
-                                        <div class="modal-content">
-                                            <p>Are you sure want to delete this?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button href="#" class="modal-action modal-close waves-effect waves-light btn-flat">Cancel</button>
-                                            <button id="confirm" class="modal-action modal-close waves-effect waves-light btn-flat red">Delete</button>
-                                        </div>
-                                    </div>
                                     <div id="{{'action-'.$em->id}}">
-                                    <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn-floating green" title="Edit" id="{{'show-edit-'.$em->id}}"><i class="material-icons">mode_edit</i></a>
+                                        <a href="{{url('/employee').'/'.$em->id.'/edit'}}" class="btn btn-primary btn-lg btn-circle" title="Edit" id="{{'show-edit-'.$em->id}}"><i class="fa fa-edit"></i></a>
                                     </div>
                                 </td>
                             @endif
@@ -108,81 +86,13 @@
                 @endforeach
                 </tbody>
                 </thead>
-            </table>
+            </table> 
             <center>
                 {!! $employees->render() !!}
             </center>
         @endif
+        </div>
+        </div>
+
     </div>
-@endsection
-
-
-@section('script')
-    <script>
-        $('.modal-trigger').leanModal();
-        $('select').material_select();
-
-        // Show/hide floating button on scroll
-        $(window).scroll(function () {
-            var btn  = $('.fixed-action-btn');
-            btn.fadeOut();
-        });
-        $('#tbody').scroll(function () {
-            var btn  = $('.fixed-action-btn');
-            btn.fadeOut();
-        });
-        // Scroll end extension
-        $.fn.scrollEnd = function(callback, timeout) {
-            $(this).scroll(function(){
-                var $this = $(this);
-                if ($this.data('scrollTimeout')) {
-                    clearTimeout($this.data('scrollTimeout'));
-                }
-                $this.data('scrollTimeout', setTimeout(callback,timeout));
-            });
-        };
-        $(window).scrollEnd(function () {
-            var btn  = $('.fixed-action-btn');
-            btn.fadeIn();
-        }, 1000);
-        $('#tbody').scrollEnd(function () {
-            var btn  = $('.fixed-action-btn');
-            btn.fadeIn();
-        }, 1000);
-
-        <!-- Form confirm (yes/ok) handler, submits form -->
-        $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-            $('#deleteForm').submit();
-        });
-
-        // Show search form 
-        $(document).ready(function () {
-            $('#close-search-form').hide();
-            $('#search-form').hide();
-            $('#show-search').on('click', function() {
-                $('#show-search').hide();
-                $('#close-search-form').show();
-                $('#search-form').toggle('fast', function() {
-                    if ($(this).is(':visible')) {
-                        $(this).css('display', 'inline');
-                    }
-                });
-                $('input:text:visible:first').focus();
-            });
-            $('#close-search-form').on('click', function () {
-                $('#close-search-form').hide();
-                $('#show-search').show();
-                $('#search-form').hide();
-            });
-        });
-
-        // Mouse enter/leave a table row
-        $('[id^="info-"]').mouseenter(function() {
-            id = $(this).attr('id').substr(5);
-            $('#action-' + id).css('visibility', 'visible');
-        }).mouseleave(function() {
-            id = $(this).attr('id').substr(5);
-            $('#action-' + id).css('visibility', 'hidden');
-        });
-    </script>
 @endsection
