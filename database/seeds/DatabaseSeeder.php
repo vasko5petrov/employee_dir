@@ -13,29 +13,37 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
-        
+
         // php artisan db:seed to run
         App\User::truncate();
         App\Employee::truncate();
         App\Department::truncate();
-        
+
         $user = new App\User();
-        $user->email = 'example@gmail.com';
-        $user->username = 'Administrator';
+        $user->email = 'admin@anakatech.com';
+        $user->username = 'Admin';
         $user->password = bcrypt('123456');
         $user->save();
 
+        //Random Date
+        $rDateB = date("Y-m-d",mt_rand(301055681,901055681));
+        $rDateH = date("Y-m-d",mt_rand(1001055681,1101055681));
+
         // Using faker
         $faker = Faker::create();
-        foreach (range(0, 15) as $index) {
-            foreach (range(0, 5) as $count) {
+        foreach (range(0, 10) as $index) {
+            foreach (range(0, 3) as $count) {
                 DB::table('employees')->insert([
                     'name' => $faker->name,
                     'job_title' => $faker->jobTitle,
                     'department_id' => $index + 1,
                     'email' => $faker->email,
                     'phone_number' => $faker->phoneNumber,
-                    'picture' => 'uploads/images/icon-user-default.png'
+                    'picture' => 'uploads/images/icon-user-default.png',
+                    'gender' => 'Male',
+                    'location' => 'Sofia, Bulgaria',
+                    'birthday' => date("Y-m-d",mt_rand(301055681,901055681)),
+                    'hiring_day' => date("Y-m-d",mt_rand(1001055681,1101055681)),
                 ]);
             }
         }

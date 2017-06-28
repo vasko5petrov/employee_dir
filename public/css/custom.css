@@ -1,6 +1,6 @@
 /* Custom CSS */
 .navbar-brand, .navbar-brand:hover, .navbar-brand:focus {
-	padding:20px 10px !important;
+	padding:25px 10px !important;
 	background-color: white !important;
 }
 .navbar-right {
@@ -12,25 +12,25 @@
 .employeeDetails, .departmentDetails {
 	margin-bottom: 100px;
 }
-th.headerSortUp { 
-    background-image: url(../images/small_asc.gif); 
+th.headerSortUp {
+    background-image: url(../images/small_asc.gif);
     background-color: #3399FF;
     color: white;
 }
-th.headerSortDown { 
-    background-image: url(../images/small_desc.gif); 
+th.headerSortDown {
+    background-image: url(../images/small_desc.gif);
     background-color: #3399FF;
     color: white;
-} 
-th.header { 
-    background-image: url(../images/small.gif); 
-    cursor: pointer; 
-    font-weight: bold; 
-    background-repeat: no-repeat; 
-    background-position: center right; 
-    padding-left: 20px; 
-    border-right: 1px solid #dad9c7; 
-    margin-left: -1px; 
+}
+th.header {
+    background-image: url(../images/small.gif);
+    cursor: pointer;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-position: center right;
+    padding-left: 20px;
+    border-right: 1px solid #dad9c7;
+    margin-left: -1px;
 }
 th.disabled {
 	background:none;
@@ -54,11 +54,11 @@ th.disabled {
   border-radius: 25px;
 }
 .btn-circle.btn-xl {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   padding: 10px 17px;
   font-size: 24px;
-  line-height: 1.33;
+  line-height: 1.83;
   border-radius: 35px;
 }
 .btn-file {

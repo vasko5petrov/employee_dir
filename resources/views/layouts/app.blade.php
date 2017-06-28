@@ -51,7 +51,7 @@
                 <span class="icon-bar"></span>
               </button>
               <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="{{URL::asset('website-logo.png')}}" width="200" class="website_logo"/>
+                <img src="{{URL::asset('website-logo.png')}}" width="150" class="website_logo"/>
               </a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
@@ -75,11 +75,11 @@
                           <li><a href="{{url('/logout')}}"><i class="fa fa-sign-out"></i> Logout</a></li>
 
                         </ul>
-                    </li>                    
+                    </li>
                 @endif
               </ul>
             </div><!--/.nav-collapse -->
-          </div>        
+          </div>
     </nav>
     <div class="content-wrap">
         @yield('content')

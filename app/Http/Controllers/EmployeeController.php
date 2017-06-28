@@ -27,7 +27,7 @@ class EmployeeController extends Controller
             $query = $query->where('department_id', '=', $em_search_dp);
         }
         $employees = $query->orderBy('name')->paginate(15)->appends([
-            'search' => $search, 
+            'search' => $search,
             'em-search-name' => $em_search_name,
             'em-search-dp' => $em_search_dp
         ]);
@@ -45,19 +45,20 @@ class EmployeeController extends Controller
     // Add a new employee
     public function add(Request $request)
     {
-            // Testing date field           
+            // Testing date field
 
 
             // Customize validation messages
             $messages = [
                 'em-name.required' => 'The name field is required.',
                 'em-gender.required' => 'The gender field is required.',
+                'em-hiringDate.required' => 'Hiring date field is required.',
                 'em-job-title.required' => 'The job title field is required.',
                 'em-department-id.required' => 'The department field is required',
                 'em-email.required' => 'The email field is required.',
                 'em-email.email' => 'Please provide a valid email address.',
                 'em-email.unique' => 'This email address already exist.',
-                'em-phone-number.phone' => 'The phone number field contains an invalid number.',
+                'em-phone-number.integer' => 'The phone number field contains an invalid number.',
             ];
 
             // Validation rules
@@ -65,7 +66,7 @@ class EmployeeController extends Controller
                 'em-name' => 'required|string',
                 'em-gender' => 'required|string',
                 'em-birthday' => 'string',
-                'em-hiringDate' => 'string',
+                'em-hiringDate' => 'required|string',
                 'em-location' => 'string',
                 'em-job-title' => 'required|string',
                 'em-department-id' => 'required|string',
@@ -123,12 +124,12 @@ class EmployeeController extends Controller
     }
 
     //Show a employee details
-    public function show($id) 
+    public function show($id)
     {
         $em = Employee::find($id);
         $em_department_id = $em->department_id;
         $dp = Department::find($em_department_id);
-        
+
         $em_birthday = EmployeeController::CheckDateForUndefined($em->birthday);
         $em_hiringDate = EmployeeController::CheckDateForUndefined($em->hiring_day);
         return view('employee.showEmployeeDetails', compact('em', 'dp', 'em_birthday', 'em_hiringDate'));
@@ -143,10 +144,10 @@ class EmployeeController extends Controller
     }
 
     public function formatDateToView($date) {
-        $dateFormat = new DateTime($date); 
+        $dateFormat = new DateTime($date);
         return date_format($dateFormat, 'd F Y');
     }
-    
+
     // Return form: Edit a employee information
     public function editForm($id)
     {
@@ -155,7 +156,7 @@ class EmployeeController extends Controller
         $departments = $departments->sortBy('name');
         return view('employee.editEmployeeForm', compact('em', 'departments'));
     }
-    
+
     // Edit a employee information
     public function edit(Request $request)
     {
@@ -163,11 +164,12 @@ class EmployeeController extends Controller
         $messages = [
             'em-name.required' => 'The name field is required.',
             'em-gender.required' => 'The gender field is required.',
+            'em-hiringDate.required' => 'Hiring date field is required.',
             'em-job-title.required' => 'The job title field is required.',
             'em-department-id.required' => 'The department field is required.',
             'em-email.required' => 'The email field is required.',
             'em-email.email' => 'Please provide a valid email address.',
-            'em-phone-number.phone' => 'The phone number field contains an invalid number.',
+            'em-phone-number.integer' => 'The phone number field contains an invalid number.',
         ];
 
         // Validate
@@ -178,14 +180,14 @@ class EmployeeController extends Controller
             'em-gender' => 'required|string',
             'em-location' => 'string',
             'em-birthday' => 'string',
-            'em-hiringDate' => 'string',
+            'em-hiringDate' => 'required|string',
             'em-job-title' => 'required|string',
             'em-department-id' => 'required|string',
             'em-email' => 'email|required',
             'em-phone-number' => 'integer',
             'image' => 'image|max:2048'
         ], $messages);
-        
+
         $em_id = $request->input('em-id');
         $new_em_name = $request->input('em-name');
         $new_em_gender = $request->input('em-gender');
@@ -212,7 +214,7 @@ class EmployeeController extends Controller
 
         // and all departments
         $departments = Department::all();
-        
+
         // If the provided information from Edit form is not modified, do nothing
         if (!isset($new_em_picture) && $em->name === $new_em_name && $em->gender === $new_em_gender && $em->birthday === $new_em_birthday && $em->hiring_day === $new_em_hiringDate && $em->location === $new_em_location && $em->department_id == $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
             $result = 'Employee information remains unchanged!';

@@ -4,12 +4,13 @@
     <div class="container">
         <h3>Departments
         @if(!Auth::guest())
-            <a href="{{url('/department/add')}}" style="float: right;" class="btn btn-lg btn-success" title="Add employee">
-                <i class="large material-icons">add</i>
+            <a href="{{url('/department/add')}}" style="float: right;" class="btn btn-xl btn-circle btn-success" title="Add employee">
+                <i class="fa fa-plus"></i>
             </a>
         @endif
         </h3>
         <hr>
+        @if(sizeof($departments))
         <div class="row">
         @foreach($departments as $index=>$dp)
         <div class="col-md-6">
@@ -34,6 +35,10 @@
         </div>
         @endforeach
         </div>
+        <center>
+          {!! $departments->render() !!}
+        </center>
+        @endif
     </div>
 @endsection
 

@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="form-group">
                                 <label class="input-group-btn">
-                                <span class="btn btn-primary">
+                                <span class="btn btn-warning">
                                     Choose image {!! Form::file('image', ['id'=>'picture', 'class'=>'form-control-file', 'style'=>'display:none;' ]) !!}
                                 </span>
                                 </label>

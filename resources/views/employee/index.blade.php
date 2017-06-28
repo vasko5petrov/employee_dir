@@ -4,8 +4,8 @@
     <div class="container">
         <h3>Employees
         @if(!Auth::guest())
-            <a href="{{url('/employee/add')}}" style="float: right;" class="btn btn-lg btn-success" title="Add employee">
-                <i class="large material-icons">add</i>
+            <a href="{{url('/employee/add')}}" style="float: right;" class="btn btn-xl btn-success btn-circle" title="Add employee">
+                <i class="fa fa-plus"></i>
             </a>
         @endif
         </h3>
@@ -86,7 +86,7 @@
                 @endforeach
                 </tbody>
                 </thead>
-            </table> 
+            </table>
             <center>
                 {!! $employees->render() !!}
             </center>
