@@ -130,6 +130,8 @@
             });
 
             $(".tablesorter").tablesorter();
+            
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 

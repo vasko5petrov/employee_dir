@@ -11,33 +11,44 @@
         </h3>
         <hr>
         @if(sizeof($departments))
-        <div class="row">
-        @foreach($departments as $index=>$dp)
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">{{$dp->name}}</h3>
+            <div class="row">
+                @foreach($departments as $index=>$dp)
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">{{$dp->name}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p><strong>Office Number:</strong> {{$dp->office_number}}</p>
+                            @if($dp->manager())
+                                <p><strong>Manager:</strong> <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}"id="dpManager">{{$dp->manager()->name}}</a></p>
+                            @endif
+                        </div>
+                        <div class="panel-footer">
+                            <a href="{{url('/department').'/'.$dp->id.'/detail'}}" id="dpName">View Department</a>
+                            <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn btn-primary btn-circle btn-lg" title="Employee list"><i class="fa fa-list" style=""></i></a>
+                            @if(!Auth::guest())
+                                <a href="{{url('/department').'/'.$dp->id.'/edit'}}" id="{{'show-edit-'.$dp->id}}" class="btn btn-success btn-circle btn-lg" title="Edit"><i class="fa fa-edit" style=""></i></a>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <p><strong>Office Number:</strong> {{$dp->office_number}}</p>
-                    @if($dp->manager())
-                        <p><strong>Manager:</strong> <a href="{{url('/employee').'/'.$dp->manager()->id.'/detail'}}"id="dpManager">{{$dp->manager()->name}}</a></p>
-                    @endif
-                </div>
-                <div class="panel-footer">
-                    <a href="{{url('/department').'/'.$dp->id.'/detail'}}" id="dpName">View Department</a>
-                    <a href="{{url('/department').'/'.$dp->id.'/employee'}}" class="btn btn-primary btn-circle btn-lg" title="Employee list"><i class="fa fa-list" style=""></i></a>
-                    @if(!Auth::guest())
-                        <a href="{{url('/department').'/'.$dp->id.'/edit'}}" id="{{'show-edit-'.$dp->id}}" class="btn btn-success btn-circle btn-lg" title="Edit"><i class="fa fa-edit" style=""></i></a>
+                @endforeach
+
+                <center>
+                  {!! $departments->render() !!}
+                </center>
+            </div>
+        @else
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>No Departments found.</h5>
+                    @if (!Auth::guest())
+                        <p>You can start by adding one</p>
+                        <a href="{{url('/department/add')}}" class="btn btn-success"><i class="fa fa-plus"></i> Add Department</a>
                     @endif
                 </div>
             </div>
-        </div>
-        @endforeach
-        </div>
-        <center>
-          {!! $departments->render() !!}
-        </center>
         @endif
     </div>
 @endsection

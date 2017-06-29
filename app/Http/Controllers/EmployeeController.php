@@ -13,9 +13,29 @@ use Illuminate\Validation\Validator;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpFoundation\Response;
 use Datetime;
+use DB;
 
 class EmployeeController extends Controller
 {
+    //Custom functions
+    public function CheckDateForUndefined($date) {
+        if($date != '0000-00-00') {
+            return EmployeeController::formatDateToView($date);
+        } else {
+            $date = "";
+        }
+    }
+
+    public function formatDateToView($date) {
+        $dateFormat = new DateTime($date);
+        return date_format($dateFormat, 'd F Y');
+    }
+    public function formatDateMonthToView($date) {
+        $dateFormat = new DateTime($date);
+        return date_format($dateFormat, 'd F');
+    }
+
+
     // show list of employees
     public function index(Request $request)
     {
@@ -32,7 +52,21 @@ class EmployeeController extends Controller
             'em-search-dp' => $em_search_dp
         ]);
         $departments = Department::all();
-        return view('employee.index', compact('employees', 'departments', 'em_search_name', 'em_search_dp', 'search'));
+
+        //$new_em = Employee::orderBy('hiring_day', 'DESC')->limit(6)->get();
+        $new_em = DB::select("SELECT * FROM `employees` WHERE DATE_ADD(hiring_day, INTERVAL YEAR(CURDATE())-YEAR(hiring_day) + IF(DAYOFYEAR(CURDATE()) < DAYOFYEAR(hiring_day),1,0) YEAR) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY) AND DATE_ADD(hiring_day, INTERVAL YEAR(CURDATE())-YEAR(hiring_day) YEAR) <> CURDATE() ORDER BY `employees`.`hiring_day` DESC");
+
+        $next_birthday_query = "SELECT * FROM `employees` WHERE DATE_ADD(birthday, INTERVAL YEAR(CURDATE())-YEAR(birthday) + IF(DAYOFYEAR(CURDATE()) > DAYOFYEAR(birthday),1,0) YEAR) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) AND DATE_ADD(birthday, INTERVAL YEAR(CURDATE())-YEAR(birthday) YEAR) <> CURDATE() ORDER BY `employees`.`birthday` DESC";
+
+        $next_bd = DB::select($next_birthday_query);
+
+        foreach ($next_bd as $key => $value) {
+            $fnext_bd[$key] = $em_birthday = EmployeeController::formatDateMonthToView($value->birthday);
+        }
+        
+        $todays_bd = DB::select("SELECT * FROM `employees` WHERE DATE_ADD(birthday, INTERVAL YEAR(CURDATE())-YEAR(birthday) + IF(DAYOFYEAR(CURDATE()) > DAYOFYEAR(birthday),1,0) YEAR) BETWEEN CURDATE() AND CURDATE() ORDER BY `employees`.`birthday` ASC");
+
+        return view('employee.index', compact('employees', 'departments', 'em_search_name', 'em_search_dp', 'search', 'new_em', 'next_bd', 'todays_bd', 'fnext_bd'));
     }
 
     // Return form: Add a new employee
@@ -54,10 +88,10 @@ class EmployeeController extends Controller
                 'em-gender.required' => 'The gender field is required.',
                 'em-hiringDate.required' => 'Hiring date field is required.',
                 'em-job-title.required' => 'The job title field is required.',
-                'em-department-id.required' => 'The department field is required',
                 'em-email.required' => 'The email field is required.',
                 'em-email.email' => 'Please provide a valid email address.',
                 'em-email.unique' => 'This email address already exist.',
+                'em-phone-number.required' => 'The phone number field is required.',
                 'em-phone-number.integer' => 'The phone number field contains an invalid number.',
             ];
 
@@ -69,9 +103,9 @@ class EmployeeController extends Controller
                 'em-hiringDate' => 'required|string',
                 'em-location' => 'string',
                 'em-job-title' => 'required|string',
-                'em-department-id' => 'required|string',
+                'em-department-id' => 'string',
                 'em-email' => 'email|required|unique:employees,email',
-                'em-phone-number' => 'integer',
+                'em-phone-number' => 'required|integer',
                 'image' => 'image|max:2048'
             ];
 
@@ -135,19 +169,6 @@ class EmployeeController extends Controller
         return view('employee.showEmployeeDetails', compact('em', 'dp', 'em_birthday', 'em_hiringDate'));
     }
 
-    public function CheckDateForUndefined($date) {
-        if($date != '0000-00-00') {
-            return EmployeeController::formatDateToView($date);
-        } else {
-            $date = "";
-        }
-    }
-
-    public function formatDateToView($date) {
-        $dateFormat = new DateTime($date);
-        return date_format($dateFormat, 'd F Y');
-    }
-
     // Return form: Edit a employee information
     public function editForm($id)
     {
@@ -166,9 +187,9 @@ class EmployeeController extends Controller
             'em-gender.required' => 'The gender field is required.',
             'em-hiringDate.required' => 'Hiring date field is required.',
             'em-job-title.required' => 'The job title field is required.',
-            'em-department-id.required' => 'The department field is required.',
             'em-email.required' => 'The email field is required.',
             'em-email.email' => 'Please provide a valid email address.',
+            'em-phone-number.required' => 'The phone number field is required.',
             'em-phone-number.integer' => 'The phone number field contains an invalid number.',
         ];
 
@@ -182,9 +203,9 @@ class EmployeeController extends Controller
             'em-birthday' => 'string',
             'em-hiringDate' => 'required|string',
             'em-job-title' => 'required|string',
-            'em-department-id' => 'required|string',
+            'em-department-id' => 'string',
             'em-email' => 'email|required',
-            'em-phone-number' => 'integer',
+            'em-phone-number' => 'required|integer',
             'image' => 'image|max:2048'
         ], $messages);
 

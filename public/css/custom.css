@@ -83,3 +83,20 @@ th.disabled {
 img.circle {
 	border-radius: 100%;
 }
+.chip {
+    display: inline-block;
+    padding: 0 20px;
+    height: 40px;
+    font-size: 12px;
+    line-height: 40px;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+}
+
+.chip img {
+    float: left;
+    margin: 0 10px 0 -20px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}

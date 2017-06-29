@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         App\Department::truncate();
 
         $user = new App\User();
-        $user->email = 'admin@anakatech.com';
+        $user->email = 'example@gmail.com';
         $user->username = 'Admin';
         $user->password = bcrypt('123456');
         $user->save();
@@ -31,8 +31,8 @@ class DatabaseSeeder extends Seeder
 
         // Using faker
         $faker = Faker::create();
-        foreach (range(0, 10) as $index) {
-            foreach (range(0, 3) as $count) {
+        foreach (range(0, 4) as $index) {
+            foreach (range(0, 8) as $count) {
                 DB::table('employees')->insert([
                     'name' => $faker->name,
                     'job_title' => $faker->jobTitle,
@@ -43,11 +43,11 @@ class DatabaseSeeder extends Seeder
                     'gender' => 'Male',
                     'location' => 'Sofia, Bulgaria',
                     'birthday' => date("Y-m-d",mt_rand(301055681,901055681)),
-                    'hiring_day' => date("Y-m-d",mt_rand(1001055681,1101055681)),
+                    'hiring_day' => date("Y-m-d",mt_rand(1001055681,1498611681)),
                 ]);
             }
         }
-        foreach (range(0, 40) as $index) {
+        foreach (range(0, 4) as $index) {
             DB::table('departments')->insert([
                 'name' => $faker->company,
                 'office_number' => $faker->tollFreePhoneNumber,

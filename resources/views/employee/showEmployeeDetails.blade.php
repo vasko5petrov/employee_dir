@@ -59,7 +59,11 @@
                     <tbody>
                         <tr>
                             <th>Department</th>
-                            <td>{{$dp->name}}</td>
+                            <td>
+                                @if(sizeof($dp))
+                                    {{$dp->name}}
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <th>Job Title</th>
