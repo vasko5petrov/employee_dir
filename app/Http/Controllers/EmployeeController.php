@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpFoundation\Response;
 use Datetime;
 use DB;
+use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -54,19 +55,24 @@ class EmployeeController extends Controller
         $departments = Department::all();
 
         //$new_em = Employee::orderBy('hiring_day', 'DESC')->limit(6)->get();
-        $new_em = DB::select("SELECT * FROM `employees` WHERE DATE_ADD(hiring_day, INTERVAL YEAR(CURDATE())-YEAR(hiring_day) + IF(DAYOFYEAR(CURDATE()) < DAYOFYEAR(hiring_day),1,0) YEAR) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY) AND DATE_ADD(hiring_day, INTERVAL YEAR(CURDATE())-YEAR(hiring_day) YEAR) <> CURDATE() ORDER BY `employees`.`hiring_day` DESC");
+        $new_em = Employee::where('hiring_day', '>=', Carbon::now()->subMonth())->orderBy('hiring_day', 'DESC')->get();
+
+        foreach ($new_em as $key => $value) {
+            $fnew_em[$key] = EmployeeController::formatDateMonthToView($value->hiring_day);
+        }
 
         $next_birthday_query = "SELECT * FROM `employees` WHERE DATE_ADD(birthday, INTERVAL YEAR(CURDATE())-YEAR(birthday) + IF(DAYOFYEAR(CURDATE()) > DAYOFYEAR(birthday),1,0) YEAR) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) AND DATE_ADD(birthday, INTERVAL YEAR(CURDATE())-YEAR(birthday) YEAR) <> CURDATE() ORDER BY `employees`.`birthday` DESC";
+        $todays_birthday_query = "SELECT * FROM `employees` WHERE DATE_ADD(birthday, INTERVAL YEAR(CURDATE())-YEAR(birthday) + IF(DAYOFYEAR(CURDATE()) > DAYOFYEAR(birthday),1,0) YEAR) BETWEEN CURDATE() AND CURDATE() ORDER BY `employees`.`birthday` ASC";
 
         $next_bd = DB::select($next_birthday_query);
 
         foreach ($next_bd as $key => $value) {
-            $fnext_bd[$key] = $em_birthday = EmployeeController::formatDateMonthToView($value->birthday);
+            $fnext_bd[$key] = EmployeeController::formatDateMonthToView($value->birthday);
         }
         
-        $todays_bd = DB::select("SELECT * FROM `employees` WHERE DATE_ADD(birthday, INTERVAL YEAR(CURDATE())-YEAR(birthday) + IF(DAYOFYEAR(CURDATE()) > DAYOFYEAR(birthday),1,0) YEAR) BETWEEN CURDATE() AND CURDATE() ORDER BY `employees`.`birthday` ASC");
+        $todays_bd = DB::select($todays_birthday_query);
 
-        return view('employee.index', compact('employees', 'departments', 'em_search_name', 'em_search_dp', 'search', 'new_em', 'next_bd', 'todays_bd', 'fnext_bd'));
+        return view('employee.index', compact('employees', 'departments', 'em_search_name', 'em_search_dp', 'search', 'new_em', 'next_bd', 'todays_bd', 'fnext_bd', 'fnew_em'));
     }
 
     // Return form: Add a new employee

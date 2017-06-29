@@ -90,10 +90,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h5>No Employees found.</h5>
-                        @if (!Auth::guest())
-                            <p>You can start by adding one</p>
-                            <a href="{{url('/employee/add')}}" class="btn btn-success"><i class="fa fa-plus"></i> Add Employee</a>
-                        @endif
                     </div>
                 </div>
             @endif
@@ -114,13 +110,12 @@
                       <div class="panel-body">
                         <h6>Find out who recently joined the team</h6>
                         @if(sizeof($new_em))
-                        @foreach($new_em as $nb)
-                        
-                        <div class="chip well">
-                        <a href="{{url('/employee').'/'.$nb->id.'/detail'}}">
-                          <img src="{{url('/').'/'.$nb->picture}}" alt="Person" width="40" height="40">
-                          {{$nb->name}}
-                        </a>
+                        @foreach($new_em as $key => $nb)
+                        <div class="chip well" data-toggle="tooltip" data-placement="top" title="{{$fnew_em[$key]}}">
+                            <a href="{{url('/employee').'/'.$nb->id.'/detail'}}">
+                              <img src="{{url('/').'/'.$nb->picture}}" alt="Person" width="40" height="40">
+                              {{$nb->name}}
+                            </a>
                         </div>
                         @endforeach
                         @else

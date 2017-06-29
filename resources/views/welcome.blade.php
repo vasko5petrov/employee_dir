@@ -7,7 +7,7 @@
             <div class="jumbotron">
                 <h1>Welcome</h1>
                 <p>
-                    This is the Anakatech Team office data website. <br>
+                    This is the {{ config('app.name', 'Anakatech Family') }} office data website. <br>
                             View employees and departments. <br>
                             Check your own employee profile.
                 </p>

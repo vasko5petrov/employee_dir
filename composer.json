@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "^5.2",
         "propaganistas/laravel-phone": "~2.0",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "nesbot/carbon": "^1.22"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
