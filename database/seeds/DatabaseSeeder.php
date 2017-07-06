@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         App\User::truncate();
         App\Employee::truncate();
         App\Department::truncate();
+        App\Post::truncate();
 
         $user = new App\User();
         $user->email = 'example@gmail.com';
@@ -31,6 +32,14 @@ class DatabaseSeeder extends Seeder
 
         // Using faker
         $faker = Faker::create();
+        foreach (range(0, 25) as $index) {
+            DB::table('posts')->insert([
+                'title' => $faker->text(20),
+                'body' => $faker->text(5000),
+                'cover_image' => 'uploads/posts/cover-image-default.jpg',
+            ]);
+        }
+
         foreach (range(0, 4) as $index) {
             foreach (range(0, 8) as $count) {
                 DB::table('employees')->insert([

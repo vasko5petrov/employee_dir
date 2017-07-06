@@ -39,6 +39,15 @@ Route::get('/employee/{id}/edit', 'EmployeeController@editForm')->middleware('au
 Route::post('/employee/{id}/edit', 'EmployeeController@edit')->middleware('auth');
 Route::delete('employee/{id}/delete', 'EmployeeController@delete')->middleware('auth');
 
+// Posts routes
+Route::get('/posts', 'PostsController@index');
+Route::get('/post/{id}', 'PostsController@show');
+Route::get('/posts/add', 'PostsController@addForm')->middleware('auth');
+Route::post('/posts/add', 'PostsController@add')->middleware('auth');
+Route::get('/post/{id}/edit', 'PostsController@editForm')->middleware('auth');
+Route::post('/post/{id}/edit', 'PostsController@edit')->middleware('auth');
+Route::delete('post/{id}/delete', 'PostsController@delete')->middleware('auth');
+
 // Admin routes
 Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');
 Route::post('/update/password', 'UserController@updatePassword')->middleware('auth');
