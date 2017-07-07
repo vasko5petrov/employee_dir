@@ -24,10 +24,15 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span style="width: 50px;">{{ Auth::user()->username }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                          <li class="dropdown-header">Admin Actions</li>
+                          <li class="dropdown-header">Manage Articles</li>
+                          <li><a href="{{url('/posts/add')}}"><i class="fa fa-plus"></i> Add Article</a></li>
+                          <li><a href="{{url('/posts/categories')}}"><i class="fa fa-list"></i> Catergories</a></li>
+                          <li class="divider" role="separator"></li>
+                          <li class="dropdown-header">Manage Departments & Employee</li>
                           <li><a href="{{url('/department/add')}}"><i class="fa fa-plus"></i> Add Department</a></li>
                           <li><a href="{{url('/employee/add')}}"><i class="fa fa-plus"></i> Add Employee</a></li>
                           <li class="divider" role="separator"></li>
+                          <li class="dropdown-header">Admin Profile Settings</li>
                           <li><a href="{{url('/update/password')}}"><i class="fa fa-edit"></i> Edit Password</a></li>
                           <li><a href="{{url('/invite')}}"><i class="fa fa-edit"></i> Invite admin</a></li>
                           <li><a href="{{url('/logout')}}"><i class="fa fa-sign-out"></i> Logout</a></li>

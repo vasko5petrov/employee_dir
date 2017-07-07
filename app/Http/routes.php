@@ -48,6 +48,13 @@ Route::get('/post/{id}/edit', 'PostsController@editForm')->middleware('auth');
 Route::post('/post/{id}/edit', 'PostsController@edit')->middleware('auth');
 Route::delete('post/{id}/delete', 'PostsController@delete')->middleware('auth');
 
+	//Posts Categories
+	Route::get('/posts/categories', 'PostsCategoriesController@index')->middleware('auth');
+	Route::get('/posts/category/{id}', 'PostsCategoriesController@show');
+	Route::post('/posts/category/add', 'PostsCategoriesController@add')->middleware('auth');
+	Route::get('/posts/category/{id}/edit', 'PostsCategoriesController@editForm')->middleware('auth');
+	Route::post('/posts/category/{id}/edit', 'PostsCategoriesController@edit')->middleware('auth');
+
 // Admin routes
 Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');
 Route::post('/update/password', 'UserController@updatePassword')->middleware('auth');

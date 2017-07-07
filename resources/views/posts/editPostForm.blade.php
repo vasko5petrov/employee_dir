@@ -57,6 +57,26 @@
                                     </span>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select name="post-category-id" class="form-control">
+                                    @if(sizeof($categories))
+                                        <option value=""></option>
+                                        @foreach($categories as $cat)
+                                            @if ($cat->id == $post->post_category_id)
+                                                <option value="{{ $post->post_category_id }}" selected>{{ $post_category_name }}</option>
+                                            @else
+                                                <option value="{{$cat->id}}">{{$cat->name}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </select>
+                                @if ($errors->has('post-category-id'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('post-category-id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                         <div class="row">
                             

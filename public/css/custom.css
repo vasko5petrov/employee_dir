@@ -1,16 +1,16 @@
 /* Custom CSS */
 .navbar-brand, .navbar-brand:hover, .navbar-brand:focus {
-	padding:25px 10px !important;
-	background-color: white !important;
+  padding:25px 10px !important;
+  background-color: white !important;
 }
 .navbar-right {
-	padding-right: 15px;
+  padding-right: 15px;
 }
 .content-wrap {
-	margin-top: -20px;
+  margin-top: -20px;
 }
 .employeeDetails, .departmentDetails {
-	margin-bottom: 100px;
+  margin-bottom: 100px;
 }
 th.headerSortUp {
     background-image: url(../images/small_asc.gif);
@@ -33,8 +33,8 @@ th.header {
     margin-left: -1px;
 }
 th.disabled {
-	background:none;
-	color: inherit;
+  background:none;
+  color: inherit;
 }
 .btn-circle {
   width: 30px;
@@ -81,7 +81,7 @@ th.disabled {
     display: block;
 }
 img.circle {
-	border-radius: 100%;
+  border-radius: 100%;
 }
 .chip {
     display: inline-block;
@@ -109,4 +109,29 @@ img.circle {
     padding: 0;
     margin: 15px 0px 35px;
     margin-top: -5px;
+}
+
+/*css to add back colours for badges and make use of the colours*/
+.badge-default {
+  background-color: #999999;
+}
+
+.badge-primary {
+  background-color: #428bca;
+}
+
+.badge-success {
+  background-color: #5cb85c;
+}
+
+.badge-info {
+  background-color: #5bc0de;
+}
+
+.badge-warning {
+  background-color: #f0ad4e;
+}
+
+.badge-danger {
+  background-color: #d9534f;
 }

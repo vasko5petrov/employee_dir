@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         App\Employee::truncate();
         App\Department::truncate();
         App\Post::truncate();
+        App\PostCategory::truncate();
 
         $user = new App\User();
         $user->email = 'example@gmail.com';
@@ -32,11 +33,21 @@ class DatabaseSeeder extends Seeder
 
         // Using faker
         $faker = Faker::create();
-        foreach (range(0, 25) as $index) {
-            DB::table('posts')->insert([
-                'title' => $faker->text(20),
-                'body' => $faker->text(5000),
-                'cover_image' => 'uploads/posts/cover-image-default.jpg',
+        foreach (range(0, 4) as $cat_index) {
+            foreach (range(0, 4) as $index) {
+                DB::table('posts')->insert([
+                    'title' => $faker->text(20),
+                    'body' => $faker->text(5000),
+                    'cover_image' => 'uploads/posts/cover-image-default.jpg',
+                    'post_category_id' => $cat_index + 1,
+                ]);
+            }
+        }  
+
+        foreach (range(0, 4) as $index) {
+            DB::table('posts_categories')->insert([
+                'name' => 'Category '.($index+1),
+                'importance' => $index
             ]);
         }
 

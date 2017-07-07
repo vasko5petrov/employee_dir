@@ -11,7 +11,7 @@
         </h3>
         <hr>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9">
             <a data-toggle="collapse" href="#collapse-search-form" class="btn btn-primary btn-block">Search</h4></a>
                 <br>
                 <div id="collapse-search-form" class="collapse">
@@ -31,11 +31,19 @@
             <br>
             @if(sizeof($posts))
                 @foreach($posts as $index=>$post)
+                
                 <div class="row">
                     <div class="col-sm-4"><a href="{{url('/post').'/'.$post->id}}"><img src="{{url('/').'/'.$post->cover_image}}" class="responsive-imge" style="width: 100%;"></a>
                     </div>
                     <div class="col-sm-8">
                       <h3 class="title"><a href="{{url('/post').'/'.$post->id}}">{{$post->title}}</a></h3>
+                    @if($categories)
+                    @foreach($categories as $key=>$cat)
+                      @if($cat->id == $post->post_category_id) 
+                        <span class="label label-{{$importanceLabels[$cat->importance]}}">{{$cat->name}}</span>
+                      @endif
+                    @endforeach
+                    @endif
                       <p>{!! str_limit($post->body, $limit = 150, $end = '...') !!}</p>
                       
                       <p class="text-muted">{{$post->created_at}}</a></p>
@@ -49,12 +57,21 @@
                 </center>
             @else
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-9">
                         <h5>No Posts found.</h5>
                     </div>
                 </div>
             @endif
             </div>
+            @if($categories)
+            <div class="col-md-3">
+                <ul class="list-group">
+                    @foreach($categories as $key => $cat)
+                        <a href="{{url('/posts/category/'.$cat->id)}}"><li class="list-group-item">{{$cat->name}}<span class="badge badge-default">{{$number_posts[$key]}}</span></li></a>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             
         </div>
 

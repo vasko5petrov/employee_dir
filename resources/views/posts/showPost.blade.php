@@ -12,6 +12,7 @@
             </a>
         @endif
         </h3>
+        <h5><span class="label label-{{$importanceLabels[$post_category_importance]}}">{{$post_category_name}}</span></h5>
         <hr>
         <div class="row">
             <div class="col-md-12">
