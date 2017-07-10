@@ -16,6 +16,10 @@
                 <table class="table">
                     <tbody>
                         <tr>
+                            <th>Posts</th>
+                            <td>{{$number_posts}}</td>
+                        </tr>
+                        <tr>
                             <th>Importance</th>
                             <td>{{$categoriesNames[$category->importance]}}</td>
                         </tr>

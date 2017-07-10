@@ -57,6 +57,21 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label class="input-group-btn">
+                                <span class="btn btn-warning">
+                                    Attach files {!! Form::file('files[]', ['multiple' => true, 'id'=>'files', 'class'=>'form-control-file', 'style'=>'display:none;' ]) !!}
+                                </span>
+                                </label>
+                                <input type="files" style="display: none;" multiple/>
+                                <input type="text" class="form-control" style="padding-left: 10px;" readonly/>
+
+                                @if($errors->has('files'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{$errors->first('files')}}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label for="post-category-id">Category</label>
                                 <select name="post-category-id" class="form-control">
                                     <option value="" selected disabled>Choose Category</option>

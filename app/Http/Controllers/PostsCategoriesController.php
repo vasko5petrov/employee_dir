@@ -114,7 +114,9 @@ class PostsCategoriesController extends Controller
 
         $importanceLabels = ['success', 'info', 'primary' , 'warning', 'danger'];
 
-        return view('posts.categories.showCategory', compact('posts', 'categories', 'category', 'categoriesNames', 'importanceLabels'));
+        $number_posts = count($category->posts);
+
+        return view('posts.categories.showCategory', compact('posts', 'categories', 'category', 'categoriesNames', 'importanceLabels', 'number_posts'));
     }
 
     /**

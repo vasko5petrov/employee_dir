@@ -18,7 +18,19 @@
                     <form method="GET" url="posts" id="search-form" >
                         <input type="hidden" name="search" value=1>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="post-search-title" placeholder="Post Title" value="" />
+                            <input type="text" class="form-control" name="post-search-title" placeholder="Post Title" value="{{$post_search_title}}" />
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="post-search-cat">
+                                <option value="">All Categories</option>
+                                @foreach($categories as $cat)
+                                    @if ($cat->id == $post_search_cat)
+                                        <option value="{{$cat->id}}" selected>{{$cat->name}}</option>
+                                    @else
+                                        <option value="{{$cat->id}}">{{$cat->name}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-sm btn-primary">
                             <i class="fa fa-search"></i> Search
@@ -40,7 +52,7 @@
                     @if($categories)
                     @foreach($categories as $key=>$cat)
                       @if($cat->id == $post->post_category_id) 
-                        <span class="label label-{{$importanceLabels[$cat->importance]}}">{{$cat->name}}</span>
+                        <a style="text-decoration: none;" href="{{url('/posts/category/'.$cat->id)}}"><span class="label label-{{$importanceLabels[$cat->importance]}}">{{$cat->name}}</span></a>
                       @endif
                     @endforeach
                     @endif

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\PostCategory;
 use App\Http\Requests;
+use Response;
 
 class PostsController extends Controller
 {
@@ -23,10 +24,15 @@ class PostsController extends Controller
     {
         $search = $request->get('search');
         $post_search_title = $request->get('post-search-title');
-        $query = Post::where('title', 'like', '%' . $post_search_title . '%');
-        $posts = $query->orderBy('created_at', 'desc')->paginate(7)->appends([
+        $post_search_cat = $request->get('post-search-cat');
+        $query = Post::where('body', 'like', '%' . $post_search_title . '%')->orWhere('title', 'like', '%' . $post_search_title . '%');
+        if ($post_search_cat != '') {
+            $query = $query->where('post_category_id', '=', $post_search_cat);
+        }
+        $posts = $query->orderBy('updated_at', 'desc')->paginate(7)->appends([
             'search' => $search,
-            'post-search-title' => $post_search_title
+            'post-search-title' => $post_search_title,
+            'post-search-cat' => $post_search_cat
         ]);
 
         $categories = PostCategory::all();
@@ -36,7 +42,7 @@ class PostsController extends Controller
             $number_posts[$key] = count($cat->posts);
         }
 
-        return view('posts.index', compact('posts', 'categories', 'importanceLabels', 'number_posts'));
+        return view('posts.index', compact('posts', 'categories', 'importanceLabels', 'number_posts', 'post_search_title', 'post_search_cat'));
     }
 
     /**
@@ -63,15 +69,17 @@ class PostsController extends Controller
         $messages = [
             'post-title.required' => 'The title field is required.',
             'post-body.required' => 'The body field is required.',
+            'post-category-id.required' => 'The category field is required.',
             'image.image' => 'Please upload an image.',
-            'image.max' => 'Please upload an image with max size 2048KB.'
+            'image.max' => 'Please upload an image with max size 2048KB.',
         ];
 
         // Validation rules
         $rules = [
             'post-title' => 'required|string',
             'post-body' => 'required|string',
-            'image' => 'image|max:2048'
+            'image' => 'image|max:2048',
+            'post-category-id' => 'required|integer'
         ];
 
         // Make validation
@@ -90,12 +98,29 @@ class PostsController extends Controller
             $post_cover_image = 'cover-image-default.jpg';
         }
 
+        $files_array = [];
+
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            $file_count = count($files);
+
+            foreach($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $attached_files = $filename;
+                $file->move('uploads/posts/document_files/', $attached_files);
+                array_push($files_array, 'uploads/posts/document_files/' . $attached_files);
+            }
+        }
+
+        $serialized_files_array = json_encode($files_array);
+
         // Insert new employee record into database
         $post = new Post();
         $post->title = $post_title;
         $post->body = $post_body;
         $post->post_category_id = $post_category_id;
         $post->cover_image = 'uploads' . '/posts/' . $post_cover_image;
+        $post->attached_files = $serialized_files_array;
         $post->save();
 
         // Create success flag
@@ -139,15 +164,30 @@ class PostsController extends Controller
             if($cat->id == $post->post_category_id) {
                 $post_category_name = $cat->name;
                 $post_category_importance = $cat->importance;
+                $post_category_id = $cat->id;
                 $tmp = $categories[0];
                 $categories[0] = $categories[$index];
                 $categories[$index] = $tmp;
             }
         }
+        $unserialized_files_array = [];
+        if($post->attached_files != null){
+            $unserialized_files_array = json_decode($post->attached_files);
+
+            $filesNames = [];
+            foreach ($unserialized_files_array as $key => $value) {
+                $filename = pathinfo($value);
+                array_push($filesNames, $filename['basename']);
+            }
+        }
+
+        $post_search_category_id = $post_category_id;
+        $query = Post::where('post_category_id', 'like', '%' . $post_search_category_id . '%')->where('id', '!=' , $id);
+        $posts = $query->orderBy('created_at', 'desc')->take(3)->get();
 
         $importanceLabels = ['success', 'info', 'primary' , 'warning', 'danger'];
 
-        return view('posts.showPost', compact('post', 'post_trunc', 'post_category_name', 'post_category_importance', 'categories', 'importanceLabels'));
+        return view('posts.showPost', compact('unserialized_files_array', 'filesNames','posts', 'post', 'post_trunc', 'post_category_name', 'post_category_importance', 'post_category_id', 'categories', 'importanceLabels', 'file'));
     }
 
     /**
@@ -192,6 +232,7 @@ class PostsController extends Controller
         $messages = [
             'post-title.required' => 'The title field is required.',
             'post-body.required' => 'The body field is required.',
+            'post-category-id.required' => 'The category field is required.',
             'image.image' => 'Please upload an image.',
             'image.max' => 'Please upload an image with max size 2048KB.'
         ];
@@ -202,10 +243,12 @@ class PostsController extends Controller
         $this->validate($request,[
             'post-title' => 'required|string',
             'post-body' => 'required|string',
+            'post-category-id' => 'required|integer',
             'image' => 'image|max:2048'
         ], $messages);
 
         $post_id = $request->input('post-id');
+        $post = Post::find($post_id);
         $new_post_title = $request->input('post-title');
         $new_post_body = $request->input('post-body');
         $new_post_category_id = $request->input('post-category-id');
@@ -218,10 +261,33 @@ class PostsController extends Controller
             $image->move('uploads/images', $upload_name);
         }
 
+        $files_array = [];
+
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            $file_count = count($files);
+
+            if($post->attached_files != null){
+                $unserialize_files = json_decode($post->attached_files);
+                for ($i=0; $i < count($unserialize_files); $i++) { 
+                    unlink($unserialize_files[$i]);
+                }
+            }
+
+            foreach($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $attached_files = $filename;
+                $file->move('uploads/posts/document_files/', $attached_files);
+                array_push($files_array, 'uploads/posts/document_files/' . $attached_files);
+            }
+        }
+
+        $serialized_files_array = json_encode($files_array);
+
         // Find the post with provided id
         $post = Post::find($post_id);
 
-        if (!isset($new_post_cover_image) && $post->title == $new_post_title && $post->body == $new_post_body && $post->post_category_id == $new_post_category_id) {
+        if (!isset($new_post_cover_image) && !isset($serialized_files_array) && $post->title == $new_post_title && $post->body == $new_post_body && $post->post_category_id == $new_post_category_id) {
             $result = 'Article information remains unchanged!';
             $alert_type = 'warning';
         }
@@ -231,6 +297,7 @@ class PostsController extends Controller
             $post->body = $new_post_body;
             $post->post_category_id = $new_post_category_id;
             if (isset($new_post_cover_image)) $post->cover_image = $new_post_cover_image;
+            if (isset($serialized_files_array)) $post->attached_files = $serialized_files_array;
             $post->save();
 
             // Create alert message to flash back to session
@@ -264,6 +331,7 @@ class PostsController extends Controller
      */
     public function delete(Request $request)
     {
+
         $delete_id = $request->input('post-id');
         if (is_numeric($delete_id)) {
             try {
@@ -272,6 +340,12 @@ class PostsController extends Controller
                 $post = Post::find($delete_id);
                 if ($post->cover_image != 'uploads/posts/cover-image-default.jpg') {
                     unlink($post->cover_image);
+                }
+                if (isset($post->attached_files)) {
+                    $unserialize_files = json_decode($post->attached_files);
+                    for ($i=0; $i < count($unserialize_files); $i++) { 
+                        unlink($unserialize_files[$i]);
+                    }
                 }
                 $post->delete();
             }
