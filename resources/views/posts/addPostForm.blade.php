@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <label class="input-group-btn">
                                 <span class="btn btn-warning">
-                                    Attach files {!! Form::file('files[]', ['multiple' => true, 'id'=>'files', 'class'=>'form-control-file', 'style'=>'display:none;' ]) !!}
+                                    <i class="fa fa-files-o"></i> Attach files {!! Form::file('files[]', ['multiple' => true, 'id'=>'files', 'class'=>'form-control-file', 'style'=>'display:none;' ]) !!}
                                 </span>
                                 </label>
                                 <input type="files" style="display: none;" multiple/>
