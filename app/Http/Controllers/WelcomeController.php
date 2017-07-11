@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use App\PostCategory;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Datetime;
 
 class WelcomeController extends Controller
 {
@@ -13,9 +17,20 @@ class WelcomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function formatDateToView($date) {
+        $dateFormat = new DateTime($date);
+        return date_format($dateFormat, 'd F Y H:m');
+    }
+
     public function index()
     {
-        //
+        $posts = Post::orderBy('created_at', 'desc')->take(5)->get();
+
+        foreach ($posts as $index => $post) {
+            $postedOn[$index] = WelcomeController::formatDateToView($post->created_at);
+        }
+        return view('welcome', compact('posts', 'postedOn'));
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Http\Requests;
 
 use Illuminate\Validation\Validator;
 use Symfony\Component\Finder\Iterator\DepthRangeFilterIterator;
+use Datetime;
 
 
 class PostsCategoriesController extends Controller
@@ -21,6 +22,16 @@ class PostsCategoriesController extends Controller
 
     public function categoriesNames() {
         return ['Default', 'Info', 'Attention', 'Very Important', 'Extremly Important'];
+    }
+
+    public function getImageSize($path) {
+        $dimensions = getimagesize($path);
+        return $dimensions;
+    }
+
+    public function formatDateToView($date) {
+        $dateFormat = new DateTime($date);
+        return date_format($dateFormat, 'd F Y H:m');
     }
 
     public function index(Request $request)
@@ -104,7 +115,7 @@ class PostsCategoriesController extends Controller
     {
         $post_search_category_id = $id;
         $query = Post::where('post_category_id', 'like', '%' . $post_search_category_id . '%');
-        $posts = $query->orderBy('created_at', 'desc')->paginate(3);
+        $posts = $query->orderBy('created_at', 'desc')->paginate(5);
 
         $categories = PostCategory::all();
 
@@ -116,7 +127,19 @@ class PostsCategoriesController extends Controller
 
         $number_posts = count($category->posts);
 
-        return view('posts.categories.showCategory', compact('posts', 'categories', 'category', 'categoriesNames', 'importanceLabels', 'number_posts'));
+        $imagesPaths = [];
+
+        foreach ($posts as $index => $post) {
+            array_push($imagesPaths, $post->cover_image);
+
+            $postedOn[$index] = PostsCategoriesController::formatDateToView($post->created_at);
+        }
+
+        foreach ($imagesPaths as $key => $value) {
+            $imageSizes[$key] = PostsCategoriesController::getImageSize($value);
+        }
+
+        return view('posts.categories.showCategory', compact('postedOn', 'imageSizes', 'posts', 'categories', 'category', 'categoriesNames', 'importanceLabels', 'number_posts'));
     }
 
     /**

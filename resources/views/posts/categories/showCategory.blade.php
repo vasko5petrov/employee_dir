@@ -67,30 +67,35 @@
             </div>
         </div>
         @if(sizeof($posts))
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
                 @foreach($posts as $index=>$post)
-                
-                <div class="row">
-                    <div class="col-sm-4"><a href="{{url('/post').'/'.$post->id}}"><img src="{{url('/').'/'.$post->cover_image}}" class="responsive-imge" style="width: 100%;"></a>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title"><a href="{{url('/post').'/'.$post->id}}">{{$post->title}}</a></h3>
+                        </div>
+                        <a href="{{url('/post').'/'.$post->id}}"><img src="{{url('/').'/'.$post->cover_image}}" class="responsive-imge" style="width: 100%;"></a>
+                        <div class="panel-body">
+                            <p>{!! str_limit($post->body, $limit = 150, $end = '...') !!}</p>
+                        </div>
+                        <div class="panel-footer">
+                            @foreach($categories as $key=>$cat)
+                              @if($cat->id == $post->post_category_id) 
+                                <span class="label label-{{$importanceLabels[$cat->importance]}}">{{$cat->name}}</span>
+                              @endif
+                            @endforeach
+                            @if(count(json_decode($post->attached_files)) != 0)
+                                <a data-toggle="tooltip" title="Attachments" data-placement="right"><i class="fa fa-files-o" style="font-size: 16px"></i></a>
+                            @endif
+                            <p class="pull-right">{{$postedOn[$index]}}</a></p>
+                        </div>
                     </div>
-                    <div class="col-sm-8">
-                      <h3 class="title"><a href="{{url('/post').'/'.$post->id}}">{{$post->title}}</a></h3>
-
-                    @foreach($categories as $key=>$cat)
-                      @if($cat->id == $post->post_category_id) 
-                        <span class="label label-{{$importanceLabels[$cat->importance]}}">{{$cat->name}}</span>
-                      @endif
-                    @endforeach
-                      <p>{!! str_limit($post->body, $limit = 150, $end = '...') !!}</p>
-                      
-                      <p class="text-muted">{{$post->created_at}}</a></p>
-                      
-                    </div>
-                </div>
-                <hr>
                 @endforeach
                 <center>
                     {!! $posts->render() !!}
                 </center>
+            </div>
+        </div>
             @else
                 <div class="row">
                     <div class="col-md-12">

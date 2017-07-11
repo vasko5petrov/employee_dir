@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 //Welcome routes
-//Route::get('/', 'WelcomeController@show');
+Route::get('/', 'WelcomeController@index');
 
 Route::auth();
 Route::post('/login', 'Auth\AuthController@postLogin');

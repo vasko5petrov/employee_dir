@@ -7,6 +7,7 @@ use App\Post;
 use App\PostCategory;
 use App\Http\Requests;
 use Response;
+use Datetime;
 
 class PostsController extends Controller
 {
@@ -20,16 +21,29 @@ class PostsController extends Controller
         return ['Default', 'Info', 'Attention', 'Very Important', 'Extremly Important'];
     }
 
+    public function getImageSize($path) {
+        $dimensions = getimagesize($path);
+        return $dimensions;
+    }
+
+    public function formatDateToView($date) {
+        $dateFormat = new DateTime($date);
+        return date_format($dateFormat, 'd F Y H:m');
+    }
+
     public function index(Request $request)
     {
         $search = $request->get('search');
         $post_search_title = $request->get('post-search-title');
         $post_search_cat = $request->get('post-search-cat');
-        $query = Post::where('body', 'like', '%' . $post_search_title . '%')->orWhere('title', 'like', '%' . $post_search_title . '%');
+        $query = Post::where('title', 'like', '%' . $post_search_title . '%');
+        if(count($query->get()) == 0) {
+            $query = Post::where('body', 'like', '%' . $post_search_title . '%');
+        }
         if ($post_search_cat != '') {
             $query = $query->where('post_category_id', '=', $post_search_cat);
         }
-        $posts = $query->orderBy('updated_at', 'desc')->paginate(7)->appends([
+        $posts = $query->orderBy('created_at', 'desc')->paginate(7)->appends([
             'search' => $search,
             'post-search-title' => $post_search_title,
             'post-search-cat' => $post_search_cat
@@ -42,7 +56,19 @@ class PostsController extends Controller
             $number_posts[$key] = count($cat->posts);
         }
 
-        return view('posts.index', compact('posts', 'categories', 'importanceLabels', 'number_posts', 'post_search_title', 'post_search_cat'));
+        $imagesPaths = [];
+
+        foreach ($posts as $index => $post) {
+            array_push($imagesPaths, $post->cover_image);
+
+            $postedOn[$index] = PostsController::formatDateToView($post->created_at);
+        }
+
+        foreach ($imagesPaths as $key => $value) {
+            $imageSizes[$key] = PostsController::getImageSize($value);
+        }
+
+        return view('posts.index', compact('postedOn', 'imageSizes', 'posts', 'categories', 'importanceLabels', 'number_posts', 'post_search_title', 'post_search_cat'));
     }
 
     /**
@@ -184,10 +210,15 @@ class PostsController extends Controller
         $post_search_category_id = $post_category_id;
         $query = Post::where('post_category_id', 'like', '%' . $post_search_category_id . '%')->where('id', '!=' , $id);
         $posts = $query->orderBy('created_at', 'desc')->take(3)->get();
+        foreach ($posts as $index => $cat_post) {
+            $cat_postedOn[$index] = PostsController::formatDateToView($cat_post->created_at);
+        }
 
         $importanceLabels = ['success', 'info', 'primary' , 'warning', 'danger'];
 
-        return view('posts.showPost', compact('unserialized_files_array', 'filesNames','posts', 'post', 'post_trunc', 'post_category_name', 'post_category_importance', 'post_category_id', 'categories', 'importanceLabels', 'file'));
+        $postedOn = PostsController::formatDateToView($post->created_at);
+
+        return view('posts.showPost', compact('cat_postedOn', 'postedOn', 'unserialized_files_array', 'filesNames','posts', 'post', 'post_trunc', 'post_category_name', 'post_category_importance', 'post_category_id', 'categories', 'importanceLabels', 'file'));
     }
 
     /**
@@ -254,14 +285,15 @@ class PostsController extends Controller
         $new_post_category_id = $request->input('post-category-id');
 
         if ($request->hasFile('image')) {
+            if($post->cover_image != 'uploads/posts/cover-image-default.jpg'){
+                unlink($post->cover_image);
+            }
             $image = $request->file('image');
             $img_name = $image->getClientOriginalName();
             $upload_name = time() . '.' . $img_name;
-            $new_post_cover_image = 'uploads/images/' . $upload_name;
-            $image->move('uploads/images', $upload_name);
+            $new_post_cover_image = 'uploads/posts/' . $upload_name;
+            $image->move('uploads/posts', $upload_name);
         }
-
-        $files_array = [];
 
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -273,21 +305,22 @@ class PostsController extends Controller
                     unlink($unserialize_files[$i]);
                 }
             }
-
+            $files_array = [];
             foreach($files as $file) {
                 $filename = $file->getClientOriginalName();
                 $attached_files = $filename;
                 $file->move('uploads/posts/document_files/', $attached_files);
                 array_push($files_array, 'uploads/posts/document_files/' . $attached_files);
             }
+            $serialized_files_array = json_encode($files_array);
+        } else {
+            $serialized_files_array = $post->attached_files;
         }
-
-        $serialized_files_array = json_encode($files_array);
 
         // Find the post with provided id
         $post = Post::find($post_id);
 
-        if (!isset($new_post_cover_image) && !isset($serialized_files_array) && $post->title == $new_post_title && $post->body == $new_post_body && $post->post_category_id == $new_post_category_id) {
+        if (!isset($new_post_cover_image) && $post->attached_files == $serialized_files_array && $post->title == $new_post_title && $post->body == $new_post_body && $post->post_category_id == $new_post_category_id) {
             $result = 'Article information remains unchanged!';
             $alert_type = 'warning';
         }

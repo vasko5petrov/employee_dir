@@ -1,4 +1,7 @@
 /* Custom CSS */
+body {
+  margin-bottom: 300px;
+}
 .navbar-brand, .navbar-brand:hover, .navbar-brand:focus {
   padding:25px 10px !important;
   background-color: white !important;

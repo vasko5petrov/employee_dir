@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ url('/css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('/css/bootstrap-datepicker.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('/css/custom.css') }}" type="text/css">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Yah75rDjdUSwHjPt420XKmH1RLiSMA4&libraries=places&sensor=false&language=en"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Yah75rDjdUSwHjPt420XKmH1RLiSMA4&libraries=places&language=en"></script>
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">--}}
 
@@ -54,6 +54,9 @@
     <script src="{{url('/js/googleAutocomplete.js')}}"></script>
     <script src="{{url('/js/jquery.tablesorter.js')}}"></script>
     <script src="{{url('/js/custom.js')}}"></script>
+    <!-- Scrolling Nav JavaScript -->
+    <script src="{{url('/js/jquery.easing.min.js')}}"></script>
+    <script src="{{url('/js/scrolling-nav.js')}}"></script>
     {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.js"></script>--}}
     {{--<script src="{{url('/js/bootstrap.min.js')}}"></script>--}}
 
@@ -100,7 +103,7 @@
     <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
     <script>
         $('.ckeditor').ckeditor({
-            language: 'en'
+            language: 'en',
         });
         // $('.textarea').ckeditor(); // if class is prefered.
     </script>

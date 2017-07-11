@@ -5,26 +5,29 @@
 
     @if(isset($post))
 
-        <h3>{{$post->title}}
+        <h1>{{$post->title}}
         @if(!Auth::guest())
             <a href="{{url(url('/post').'/'.$post->id.'/edit')}}" style="float: right;" class="btn btn-xl btn-primary btn-circle" title="Edit post">
                 <i class="fa fa-edit"></i>
             </a>
         @endif
-        </h3>
-        <h5><a style="text-decoration: none;" href="{{url('/posts/category/'.$post_category_id)}}"><span class="label label-{{$importanceLabels[$post_category_importance]}}">{{$post_category_name}}</span></a></h5>
+        </h1>
+        <h5><a style="text-decoration: none;" href="{{url('/posts/category/'.$post_category_id)}}"><span class="label label-{{$importanceLabels[$post_category_importance]}}">{{$post_category_name}}</span></a>
+            @if(isset($post->attached_files) && count($unserialized_files_array))
+                <a href="#attachments" data-toggle="tooltip" title="Attachments" data-placement="right" class="text-muted page-scroll btn btn-warning btn-sm"><i class="fa fa-files-o" style="font-size: 16px;"></i></a>
+            @endif
+        </h5>
         <hr>
         <div class="row">
             <div class="col-md-9">
-                <div class="well">
-                    <p class="text-muted">{{$post->created_at}}</p>
+                <p><i class="fa fa-clock-o"></i> Posted on {{$postedOn}}</p>
+                <hr>
                     <img src="{{url('/').'/'.$post->cover_image}}" class="responsive-imge" style="width: 100%;">
-                    <p>{!! $post->body !!}</p>                    
-                </div>
+                    <p>{!! $post->body !!}</p>
                 <hr>
                 <h6>Attached files: </h6>
-                @if($unserialized_files_array)
-                <ul class="list-group-horizontal">
+                @if(isset($post->attached_files) && count($unserialized_files_array))
+                <ul id="attachments" class="list-group">
                 @foreach ($unserialized_files_array as $index => $element)
                     @if(substr($element, -4) == '.pdf' )
                     <a data-toggle="modal" data-target="#attachedFile{{$index}}" href="#" >
@@ -70,24 +73,27 @@
                 <hr>
             </div>
             <div class="col-md-3">
+            @if(count($posts) != 0)
+            <h4>More news:</h4>
                 <ul class="list-group">
                     @foreach($posts as $index=>$cat_post)
-                    
-                    <div class="row">
-                        <div class="col-sm-4"><a href="{{url('/post').'/'.$cat_post->id}}"><img src="{{url('/').'/'.$cat_post->cover_image}}" class="responsive-imge" style="width: 100%;"></a>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title"><a href="{{url('/post').'/'.$cat_post->id}}">{{$cat_post->title}}</a></h3>
                         </div>
-                        <div class="col-sm-8">
-                          <h6 class="title"><a href="{{url('/post').'/'.$cat_post->id}}">{{$cat_post->title}}</a></h6>
-                          <p class="text-muted">{{$cat_post->created_at}}</p>                      
+                        <a href="{{url('/post').'/'.$cat_post->id}}"><img src="{{url('/').'/'.$cat_post->cover_image}}" class="responsive-imge" style="width: 100%;"></a>
+                        <div class="panel-footer clearfix">
+                            @if(count(json_decode($cat_post->attached_files)) != 0)
+                                <a data-toggle="tooltip" title="Attachments" data-placement="right"><i class="fa fa-files-o" style="font-size: 16px"></i></a>
+                            @endif
+                            <span class="pull-right">{{$cat_postedOn[$index]}}</a></span>
                         </div>
                     </div>
-                    <hr>
                     @endforeach
                 </ul>
+            @endif
             </div>
         </div>
-        
-        
         @if(!Auth::guest())
                     <table>
                         <td style="width: 100px;">

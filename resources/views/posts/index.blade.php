@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+        
     <div class="container">
         <h3>News & Articles
         @if(!Auth::guest())
@@ -18,7 +19,7 @@
                     <form method="GET" url="posts" id="search-form" >
                         <input type="hidden" name="search" value=1>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="post-search-title" placeholder="Post Title" value="{{$post_search_title}}" />
+                            <input type="text" class="form-control" name="post-search-title" placeholder="Search by title or content" value="{{$post_search_title}}" />
                         </div>
                         <div class="form-group">
                             <select class="form-control" name="post-search-cat">
@@ -43,26 +44,31 @@
             <br>
             @if(sizeof($posts))
                 @foreach($posts as $index=>$post)
-                
-                <div class="row">
-                    <div class="col-sm-4"><a href="{{url('/post').'/'.$post->id}}"><img src="{{url('/').'/'.$post->cover_image}}" class="responsive-imge" style="width: 100%;"></a>
-                    </div>
-                    <div class="col-sm-8">
-                      <h3 class="title"><a href="{{url('/post').'/'.$post->id}}">{{$post->title}}</a></h3>
-                    @if($categories)
-                    @foreach($categories as $key=>$cat)
-                      @if($cat->id == $post->post_category_id) 
-                        <a style="text-decoration: none;" href="{{url('/posts/category/'.$cat->id)}}"><span class="label label-{{$importanceLabels[$cat->importance]}}">{{$cat->name}}</span></a>
-                      @endif
-                    @endforeach
-                    @endif
-                      <p>{!! str_limit($post->body, $limit = 150, $end = '...') !!}</p>
-                      
-                      <p class="text-muted">{{$post->created_at}}</a></p>
-                      
-                    </div>
+
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title"><a href="{{url('/post').'/'.$post->id}}">{{$post->title}}</a></h3>
+                        </div>
+                        <a href="{{url('/post').'/'.$post->id}}"><img src="{{url('/').'/'.$post->cover_image}}" class="responsive-imge" style="width: 100%;"></a>
+                        <div class="panel-body">
+                            <p>{!! str_limit($post->body, $limit = 150, $end = '...') !!}</p>
+                        </div>
+                        <div class="panel-footer">
+                            @if($categories)
+                            @foreach($categories as $key=>$cat)
+                              @if($cat->id == $post->post_category_id)
+                                <a style="text-decoration: none;" href="{{url('/posts/category/'.$cat->id)}}"><span class="label label-{{$importanceLabels[$cat->importance]}}">{{$cat->name}}</span></a>
+                              @endif
+                            @endforeach
+                            @endif
+                            @if(count(json_decode($post->attached_files)) != 0)
+                                <a data-toggle="tooltip" title="Attachments" data-placement="right"><i class="fa fa-files-o" style="font-size: 16px"></i></a>
+                            @endif
+                            <p class="pull-right">{{$postedOn[$index]}}</a></p>
+                        </div>
+                    </div> 
                 </div>
-                <hr>
                 @endforeach
                 <center>
                     {!! $posts->render() !!}
@@ -79,7 +85,7 @@
             <div class="col-md-3">
                 <ul class="list-group">
                     @foreach($categories as $key => $cat)
-                        <a href="{{url('/posts/category/'.$cat->id)}}"><li class="list-group-item">{{$cat->name}}<span class="badge badge-default">{{$number_posts[$key]}}</span></li></a>
+                        <li class="list-group-item"><a href="{{url('/posts/category/'.$cat->id)}}">{{$cat->name}}</a><span class="badge badge-default">{{$number_posts[$key]}}</span></li>
                     @endforeach
                 </ul>
             </div>
