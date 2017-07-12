@@ -55,6 +55,16 @@ Route::delete('post/{id}/delete', 'PostsController@delete')->middleware('auth');
 	Route::get('/posts/category/{id}/edit', 'PostsCategoriesController@editForm')->middleware('auth');
 	Route::post('/posts/category/{id}/edit', 'PostsCategoriesController@edit')->middleware('auth');
 
+//Events routes
+Route::get('/events', 'EventController@index');
+Route::get('/events/list', 'EventController@listEvents');
+Route::get('/events/{id}', 'EventController@show');
+Route::get('/event/add', 'EventController@addForm')->middleware('auth');
+Route::post('/event/add', 'EventController@add')->middleware('auth');
+Route::get('/event/{id}/edit', 'EventController@editForm')->middleware('auth');
+Route::post('/event/{id}/edit', 'EventController@edit')->middleware('auth');
+Route::delete('event/{id}/delete', 'EventController@delete')->middleware('auth');
+
 // Admin routes
 Route::get('/update/password', 'UserController@updatePasswordForm')->middleware('auth');
 Route::post('/update/password', 'UserController@updatePassword')->middleware('auth');
@@ -64,3 +74,13 @@ Route::post('login/first', 'Auth\AuthController@firstLogin');
 // Mail service
 Route::get('/invite', 'MailController@showInvitationForm')->middleware('auth');
 Route::post('/invite/send-invitation', 'MailController@sendInvitation')->middleware('auth');
+
+Route::get('/api', function () {
+	$events = DB::table('events')->select('id', 'name', 'title', 'start_time as start', 'end_time as end')->get();
+	foreach($events as $event)
+	{
+		$event->title = $event->title . ' - ' .$event->name;
+		$event->url = url('events/' . $event->id);
+	}
+	return $events;
+});

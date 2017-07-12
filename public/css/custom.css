@@ -157,3 +157,8 @@ img.circle {
   border-bottom-left-radius:0;
   border-right-width: 1px;
 }
+
+.modalAttachment .modal-body{
+    max-height: calc(100vh - 200px);
+    height: 100vh;
+}

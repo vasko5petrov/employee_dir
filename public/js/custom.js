@@ -20,4 +20,8 @@
           }
 
       });
+
+      $('.daterangepicker_input').on('click', function() {
+        alert('working');
+      })
   });

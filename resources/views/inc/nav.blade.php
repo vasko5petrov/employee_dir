@@ -16,6 +16,7 @@
                 <li><a href="{{url('/department')}}">Departments</a></li>
                 <li><a href="{{url('/employee')}}">Employees</a></li>
                 <li><a href="{{url('/posts')}}">News & Articles</a></li>
+                <li><a href="{{url('/events')}}">Events</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
@@ -24,6 +25,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span style="width: 50px;">{{ Auth::user()->username }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                          <li class="dropdown-header">Manage Events</li>
+                          <li><a href="{{url('/event/add')}}"><i class="fa fa-plus"></i> Add Event</a></li>
+                          <li><a href="{{url('/events/list')}}"><i class="fa fa-calendar"></i> Events</a></li>
                           <li class="dropdown-header">Manage Articles</li>
                           <li><a href="{{url('/posts/add')}}"><i class="fa fa-plus"></i> Add Article</a></li>
                           <li><a href="{{url('/posts/categories')}}"><i class="fa fa-list"></i> Catergories</a></li>

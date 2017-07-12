@@ -203,7 +203,7 @@ class PostsController extends Controller
             $filesNames = [];
             foreach ($unserialized_files_array as $key => $value) {
                 $filename = pathinfo($value);
-                array_push($filesNames, $filename['basename']);
+                array_push($filesNames, $filename);
             }
         }
 

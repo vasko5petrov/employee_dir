@@ -26,7 +26,6 @@ class WelcomeController extends Controller
     public function index()
     {
         $posts = Post::orderBy('created_at', 'desc')->take(5)->get();
-
         foreach ($posts as $index => $post) {
             $postedOn[$index] = WelcomeController::formatDateToView($post->created_at);
         }

@@ -29,15 +29,13 @@
                 @if(isset($post->attached_files) && count($unserialized_files_array))
                 <ul id="attachments" class="list-group">
                 @foreach ($unserialized_files_array as $index => $element)
-                    @if(substr($element, -4) == '.pdf' )
-                    <a data-toggle="modal" data-target="#attachedFile{{$index}}" href="#" >
-                    <li class="list-group-item">
-                        <h6>{{$filesNames[$index]}}</h6>
-                        <small>Open file</small>
+                    @if($filesNames[$index]['extension'] == 'pdf' )
+                    <li class="list-group-item clearfix">
+                        <span class="pull-left"><i class="fa fa-file-pdf-o"></i> {{$filesNames[$index]['basename']}}</span>
+                        <a href="#" data-toggle="modal" data-target="#attachedFile{{$index}}" class="btn btn-sm btn-warning pull-right">Open file</a>
                     </li>
-                    </a>
                     <!-- Modal -->
-                    <div class="modal fade" id="attachedFile{{$index}}" role="dialog">
+                    <div class="modal fade modalAttachment" id="attachedFile{{$index}}" role="dialog">
                         <div class="modal-dialog modal-lg">
                         
                         <!-- Modal content-->
@@ -46,22 +44,24 @@
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
-                                <iframe src="{{url($element)}}" width="100%" height="800"></iframe>
+                                <iframe src="{{url($element)}}" width="100%" height="100%"></iframe>
                             </div>
                         </div>
                           
                         </div>
                     </div>
                     @else
-                        @if(substr($element, -4) == '.png'  || substr($element, -4) == '.jpg')
-                            <a href="{{url($element)}}" target="_blank"><li class="list-group-item"><img src="{{url($element)}}" width="100" alt="attached_image" class="attached_image"></li></a>
-                        @else
-                            <a href="{{url($element)}}" target="_blank">                            
-                                <li class="list-group-item">
-                                <h6>{{$filesNames[$index]}}</h6>
-                                <small>Download file</small>
-                                </li>
-                            </a>
+                        @if($filesNames[$index]['extension'] == 'png'  || $filesNames[$index]['extension'] == 'jpg')
+                            <li class="list-group-item">
+                                <a href="{{url($element)}}" target="_blank">
+                                    <img src="{{url($element)}}" width="100" alt="attached_image" class="attached_image">
+                                </a>
+                            </li>
+                        @else                  
+                            <li class="list-group-item clearfix">
+                                <span class="pull-left"><i class="fa fa-file-{{$filesNames[$index]['extension'] == 'zip' || $filesNames[$index]['extension'] == 'rar' ? 'archive-o' : 'text-o' }}"></i> {{$filesNames[$index]['basename']}}</span>
+                                <a href="{{url($element)}}" target="_blank" class="btn btn-sm btn-warning pull-right">Download file</a>
+                            </li>
                         @endif
                     @endif
                 @endforeach
