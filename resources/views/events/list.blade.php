@@ -2,7 +2,13 @@
 
 @section('content')
 <div class="container">
-    <h3 class="card-title">Manage events</h3>
+    <h3>Manage Events
+        @if(!Auth::guest())
+            <a href="{{url('/event/add')}}" style="float: right;" class="btn btn-xl btn-success btn-circle" title="Add event">
+                <i class="fa fa-plus"></i>
+            </a>
+        @endif
+    </h3>
     <hr>
     <div class="row">
     <div class="col-md-12">
@@ -24,7 +30,7 @@
                         <tr id="{{'info-'.$ev->id}}">
                             <div>
                                 <td>{{$index+1}}</td>
-                                <td><a href="{{url('/events').'/'.$ev->id}}">{{$ev->name}}</a></td>
+                                <td><a href="{{url('/events').'/'.$ev->id}}">{{$ev->title}}</a></td>
                                 <td>{{$ev->start_time}}</td>
                                 <td>{{$ev->end_time}}</td>
                                 @if(!Auth::guest())

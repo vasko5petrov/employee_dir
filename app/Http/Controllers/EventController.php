@@ -81,15 +81,15 @@ class EventController extends Controller
     {
         // Customize validation messages
         $messages = [
-            'event-name.required' => 'The name field is required.',
             'event-title.required' => 'The title field is required.',
+            'event-body.required' => 'The description field is required.',
             'event-dates.required' => 'The dates field is required.'
         ];
 
         // Validation rules
         $rules = [
-            'event-name' => 'required|min:5|max:15',
             'event-title' => 'required|min:5|max:100',
+            'event-body' => 'required|min:5|max:100',
             'event-dates' => 'required'
         ];
 
@@ -99,10 +99,11 @@ class EventController extends Controller
         $time = explode(" - ", $request->input('event-dates'));
 
         $event                  = new Event;
-        $event->name            = $request->input('event-name');
         $event->title           = $request->input('event-title');
+        $event->description     = $request->input('event-body');
         $event->start_time      = $this->formatDateToView($time[0]);
         $event->end_time        = $this->formatDateToView($time[1]);
+        $event->color           = $request->input('event-color');
         $event->save();
 
         // Create success flag
@@ -164,15 +165,15 @@ class EventController extends Controller
     {
         // Customize validation messages
         $messages = [
-            'event-name.required' => 'The name field is required.',
             'event-title.required' => 'The title field is required.',
+            'event-body.required' => 'The description field is required.',
             'event-dates.required' => 'The dates field is required.'
         ];
 
         // Validation rules
         $rules = [
-            'event-name' => 'required|min:5|max:15',
             'event-title' => 'required|min:5|max:100',
+            'event-body' => 'required|min:5|max:100',
             'event-dates' => 'required'
         ];
 
@@ -180,20 +181,22 @@ class EventController extends Controller
         $this->validate($request, $rules, $messages);
         
         $time = explode(" - ", $request->input('event-dates'));
-        $name = $request->input('event-name');
         $title = $request->input('event-title');
+        $description = $request->input('event-body');
+        $color = $request->input('event-color');
         $start_time = $this->formatDateToView($time[0]);
         $end_time = $this->formatDateToView($time[1]);
 
         $event = Event::findOrFail($id);
 
-        if($event->name == $name && $event->title == $title && $event->start_time == $start_time && $event->end_time == $end_time) {
+        if($event->description == $description && $event->title == $title && $event->color == $color && $event->start_time == $start_time && $event->end_time == $end_time) {
             // Create alert message to flash back to session
             $result = 'Article information remains unchanged!';
             $alert_type = 'warning';
         } else {
-            $event->name            = $name;
+            $event->description     = $description;
             $event->title           = $title;
+            $event->color           = $color;
             $event->start_time      = $start_time;
             $event->end_time        = $end_time;
             $event->save();

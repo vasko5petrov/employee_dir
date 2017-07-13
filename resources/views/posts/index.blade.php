@@ -47,11 +47,9 @@
 
                 <div class="col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h3 class="panel-title"><a href="{{url('/post').'/'.$post->id}}">{{$post->title}}</a></h3>
-                        </div>
                         <a href="{{url('/post').'/'.$post->id}}"><img src="{{url('/').'/'.$post->cover_image}}" class="responsive-imge" style="width: 100%;"></a>
                         <div class="panel-body">
+                            <h3 style="margin-top: 0;"><a href="{{url('/post').'/'.$post->id}}">{{$post->title}}</a></h3>
                             <p>{!! str_limit($post->body, $limit = 150, $end = '...') !!}</p>
                         </div>
                         <div class="panel-footer">

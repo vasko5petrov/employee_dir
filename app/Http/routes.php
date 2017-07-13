@@ -76,10 +76,10 @@ Route::get('/invite', 'MailController@showInvitationForm')->middleware('auth');
 Route::post('/invite/send-invitation', 'MailController@sendInvitation')->middleware('auth');
 
 Route::get('/api', function () {
-	$events = DB::table('events')->select('id', 'name', 'title', 'start_time as start', 'end_time as end')->get();
+	$events = DB::table('events')->select('id', 'description', 'title', 'color', 'start_time as start', 'end_time as end')->get();
 	foreach($events as $event)
 	{
-		$event->title = $event->title . ' - ' .$event->name;
+		$event->title = $event->title . ' - ' .$event->description;
 		$event->url = url('events/' . $event->id);
 	}
 	return $events;

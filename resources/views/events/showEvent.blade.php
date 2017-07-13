@@ -14,25 +14,22 @@
     
     @if(isset($event))
     <div class="row">
-		<div class="col-lg-12">
-			<h2>{{ $event->title }} <small>booked by {{ $event->name }}</small></h2>
-			<hr>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-6">
-			
-			<p>Time: <br>
-			{{ date("g:ia\, jS M Y", strtotime($event->start_time)) . ' until ' . date("g:ia\, jS M Y", strtotime($event->end_time)) }}
-			</p>
-			
-			<p>Duration: <br>
-			{{ $duration }}
-			</p>
-			
-		</div>
-	</div>
+        <div class="col-md-8 col-md-offset-2">
+            <h2>{{ $event->title }}</h2>
+            <p class="well">
+                {{ $event->description }}
+            </p>
+            <hr>
+        <div class="col-xs-6">
+            <h6>When:</h6>
+            <p><i class="fa fa-calendar"></i> {{ date('g:ia\, jS M Y', strtotime($event->start_time)) . ' until ' . date('g:ia\, jS M Y', strtotime($event->end_time)) }}</p>
+        </div>
+        <div class="col-xs-6">
+            <div class="pull-right">
+                <h6>Duration:</h6>
+                <p><i class="fa fa-calendar"></i> {{ $duration }} </p>
+            </div>
+        </div>
                 @if(!Auth::guest())
                     <table>
                         <td style="width: 100px;">
@@ -64,7 +61,9 @@
                         </td>
                     </table>
                 @endif
+
         </div>
+    </div>
     </div>
     @endif
 </div>

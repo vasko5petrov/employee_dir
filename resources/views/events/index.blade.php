@@ -26,18 +26,28 @@
 	$('#calendar').fullCalendar({
 			weekends: true,
 			header: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,agendaWeek,agendaDay'
-		},
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay',
+			},
+			weekends: false,
+			businessHours: {
+			    // days of week. an array of zero-based day of week integers (0=Sunday)
+			    dow: [ 1, 2, 3, 4, 5 ], // Monday - Friday
+
+			    start: '09:00', 
+			    end: '18:00', 
+			},
 			editable: false,
 			eventLimit: true, // allow "more" link when too many events
+			contentHeight: 700,
+			isRTL: false,
 			events: {
-			url: base_url + '/api',
-			error: function() {
-				alert("cannot load json");
-			}
-		}
+				url: base_url + '/api',
+				error: function() {
+					alert("cannot load json");
+				}
+			},
 	});
 
 

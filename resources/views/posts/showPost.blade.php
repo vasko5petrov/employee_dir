@@ -78,10 +78,10 @@
                 <ul class="list-group">
                     @foreach($posts as $index=>$cat_post)
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h3 class="panel-title"><a href="{{url('/post').'/'.$cat_post->id}}">{{$cat_post->title}}</a></h3>
-                        </div>
                         <a href="{{url('/post').'/'.$cat_post->id}}"><img src="{{url('/').'/'.$cat_post->cover_image}}" class="responsive-imge" style="width: 100%;"></a>
+                        <div class="panel-body">
+                          <h6 style="margin: 0px;"><a href="{{url('/post').'/'.$cat_post->id}}">{{$cat_post->title}}</a></h6>
+                        </div>
                         <div class="panel-footer clearfix">
                             @if(count(json_decode($cat_post->attached_files)) != 0)
                                 <a data-toggle="tooltip" title="Attachments" data-placement="right"><i class="fa fa-files-o" style="font-size: 16px"></i></a>

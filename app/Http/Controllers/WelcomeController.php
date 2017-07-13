@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\PostCategory;
+use App\Event;
 
 use Illuminate\Http\Request;
 
@@ -29,7 +30,10 @@ class WelcomeController extends Controller
         foreach ($posts as $index => $post) {
             $postedOn[$index] = WelcomeController::formatDateToView($post->created_at);
         }
-        return view('welcome', compact('posts', 'postedOn'));
+
+        $events = Event::orderBy('start_time')->get();
+
+        return view('welcome', compact('posts', 'postedOn', 'events'));
     }
 
     /**
