@@ -47,7 +47,6 @@
     <div class="content-wrap">
         @yield('content')
     </div>
-    
     <!-- JavaScripts -->
     <script src="{{url('/js/jquery.min.js')}}"></script>
     <script src="{{url('/js/bootstrap.min.js')}}"></script>
@@ -55,14 +54,13 @@
     <script src="{{url('/js/bootstrap-notify.js')}}"></script>
     <script src="{{url('/js/googleAutocomplete.js')}}"></script>
     <script src="{{url('/js/jquery.tablesorter.js')}}"></script>
+    <script src="{{url('/js/custom.js')}}"></script>
     <!-- Scrolling Nav JavaScript -->
     <script src="{{url('/js/jquery.easing.min.js')}}"></script>
     <script src="{{url('/js/scrolling-nav.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
-    
-    <script src="{{url('/js/custom.js')}}"></script>
     {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.js"></script>--}}
     {{--<script src="{{url('/js/bootstrap.min.js')}}"></script>--}}
 
@@ -103,6 +101,9 @@
             $(".tablesorter").tablesorter();
             
             $('[data-toggle="tooltip"]').tooltip();
+            setTimeout(function() {
+                $(".alert").fadeOut();
+            }, 4000);
         });
     </script>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>

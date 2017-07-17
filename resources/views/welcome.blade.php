@@ -13,9 +13,11 @@
                 </p>
                 <a href="{{ url('/department') }}"><button type="button" class="btn btn-lg btn-default">Departments</button></a>
                 <a href="{{ url('/employee') }}"><button type="button" class="btn btn-lg btn-primary">Employees</button></a>
+                <br><br>
+                <p class="text-success">Write requests to help desk from here <a href="{{url('/helpdesk')}}" class="btn btn-lg btn-success"><i class="fa fa-send"></i></a></p>
             </div>
             <h4>Event Calendar</h4>
-            <div id='calendar'></div>
+            <div id='event-calendar'></div>
         </div>
         <div class="col-md-3">
             <h4>Recent News</h4>
@@ -40,6 +42,7 @@
         </div>
     </div>
 </div>
+    @include('inc.footer')
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -47,13 +50,21 @@
   
     var base_url = '{{ url('/') }}';
      
-    $('#calendar').fullCalendar({
+    $('#event-calendar').fullCalendar({
             weekends: true,
             header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
+            firstDay: 1,
+            businessHours: {
+                // days of week. an array of zero-based day of week integers (0=Sunday)
+                dow: [ 1, 2, 3, 4, 5 ], // Monday - Friday
+
+                start: '09:00', 
+                end: '18:00', 
+            },
             editable: false,
             eventLimit: true, // allow "more" link when too many events
             events: {

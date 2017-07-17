@@ -1,7 +1,4 @@
 /* Custom CSS */
-body {
-  margin-bottom: 300px;
-}
 .navbar-brand, .navbar-brand:hover, .navbar-brand:focus {
   padding:25px 10px !important;
   background-color: white !important;
@@ -161,4 +158,67 @@ img.circle {
 .modalAttachment .modal-body{
     max-height: calc(100vh - 200px);
     height: 100vh;
+}
+
+.fc-today{
+   background-color: rgba(33, 150, 243, 0.5) !important;
+}
+
+.social-icon {
+    color: #fff;
+}
+ul.social-icons {
+    margin-top: 10px;
+    padding-left: 0px;
+}
+.social-icons li {
+    vertical-align: top;
+    display: inline;
+    height: 100px;
+}
+.social-icons a {
+    color: #333;
+    text-decoration: none;
+}
+.social-icon .fa-facebook {
+    padding:10px 14px;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition: .5s;
+    background-color: #fff;
+    color: #3d5b99;
+}
+.social-icon .fa-facebook:hover {
+    background-color: #3d5b99;
+    color: #fff;
+}
+.social-icon .fa-linkedin {
+    padding:10px 14px;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition: .5s;
+    background-color: #fff;
+    color: #0073a4;
+}
+.social-icon .fa-linkedin:hover {
+    background-color: #0073a4;
+    color: #fff;
+}
+.social-icon .fa-link {
+    padding:10px 9px;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition: .5s;
+    background-color: #fff;
+    color: #e25714;
+}
+.social-icon .fa-link:hover {
+    background-color: #e25714;
+    color: #fff;
 }

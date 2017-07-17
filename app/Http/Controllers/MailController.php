@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
+use Session;
 use App\PendingUser;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
@@ -84,5 +86,46 @@ class MailController extends Controller
             $flag = 0;
         }
         return view('mail.showInvitationForm', compact('flag'));
+    }
+
+    public function helpdeskForm() {
+        return view('mail.helpdeskForm');
+    }
+
+    public function helpdeskSend(Request $request) {
+
+        $messages = [
+            'message' => 'The message field is required.',
+            'subject.required' => 'The subject field is required.',
+        ];
+        $rules = [
+            'message' => 'required|string|min:10',
+            'subject' => 'required|string|min:5'
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $computer_ip = $_SERVER['REMOTE_ADDR'];
+
+        $query = Employee::where('ip_address', 'like', $computer_ip);
+        $employee = $query->orderBy('name')->get();
+
+        if(count($employee) != 0) {
+            $data = array(
+            'emailMessage' => $request->message,
+            'subject' => $request->subject,
+            'computer_ip' => $computer_ip,
+            'employee_name' => $employee[0]->name,
+            'employee_email' => $employee[0]->email
+            );
+            dd($data);
+
+            Session::flash('success', 'Email has been send successfully.');
+            return redirect('/helpdesk');
+        } else {
+            Session::flash('warning', 'This is an unknown IP! - '. $computer_ip);
+            return redirect('/helpdesk');
+        }
+        
     }
 }

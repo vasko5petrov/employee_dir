@@ -35,6 +35,10 @@
                             <th>Phone Number</th>
                             <td>{{$em->phone_number}}</td>
                         </tr>
+                        <tr>
+                            <th>IP Address</th>
+                            <td>{{$em->ip_address}}</td>
+                        </tr>
                     </tbody>
                 </table >
             <h5>Personal info</h5>

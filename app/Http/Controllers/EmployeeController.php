@@ -11,7 +11,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Validator;
 use Symfony\Component\Console\Input\Input;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Response;
 use Datetime;
 use DB;
 use Carbon\Carbon;
@@ -94,6 +94,8 @@ class EmployeeController extends Controller
                 'em-gender.required' => 'The gender field is required.',
                 'em-hiringDate.required' => 'Hiring date field is required.',
                 'em-job-title.required' => 'The job title field is required.',
+                'em-ip-address.required' => 'The ip address field is required.',
+                'em-ip-address.unique' => 'This ip address already exist.',
                 'em-email.required' => 'The email field is required.',
                 'em-email.email' => 'Please provide a valid email address.',
                 'em-email.unique' => 'This email address already exist.',
@@ -109,10 +111,11 @@ class EmployeeController extends Controller
                 'em-hiringDate' => 'required|string',
                 'em-location' => 'string',
                 'em-job-title' => 'required|string',
+                'em-ip-address' => 'required|string|unique:employees,ip_address',
                 'em-department-id' => 'string',
                 'em-email' => 'email|required|unique:employees,email',
                 'em-phone-number' => 'required|integer',
-                'image' => 'image|max:2048'
+                'image' => 'image|max:2048',
             ];
 
             // Make validation
@@ -124,6 +127,7 @@ class EmployeeController extends Controller
             $em_hiringDate = $request->input('em-hiringDate');
             $em_location = $request->input('em-location');
             $em_job_title = $request->input('em-job-title');
+            $em_ip_address = $request->input('em-ip-address');
             $em_email = $request->input('em-email');
             $em_phone_number = $request->input('em-phone-number');
             $em_department_id = $request->input('em-department-id');
@@ -148,6 +152,7 @@ class EmployeeController extends Controller
             $em->hiring_day = $em_hiringDate;
             $em->location = $em_location;
             $em->job_title = $em_job_title;
+            $em->ip_address = $em_ip_address;
             $em->email = $em_email;
             $em->phone_number = $em_phone_number;
             $em->department_id = $em_department_id;
@@ -193,8 +198,11 @@ class EmployeeController extends Controller
             'em-gender.required' => 'The gender field is required.',
             'em-hiringDate.required' => 'Hiring date field is required.',
             'em-job-title.required' => 'The job title field is required.',
+            'em-ip-address.required' => 'The ip address field is required.',
+            'em-ip-address.unique' => 'This ip address already exist.',
             'em-email.required' => 'The email field is required.',
             'em-email.email' => 'Please provide a valid email address.',
+            'em-email.unique' => 'This email address already exist.',
             'em-phone-number.required' => 'The phone number field is required.',
             'em-phone-number.integer' => 'The phone number field contains an invalid number.',
         ];
@@ -202,6 +210,9 @@ class EmployeeController extends Controller
         // Validate
         // If success, continue
         // Else, flash errors to the session
+
+        $em_id = $request->input('em-id');
+
         $this->validate($request,[
             'em-name' => 'required|string',
             'em-gender' => 'required|string',
@@ -209,8 +220,9 @@ class EmployeeController extends Controller
             'em-birthday' => 'string',
             'em-hiringDate' => 'required|string',
             'em-job-title' => 'required|string',
+            'em-ip-address' => 'required|string|unique:employees,ip_address,'.$em_id,
             'em-department-id' => 'string',
-            'em-email' => 'email|required',
+            'em-email' => 'email|required|unique:employees,email,'.$em_id,
             'em-phone-number' => 'required|integer',
             'image' => 'image|max:2048'
         ], $messages);
@@ -223,11 +235,13 @@ class EmployeeController extends Controller
         $new_em_location = $request->input('em-location');
         $new_em_department_id = $request->input('em-department-id');
         $new_em_job_title = $request->input('em-job-title');
+        $new_em_ip_address = $request->input('em-ip-address');
         $new_em_phone_number = $request->input('em-phone-number');
         $new_em_email = $request->input('em-email');
         if (!is_numeric($new_em_department_id)) {
             $new_em_department_id = null;
         }
+        
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $img_name = $image->getClientOriginalName();
@@ -243,7 +257,7 @@ class EmployeeController extends Controller
         $departments = Department::all();
 
         // If the provided information from Edit form is not modified, do nothing
-        if (!isset($new_em_picture) && $em->name === $new_em_name && $em->gender === $new_em_gender && $em->birthday === $new_em_birthday && $em->hiring_day === $new_em_hiringDate && $em->location === $new_em_location && $em->department_id == $new_em_department_id && $em->job_title === $new_em_job_title && $em->phone_number === $new_em_phone_number && $em->email === $new_em_email) {
+        if (!isset($new_em_picture) && $em->name === $new_em_name && $em->gender === $new_em_gender && $em->birthday === $new_em_birthday && $em->hiring_day === $new_em_hiringDate && $em->location === $new_em_location && $em->department_id == $new_em_department_id && $em->job_title == $new_em_job_title && $em->ip_address == $new_em_ip_address && $em->phone_number == $new_em_phone_number && $em->email == $new_em_email) {
             $result = 'Employee information remains unchanged!';
             $alert_type = 'warning';
         }
@@ -256,6 +270,7 @@ class EmployeeController extends Controller
             $em->location = $new_em_location;
             $em->department_id = $new_em_department_id;
             $em->job_title = $new_em_job_title;
+            $em->ip_address = $new_em_ip_address;
             $em->phone_number = $new_em_phone_number;
             $em->email = $new_em_email;
             if (isset($new_em_picture)) $em->picture = $new_em_picture;

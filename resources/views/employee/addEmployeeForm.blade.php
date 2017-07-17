@@ -75,6 +75,15 @@
                                     </span>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <label for="em-ip-address">IP Address</label>
+                                <input type="text" class="form-control validate{{ $errors->first('em-ip-address') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-ip-address') }}" name="em-ip-address" value="{{ old('em-ip-address') }}" id="em-job-title">
+                                @if ($errors->has('em-ip-address'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('em-ip-address') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                             </div>
                             <div class="col-md-6">
                             <div class="form-group">
@@ -126,7 +135,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="em-location">Location</label>
-                                <input type="text" class="form-control validate{{ $errors->first('em-location') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-location') }}" name="em-location" value="{{ old('em-location') }}" id="em-location" placeholder="">
+                                <input type="text" class="form-control validate{{ $errors->first('em-location') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-location') }}" name="em-location" value="{{ old('em-location') }}" id="em-location" placeholder="" autocomplete="on">
                                 @if ($errors->has('em-location'))
                                     <span class="help-block">
                                         <strong style="color: red;">{{ $errors->first('em-location') }}</strong>

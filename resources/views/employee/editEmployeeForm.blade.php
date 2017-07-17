@@ -76,6 +76,15 @@
                                 </span>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <label for="em-ip-address">IP Address</label>
+                                <input type="text" class="form-control validate{{ $errors->first('em-ip-address') ? ' animated shake' : '' }}" data-error="{{ $errors->first('em-ip-address') }}" name="em-ip-address" value="{{ $em->ip_address }}" id="em-job-title">
+                                @if ($errors->has('em-ip-address'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('em-ip-address') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                             </div>
                             <div class="col-md-6">
                             <div class="form-group">

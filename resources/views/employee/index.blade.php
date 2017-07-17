@@ -102,7 +102,7 @@
                       <h4 class="panel-title">
                         <i class="fa fa-user-plus text-primary"></i>
                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            New buddies
+                            New employee
                         </a>
                       </h4>
                     </div>
@@ -129,7 +129,7 @@
                       <h4 class="panel-title">
                         <i class="fa fa-birthday-cake text-warning"></i>
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Birthday buddies
+                            Birthdays
                         </a>
                       </h4>
                     </div>
